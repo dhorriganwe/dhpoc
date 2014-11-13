@@ -10,6 +10,30 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
     [TestClass]
     public class AuditLogTests
     {
+        private static string NL = Environment.NewLine;
+
+        [TestMethod]
+        public void GetAuditLogById_sproc()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            AuditLog al = auditLogDataService.GetAuditLogById("xyz");
+
+            
+            Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                NL,
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn));
+        }
+
         [TestMethod]
         public void GetAuditLogsAll_sproc()
         {
@@ -17,14 +41,15 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
 
             List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll_sproc().ToList();
 
-            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", 
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ", 
+                NL,
                 al.Id, 
                 al.EventId,
                 al.ApplicationName,
                 al.FeatureName,
                 al.Category,
                 al.MessageCode,
-                al.Messages,
+                //al.Messages,
                 al.TraceLevel,
                 al.LoginName,
                 al.AuditedOn)));

@@ -1,0 +1,41 @@
+﻿.LabelCheck {
+    font-size: x-small;
+}
+
+table.alternate_color {
+    /*border-collapse: collapse;*/
+}
+table.alternate_color tr{
+    border: 2px solid brown;
+}
+
+table.alternate_color th, td{
+    border: 1px solid black;
+    padding: 0.15em 0.5em 0.25em 0.4em;
+}
+
+table.alternate_color tr:nth-child(odd) td{
+   background-color:#d6d6d6;
+}
+table.alternate_color tr:nth-child(even) td{
+   background-color:#fff;
+}
+
+table.alternate_color td{
+   /*width: 20px;*/
+   /*max-width: 200px;*/
+}
+
+table.alternate_color td.eventId{
+    white-space: nowrap;
+    border: 0 none;
+}
+
+table.alternate_color td.messages{
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 0 none;
+}
+

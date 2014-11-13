@@ -1,22 +1,39 @@
-﻿@model dynamic
-
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
-    Layout = null;
+    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
 }
 
-<!DOCTYPE html>
+<div>
+    
+    @Html.Action("Header", "Home", Model.ViewQueryCommon)
 
-<html>
-    <head>
-        <title>AuditDb</title>
-    </head>
-    <body>
-        <div>
-            <table>
-                <tr>
-                    <td>Audit data</td>
-                </tr>
-            </table>
-        </div>
-    </body>
-</html>
+    <div>
+        <table>
+            <tr>
+                <th class="TextLabelLeft">AuditDb</th>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table class="alternate_color">
+            <tr>
+                <td>1</td>
+                <td>text1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>text2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>text3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>text4</td>
+            </tr>
+        </table>
+    </div>
+
+</div>

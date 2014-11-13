@@ -13,5 +13,6 @@ namespace Instrumentation.DomainDA.Models
         public string TraceLevel;
         public string LoginName;
         public string AuditedOn;
+        public string AdditionalInfo;
     }
 }

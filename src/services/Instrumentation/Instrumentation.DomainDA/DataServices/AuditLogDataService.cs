@@ -11,6 +11,7 @@ namespace Instrumentation.DomainDA.DataServices
     {
         IList<AuditLog> GetAuditLogsByTraceLevel_sproc(string travelLevel);
         IList<AuditLog> GetAuditLogsAll_sproc();
+        AuditLog GetAuditLogById(string id);
         void AddAuditLog_sproc(AuditLog auditLog);
     }
 
@@ -45,6 +46,13 @@ namespace Instrumentation.DomainDA.DataServices
         public IList<AuditLog> GetAuditLogsAll_sproc()
         {
             return GetAuditLogs(GETAUDITLOGSAll, new Dictionary<string, object>());
+        }
+
+        public AuditLog GetAuditLogById(string id)
+        {
+            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGSAll, new Dictionary<string, object>());
+
+            return auditLogs[0];
         }
 
         public IList<AuditLog> GetAuditLogsByTraceLevel_sproc(string travelLevel)
@@ -102,6 +110,7 @@ namespace Instrumentation.DomainDA.DataServices
         {
             return new AuditLog()
             {
+                Id = reader["Id"].ReturnDefaultOrValue<string>(),
                 EventId = reader["EventId"].ReturnDefaultOrValue<string>(),
                 ApplicationName = reader["ApplicationName"].ReturnDefaultOrValue<string>(),
                 FeatureName = reader["FeatureName"].ReturnDefaultOrValue<string>(),
@@ -110,6 +119,7 @@ namespace Instrumentation.DomainDA.DataServices
                 Messages = reader["messages"].ReturnDefaultOrValue<string>(),
                 TraceLevel = reader["TraceLevel"].ReturnDefaultOrValue<string>(),
                 LoginName = reader["LoginName"].ReturnDefaultOrValue<string>(),
+                AuditedOn = reader["AuditedOn"].ReturnDefaultOrValue<string>(),
             };
         }
 

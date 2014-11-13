@@ -1,0 +1,52 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogById
+@{
+    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
+}
+
+<div>
+    
+    @Html.Action("Header", "Home", Model.ViewQueryCommon)
+
+    <div>
+        <table>
+            <tr>
+                <th class="TextLabelLeft">AuditLogById</th><th></th>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <table class="alternate_color">
+                <tr>
+                    <th>Id</th>
+                    <th>EventId</th>
+                    <th>ApplicationName</th>
+                    <th>FeatureName</th>
+                    <th>Category</th>
+                    <th>MessageCode</th>
+                    <th>Messages</th>
+                    <th>TraceLevel</th>
+                    <th>LoginName</th>
+                    <th>AuditedOn</th>
+                </tr>
+                <tr>
+                    <td>@Model.AuditLog.Id</td>
+                    <td class="eventId">@Model.AuditLog.EventId</td>
+                    <td>@Model.AuditLog.ApplicationName</td>
+                    <td>@Model.AuditLog.FeatureName</td>
+                    <td>@Model.AuditLog.Category</td>
+                    <td>@Model.AuditLog.MessageCode</td>
+                    <td class="messages">
+                        <span title="abc  @Model.AuditLog.Messages">@Model.AuditLog.Messages</span>
+                    </td>
+                    <td>
+                        <a href="http://localhost/Instrumentation/" title="@Model.AuditLog.Messages">@Model.AuditLog.TraceLevel</a>
+                        
+                    </td>
+                    <td>@Model.AuditLog.LoginName</td>
+                    <td>@Model.AuditLog.AuditedOn</td>
+                </tr>
+        </table>
+    </div>
+
+</div>

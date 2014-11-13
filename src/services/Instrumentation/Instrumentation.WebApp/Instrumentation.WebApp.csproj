@@ -136,12 +136,15 @@
     </Compile>
     <Compile Include="Helpers\Configurations.cs" />
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Models\ViewQueryAuditLogById.cs" />
     <Compile Include="Models\FailDetail.cs" />
+    <Compile Include="Models\ViewQueryAuditLog.cs" />
     <Compile Include="Models\ViewQueryBase.cs" />
     <Compile Include="Models\ViewQueryCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\style.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -242,12 +245,20 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\AuditDb\Index.cshtml" />
+    <Content Include="Views\AuditDb\AuditLog.cshtml" />
+    <Content Include="Views\AuditDb\AuditLogById.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Instrumentation.DomainDA\Instrumentation.DomainDA.csproj">
+      <Project>{eb2092c6-8817-4705-834a-e02451ad7c12}</Project>
+      <Name>Instrumentation.DomainDA</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
