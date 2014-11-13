@@ -1,0 +1,58 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryCommon
+@{
+    Layout = null;
+}
+
+    <h2>@Model.ViewTitle</h2>
+
+    @if (Model.ViewName == "Home")
+    {
+        <div>
+            <table>
+                <tr>
+                    <th colspan="2" align="left">TestHarness Views</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <b>rtAudit</b>
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("AuditDb", "Index", "AuditDb")
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>TH</b>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+    else
+    {
+        @Html.ActionLink("Home", "Index", "Home")
+        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char)124).ToString())
+        @Html.Raw(((char)124).ToString())
+        @Html.Raw(((char)160).ToString())
+        @Html.ActionLink("AuditDb", "Index", "AuditDb")
+        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char)160).ToString())
+    }
+
+<hr />
+
+<div>
+    <div id="pageStatus"></div>
+</div>
+

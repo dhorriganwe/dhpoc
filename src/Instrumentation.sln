@@ -1,0 +1,102 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WilburEllis.RisingTide.LabelCheck.CdmsProvider", "..\..\..\wilbur-ellis\agverdict-main\src\services\LabelChecking\WilburEllis.RisingTide.LabelCheck.CdmsProvider\WilburEllis.RisingTide.LabelCheck.CdmsProvider.csproj", "{E572074E-73CB-4449-A193-037E4F16256A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{098CF0E4-2817-4C7C-B94E-3A4D9B63A060}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.Config = ..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.Config
+		..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.exe = ..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.exe
+		..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.targets = ..\..\..\wilbur-ellis\agverdict-main\src\.nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelCheck.CdmsTestHarness", "..\..\..\wilbur-ellis\agverdict-main\src\services\LabelChecking\WilburEllis.RisingTide.LabelCheck.CdmsTestHarness\LabelCheck.CdmsTestHarness.csproj", "{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WilburEllis.RisingTide.LabelCheck.CalAgProvider", "..\..\..\wilbur-ellis\agverdict-main\src\services\LabelChecking\WilburEllis.RisingTide.LabelCheck.CalAgProvider\WilburEllis.RisingTide.LabelCheck.CalAgProvider.csproj", "{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.DomainDA", "services\Instrumentation\Instrumentation.DomainDA\Instrumentation.DomainDA.csproj", "{EB2092C6-8817-4705-834A-E02451AD7C12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.DomainDA.Test", "services\Instrumentation\Instrumentation.DomainDA.Test\Instrumentation.DomainDA.Test.csproj", "{FE94F714-6DAD-4598-BF37-27A813DF1B47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.WebApp", "services\Instrumentation\Instrumentation.WebApp\Instrumentation.WebApp.csproj", "{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.WebApp.Tests", "services\Instrumentation\Instrumentation.WebApp.Tests\Instrumentation.WebApp.Tests.csproj", "{5972CD58-DA91-4335-B574-31FDEB1D5A5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		MOCK|Any CPU = MOCK|Any CPU
+		MOCK|x86 = MOCK|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E572074E-73CB-4449-A193-037E4F16256A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.MOCK|Any CPU.ActiveCfg = MOCK|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.MOCK|Any CPU.Build.0 = MOCK|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.MOCK|x86.ActiveCfg = MOCK|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E572074E-73CB-4449-A193-037E4F16256A}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.MOCK|Any CPU.ActiveCfg = MOCK|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.MOCK|Any CPU.Build.0 = MOCK|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.MOCK|x86.ActiveCfg = MOCK|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC9FD27E-56AB-4349-AF8E-EC2A88AA8A01}.Release|x86.ActiveCfg = Release|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.MOCK|Any CPU.ActiveCfg = MOCK|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.MOCK|Any CPU.Build.0 = MOCK|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.MOCK|x86.ActiveCfg = MOCK|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71851B37-3FF8-4B1A-A169-9AF56F1C48B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.MOCK|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.MOCK|Any CPU.Build.0 = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.MOCK|x86.ActiveCfg = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2092C6-8817-4705-834A-E02451AD7C12}.Release|x86.ActiveCfg = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.MOCK|Any CPU.ActiveCfg = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.MOCK|Any CPU.Build.0 = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.MOCK|x86.ActiveCfg = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE94F714-6DAD-4598-BF37-27A813DF1B47}.Release|x86.ActiveCfg = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.MOCK|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.MOCK|Any CPU.Build.0 = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.MOCK|x86.ActiveCfg = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE5A28C-7A5F-405D-95C0-F1002B98BE04}.Release|x86.ActiveCfg = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.MOCK|Any CPU.ActiveCfg = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.MOCK|Any CPU.Build.0 = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.MOCK|x86.ActiveCfg = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5972CD58-DA91-4335-B574-31FDEB1D5A5C}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

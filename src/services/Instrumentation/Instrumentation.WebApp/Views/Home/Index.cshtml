@@ -1,0 +1,55 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+@using Instrumentation.WebApp.Helpers
+@{
+    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
+}
+
+<div>
+    
+    @Html.Action("Header", Model.ViewQueryCommon)
+
+    <div>
+        <table>
+            <tr>
+                <th class="TextLabelLeft">Instrumentation</th>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <div>
+                        <table>
+                            <tr>
+                                <th class="TextLabelLeft">Web App</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="@Configurations.ReleaseVersion">ReleaseVersion</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr/>
+    <hr/>
+    <hr/>
+    <br/>
+    <br/>
+    <br/>
+    <div>
+        <table>
+            <tr>
+                <td>test harness version: @Model.ReleaseVersion</td>
+            </tr>
+        </table>
+    </div>    
+
+</div>
