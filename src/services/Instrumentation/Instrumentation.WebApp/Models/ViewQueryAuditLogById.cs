@@ -9,5 +9,6 @@ namespace Instrumentation.WebApp.Models
     public class ViewQueryAuditLogById : ViewQueryBase
     {
         public AuditLog AuditLog { get; set; }
+        public string AuditLogId { get; set; }
     }
 }

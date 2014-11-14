@@ -15,7 +15,8 @@ BEGIN
 		MessageCode,
 		Messages,
 		TraceLevel,
-		LoginName
+		LoginName,
+		AuditedOn
 	)
 	SELECT i_eventId,
 		i_applicationname,
@@ -24,7 +25,8 @@ BEGIN
 		i_messagecode,
 		i_messages,
 		i_tracelevel,
-		i_loginname;
+		i_loginname,
+		Now();
 
 	RETURN lastval();
 END;

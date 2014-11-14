@@ -16,6 +16,8 @@ namespace Instrumentation.DomainDA.DataServices
         #region ApplicationMethod
 
         private const string GETALLAPPLICATIONMETHODS = "getallapplicationmethods";
+        private const string DBKEY = "RisingTide";
+        private const string DBSCHEMA = "rt";
 
         public IList<ApplicationMethod> GetAllApplicationMethods_sproc()
         {
@@ -28,7 +30,7 @@ namespace Instrumentation.DomainDA.DataServices
         {
             var operationBoundaries = new List<ApplicationMethod>();
 
-            using (var dbContext = new SqlCommand())
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(storedProcedureName, parameters))
                 {

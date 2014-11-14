@@ -35,25 +35,47 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult AuditLogById(ViewQueryAuditLogById viewQueryAuditLogById)
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLogById(ViewQueryAuditLogById query, string command)
         {
-            var query = new ViewQueryAuditLogById();
             query.ViewQueryCommon.ViewName = "AuditLogById";
-            query.ReleaseVersion = Configurations.ReleaseVersion;
 
-            var auditLogs = GetAuditLogById("xyz");
 
-            //query.Count = auditLogs.Count;
-            query.AuditLog = auditLogs;
+            if (command == "Search")
+            {
+                var auditLogs = GetAuditLogById(query.AuditLogId);
+                query.AuditLog = auditLogs;
+            }
+            else
+            {
+                query.AuditLog = new AuditLog();
+            }
 
             return View(query);
+        }
+
+        //public ActionResult AuditLogById(ViewQueryAuditLogById query)
+        //{
+        //    query.ViewQueryCommon.ViewName = "AuditLogById";
+        //    query.AuditLog = new AuditLog();
+
+        //    return View(query);
+        //}
+
+        public ActionResult AuditLogById(string id)
+        {
+            var query = new ViewQueryAuditLogById();
+            query.AuditLogId = id;
+
+            return AuditLogById(query, "Search");
         }
 
         private List<AuditLog> GetAuditLogsAll()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll_sproc().ToList();
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll().ToList();
 
             return auditLogs;
         }

@@ -13,12 +13,11 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         private static string NL = Environment.NewLine;
 
         [TestMethod]
-        public void GetAuditLogById_sproc()
+        public void GetAuditLogById()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            AuditLog al = auditLogDataService.GetAuditLogById("xyz");
-
+            AuditLog al = auditLogDataService.GetAuditLogById("208000");
             
             Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
                 NL,
@@ -35,14 +34,37 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogsAll_sproc()
+        public void GetAuditLogByEventId()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll_sproc().ToList();
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsByEventId("208000").ToList();
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
+        public void GetAuditLogsAll()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll().ToList();
+
+            Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
 
             auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ", 
-                NL,
+                "",
                 al.Id, 
                 al.EventId,
                 al.ApplicationName,
@@ -60,7 +82,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsByTraceLevel_sproc("error").ToList();
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsByTraceLevel("error").ToList();
 
             auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                 al.Id,
@@ -90,7 +112,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             auditLog.TraceLevel = "error";
             auditLog.LoginName = "login1";
 
-            auditLogDataService.AddAuditLog_sproc(auditLog);
+            auditLogDataService.AddAuditLog(auditLog);
         }
     }
 }

@@ -34,8 +34,7 @@ RETURN QUERY
 END
 $BODY$
   LANGUAGE plpgsql VOLATILE
-  COST 100
-  ROWS 1000;
+  COST 100;
 ALTER FUNCTION rt.getauditlogsall()
   OWNER TO postgres;
 

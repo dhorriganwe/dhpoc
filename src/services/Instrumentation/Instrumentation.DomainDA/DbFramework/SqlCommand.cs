@@ -13,11 +13,19 @@ namespace Instrumentation.DomainDA.DbFramework
     public class SqlCommand : ISqlCommand
     {
         private readonly EfDatabaseContext _dbContext = EfDatabaseContext.CreateContext();
-        private readonly NpgsqlConnection _npgsqlConnection = new NpgsqlConnection(Constants.PostgresConnectionString);
+        private NpgsqlConnection _npgsqlConnection = new NpgsqlConnection(Configurations.GetConnectionString("rtAudit"));
+        private string _schema = null;
+        //private readonly NpgsqlConnection _npgsqlConnection = new NpgsqlConnection(Constants.PostgresConnectionString);
 
         #region ctors
         public SqlCommand()
         { }
+
+        public SqlCommand(string dbKey, string schema)
+        {
+            _schema = schema;
+            _npgsqlConnection = new NpgsqlConnection(Configurations.GetConnectionString(dbKey));
+        }
 
         public SqlCommand(EfDatabaseContext dbContext)
         {
@@ -34,7 +42,7 @@ namespace Instrumentation.DomainDA.DbFramework
             {
                 CommandType = CommandType.StoredProcedure,
                 Connection = _npgsqlConnection,
-                CommandText = Constants.Schema + "." + procName
+                CommandText = _schema + "." + procName
             };
             foreach (var parameter in parameters)
             {
@@ -51,7 +59,7 @@ namespace Instrumentation.DomainDA.DbFramework
             {
                 CommandType = CommandType.StoredProcedure,
                 Connection = _npgsqlConnection,
-                CommandText = Constants.Schema + "." + procName
+                CommandText = _schema + "." + procName
             };
             foreach (var parameter in parameters)
             {
@@ -114,7 +122,6 @@ namespace Instrumentation.DomainDA.DbFramework
             }
             return command.ExecuteReader();
         }
-
 
         public IDataReader ExecuteReaderSqlStatement(string sqlStatement, IDictionary<string, object> parameters)
         {

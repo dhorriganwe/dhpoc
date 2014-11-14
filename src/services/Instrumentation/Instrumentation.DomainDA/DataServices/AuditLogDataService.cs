@@ -9,10 +9,11 @@ namespace Instrumentation.DomainDA.DataServices
 {
     public interface IAuditLogDataService
     {
-        IList<AuditLog> GetAuditLogsByTraceLevel_sproc(string travelLevel);
-        IList<AuditLog> GetAuditLogsAll_sproc();
+        IList<AuditLog> GetAuditLogsByEventId(string eventid);
+        IList<AuditLog> GetAuditLogsByTraceLevel(string travelLevel);
+        IList<AuditLog> GetAuditLogsAll();
         AuditLog GetAuditLogById(string id);
-        void AddAuditLog_sproc(AuditLog auditLog);
+        void AddAuditLog(AuditLog auditLog);
     }
 
     public class AuditLogDataService : IAuditLogDataService
@@ -21,11 +22,15 @@ namespace Instrumentation.DomainDA.DataServices
 
         private const string GETAUDITLOGSBYTRACELEVEL = "GetAuditLogsByTraceLevel";
         private const string GETAUDITLOGSAll = "getauditlogsall";
+        private const string GETAUDITLOGBYID = "getauditlogbyid";
+        private const string GETAUDITLOGSBYEVENTID = "getauditlogbyeventid";
         private const string ADDAUDITLOG = "addauditlog";
+        private const string DBKEY = "rtAudit";
+        private const string DBSCHEMA = "rt";
 
         private static string NL = Environment.NewLine;
 
-        public void AddAuditLog_sproc(AuditLog auditLog)
+        public void AddAuditLog(AuditLog auditLog)
         {
             long id = AddAuditLog(ADDAUDITLOG,
                 new Dictionary<string, object>
@@ -43,19 +48,37 @@ namespace Instrumentation.DomainDA.DataServices
             auditLog.Id = id.ToString();
         }
 
-        public IList<AuditLog> GetAuditLogsAll_sproc()
+        public IList<AuditLog> GetAuditLogsAll()
         {
             return GetAuditLogs(GETAUDITLOGSAll, new Dictionary<string, object>());
         }
 
         public AuditLog GetAuditLogById(string id)
         {
-            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGSAll, new Dictionary<string, object>());
+            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGBYID, 
+                new Dictionary<string, object>
+                {
+                    {"Id", id},
+                });
 
-            return auditLogs[0];
+            if(auditLogs.Count > 0)
+                return auditLogs[0];
+            else
+                return new AuditLog();
         }
 
-        public IList<AuditLog> GetAuditLogsByTraceLevel_sproc(string travelLevel)
+        public IList<AuditLog> GetAuditLogsByEventId(string eventId)
+        {
+            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGSBYEVENTID,
+                new Dictionary<string, object>
+                {
+                    {"EventId", eventId},
+                });
+
+            return auditLogs;
+        }
+
+        public IList<AuditLog> GetAuditLogsByTraceLevel(string travelLevel)
         {
             return GetAuditLogs(GETAUDITLOGSBYTRACELEVEL,
                 new Dictionary<string, object>
@@ -67,7 +90,7 @@ namespace Instrumentation.DomainDA.DataServices
         private static long AddAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
         {
             long id = -1;
-            using (var dbContext = new SqlCommand())
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(storedProcedureName, parameters))
                 {
@@ -84,7 +107,7 @@ namespace Instrumentation.DomainDA.DataServices
         {
             var auditLogs = new List<AuditLog>();
 
-            using (var dbContext = new SqlCommand())
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(storedProcedureName, parameters))
                 {
@@ -98,7 +121,6 @@ namespace Instrumentation.DomainDA.DataServices
                     }
                     catch (Exception e)
                     {
-
                         throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, storedProcedureName, reader.Depth), e);
                     }
                 }
@@ -123,8 +145,6 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-
         #endregion
-
     }
 }

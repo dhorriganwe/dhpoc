@@ -91,6 +91,23 @@ namespace Instrumentation.DomainDA.Helpers
             return valBool;
         }
 
+        public static string GetConnectionString(string key, string defaultVal = null, bool allowNull = false)
+        {
+            string val = null;
+            val = ConfigurationManager.ConnectionStrings[key].ConnectionString;
+            if (string.IsNullOrEmpty(val))
+                val = defaultVal;
+
+            if (string.IsNullOrEmpty(val) && allowNull == false)
+            {
+                string msg = string.Format(
+                    "No value for the key: '{0}' was found in {1}, nor was a default value supplied.", key, "config file appSettings");
+
+                throw new ConfigurationErrorsException(msg);
+            }
+            return val;
+        }
+
         #endregion
     }
 }

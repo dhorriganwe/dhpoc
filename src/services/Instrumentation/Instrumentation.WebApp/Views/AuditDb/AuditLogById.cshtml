@@ -7,46 +7,48 @@
     
     @Html.Action("Header", "Home", Model.ViewQueryCommon)
 
-    <div>
-        <table>
-            <tr>
-                <th class="TextLabelLeft">AuditLogById</th><th></th>
-            </tr>
-        </table>
-    </div>
+    @using (@Html.BeginForm())
+    {
+        <div class="PageSection" style="padding: 5px; border: solid thin black">
 
-    <div>
-        <table class="alternate_color">
-                <tr>
-                    <th>Id</th>
-                    <th>EventId</th>
-                    <th>ApplicationName</th>
-                    <th>FeatureName</th>
-                    <th>Category</th>
-                    <th>MessageCode</th>
-                    <th>Messages</th>
-                    <th>TraceLevel</th>
-                    <th>LoginName</th>
-                    <th>AuditedOn</th>
-                </tr>
-                <tr>
-                    <td>@Model.AuditLog.Id</td>
-                    <td class="eventId">@Model.AuditLog.EventId</td>
-                    <td>@Model.AuditLog.ApplicationName</td>
-                    <td>@Model.AuditLog.FeatureName</td>
-                    <td>@Model.AuditLog.Category</td>
-                    <td>@Model.AuditLog.MessageCode</td>
-                    <td class="messages">
-                        <span title="abc  @Model.AuditLog.Messages">@Model.AuditLog.Messages</span>
-                    </td>
-                    <td>
-                        <a href="http://localhost/Instrumentation/" title="@Model.AuditLog.Messages">@Model.AuditLog.TraceLevel</a>
-                        
-                    </td>
-                    <td>@Model.AuditLog.LoginName</td>
-                    <td>@Model.AuditLog.AuditedOn</td>
-                </tr>
-        </table>
-    </div>
+            <div>
+                <table>
+                    <tr>
+                        <th class="TextLabelLeft">AuditLogById</th><th></th>
+                    </tr>
+                </table>
+            </div>
+    
+            <div>
+                <table>
+                    <tr>
+                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.AuditLogId, null, null)</td>
+                        <td><input type="submit" name="Command" value="Search"/></td>
+                        <td><input type="submit" name="Command" value="Copy"/></td>
+                    </tr>
+                </table>
+            </div>
 
+            <div>
+                <table>
+                    @if (!string.IsNullOrEmpty(Model.AuditLog.Id))
+                    {
+                        <tr><td>Id</td><td>@Model.AuditLog.Id</td></tr>
+                        <tr><td>EventId</td><td>@Model.AuditLog.EventId</td></tr>
+                        <tr><td>ApplicationName</td><td>@Model.AuditLog.ApplicationName</td></tr>
+                        <tr><td>FeatureName</td><td>@Model.AuditLog.FeatureName</td></tr>
+                        <tr><td>Category</td><td>@Model.AuditLog.Category</td></tr>
+                        <tr><td>MessageCode</td><td>@Model.AuditLog.MessageCode</td></tr>
+                        <tr><td>AdditionalInfo</td><td>@Model.AuditLog.AdditionalInfo</td></tr>
+                        <tr><td>TraceLevel</td><td>@Model.AuditLog.TraceLevel</td></tr>
+                        <tr><td>LoginName</td><td>@Model.AuditLog.LoginName</td></tr>
+                        <tr><td>AuditedOn</td><td>@Model.AuditLog.AuditedOn</td></tr>
+                        <tr><td>Messages</td><td>@Model.AuditLog.Messages</td></tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    }
 </div>
+        

@@ -56,18 +56,19 @@
             @foreach (var auditLog in Model.AuditLogs)
             {
                 <tr>
-                    <td>@auditLog.Id</td>
+                    <td>
+                        <a href="AuditLogById/@auditLog.Id" title="@auditLog.Id">@auditLog.Id</a>
+                    </td>
                     <td class="eventId">@auditLog.EventId</td>
                     <td>@auditLog.ApplicationName</td>
                     <td>@auditLog.FeatureName</td>
                     <td>@auditLog.Category</td>
                     <td>@auditLog.MessageCode</td>
                     <td class="messages">
-                        <span title="abc  @auditLog.Messages">@auditLog.Messages</span>
+                        <span title="@auditLog.Messages">@auditLog.Messages</span>
                     </td>
                     <td>
                         <a href="http://localhost/Instrumentation" title="@auditLog.Messages">@auditLog.TraceLevel</a>
-                        
                     </td>
                     <td>@auditLog.LoginName</td>
                     <td>@auditLog.AuditedOn</td>

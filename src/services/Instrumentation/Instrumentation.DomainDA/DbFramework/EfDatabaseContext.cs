@@ -18,7 +18,7 @@ namespace Instrumentation.DomainDA.DbFramework
 
         public static EfDatabaseContext CreateContext()
         {
-            var conn = new NpgsqlConnection(Constants.PostgresConnectionString);
+            var conn = new NpgsqlConnection(Configurations.GetConnectionString("rtAudit"));
             return new EfDatabaseContext(conn);
         }
     }
