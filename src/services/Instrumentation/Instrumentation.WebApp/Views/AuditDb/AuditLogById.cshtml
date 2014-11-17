@@ -9,7 +9,7 @@
 
     @using (@Html.BeginForm())
     {
-        <div class="PageSection" style="padding: 5px; border: solid thin black">
+        <div style="padding: 5px; border: solid thin black">
 
             <div>
                 <table>
@@ -20,7 +20,7 @@
             </div>
     
             <div>
-                <table>
+                <table class="alternate_color">
                     <tr>
                         <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.AuditLogId, null, null)</td>
                         <td><input type="submit" name="Command" value="Search"/></td>
@@ -30,7 +30,7 @@
             </div>
 
             <div>
-                <table>
+                <table class="alternate_color">
                     @if (!string.IsNullOrEmpty(Model.AuditLog.Id))
                     {
                         <tr><td>Id</td><td>@Model.AuditLog.Id</td></tr>

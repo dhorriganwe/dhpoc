@@ -7,36 +7,24 @@
 
     @if (Model.ViewName == "Home")
     {
-        <div>
-            <table>
-                <tr>
-                    <th colspan="2" align="left">TestHarness Views</th>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <table>
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink("Home", "Index", "Home")
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink("AuditDb", "Index", "AuditDb")
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+    <h3>Instrumentation Views</h3>
+                        <table class="alternate_color">
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Home", "Index", "Home")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb")
+                                </td>
+                            </tr>
+                        </table>
     }
     else
     {
@@ -44,9 +32,6 @@
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)124).ToString())
         @Html.Raw(((char)124).ToString())
-        @Html.Raw(((char)160).ToString())
-        @Html.ActionLink("AuditDb", "Index", "AuditDb")
-        @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
         @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
         @Html.Raw(((char)160).ToString())

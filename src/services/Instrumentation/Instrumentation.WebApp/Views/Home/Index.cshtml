@@ -9,45 +9,9 @@
     @Html.Action("Header", Model.ViewQueryCommon)
 
     <div>
-        <table>
+        <table class="alternate_color">
             <tr>
-                <th class="TextLabelLeft">Instrumentation</th>
-            </tr>
-            <tr>
-                <td valign="top">
-                    <div>
-                        <table>
-                            <tr>
-                                <th class="TextLabelLeft">Web App</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="@Configurations.ReleaseVersion">ReleaseVersion</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <hr/>
-    <hr/>
-    <hr/>
-    <br/>
-    <br/>
-    <br/>
-    <div>
-        <table>
-            <tr>
-                <td>test harness version: @Model.ReleaseVersion</td>
+                <td>version: @Model.ReleaseVersion</td>
             </tr>
         </table>
     </div>    
