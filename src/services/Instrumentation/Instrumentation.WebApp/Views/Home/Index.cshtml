@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+﻿@model Instrumentation.WebApp.Models.ViewQueryHome
 @using Instrumentation.WebApp.Helpers
 @{
     Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
@@ -12,6 +12,9 @@
         <table class="alternate_color">
             <tr>
                 <td>version: @Model.ReleaseVersion</td>
+            </tr>
+            <tr>
+                <td>CurrentServerTime: @Model.CurrentServerTime</td>
             </tr>
         </table>
     </div>    

@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogById
+﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogsByEventId
 @{
     Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
 }
@@ -14,7 +14,7 @@
             <div>
                 <table>
                     <tr>
-                        <th class="TextLabelLeft">AuditLogById</th><th></th>
+                        <th class="TextLabelLeft">AuditLogsByEventId</th><th></th>
                     </tr>
                 </table>
             </div>
@@ -22,15 +22,18 @@
             <div>
                 <table class="alternate_color">
                     <tr>
-                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.AuditLogId, null, null)</td>
+                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.EventId, null, null)</td>
                         <td><input type="submit" name="Command" value="Search"/></td>
                         <td><input type="button" onclick="copyToClipboard();" value="Copy" /></td>
                     </tr>
                 </table>
             </div>
 
-            @Html.Action("AuditLogRow", Model.AuditLog)
-
+            @foreach(var auditLog in Model.AuditLogs)
+            { 
+                @Html.Action("AuditLogRow", auditLog)
+                <br />
+            }
         </div>
     }
 </div>

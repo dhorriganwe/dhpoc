@@ -23,7 +23,7 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETAUDITLOGSBYTRACELEVEL = "GetAuditLogsByTraceLevel";
         private const string GETAUDITLOGSAll = "getauditlogsall";
         private const string GETAUDITLOGBYID = "getauditlogbyid";
-        private const string GETAUDITLOGSBYEVENTID = "getauditlogbyeventid";
+        private const string GETAUDITLOGSBYEVENTID = "getauditlogsbyeventid";
         private const string ADDAUDITLOG = "addauditlog";
         private const string DBKEY = "rtAudit";
         private const string DBSCHEMA = "rt";
@@ -142,6 +142,7 @@ namespace Instrumentation.DomainDA.DataServices
                 TraceLevel = reader["TraceLevel"].ReturnDefaultOrValue<string>(),
                 LoginName = reader["LoginName"].ReturnDefaultOrValue<string>(),
                 AuditedOn = reader["AuditedOn"].ReturnDefaultOrValue<string>(),
+                AdditionalInfo = reader["AdditionalInfo"].ReturnDefaultOrValue<string>(),
             };
         }
 

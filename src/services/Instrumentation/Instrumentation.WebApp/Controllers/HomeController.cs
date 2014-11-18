@@ -8,9 +8,10 @@ namespace Instrumentation.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            ViewQueryBase query = new ViewQueryBase();
+            ViewQueryHome query = new ViewQueryHome();
             query.ViewQueryCommon.ViewName = "Home";
             query.ReleaseVersion = Configurations.ReleaseVersion;
+            query.CurrentServerTime = System.DateTime.Now.ToString();
 
             return View(query);
         }

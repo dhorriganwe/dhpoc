@@ -1,8 +1,8 @@
-﻿-- Function: rt.getauditlogbyeventid(bigint)
+﻿-- Function: rt.getauditlogsbyeventid(character varying)
 
--- DROP FUNCTION rt.getauditlogbyeventid(bigint);
+-- DROP FUNCTION rt.getauditlogsbyeventid(character varying);
 
-CREATE OR REPLACE FUNCTION rt.getauditlogbyeventid(IN i_eventId character varying)
+CREATE OR REPLACE FUNCTION rt.getauditlogsbyeventid(IN i_eventId character varying)
   RETURNS TABLE(	id bigint, 
 					eventid character varying, 
 					applicationname character varying, 
@@ -34,9 +34,9 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getauditlogbyeventid(character varying)
+ALTER FUNCTION rt.getauditlogsbyeventid(character varying)
   OWNER TO postgres;
 
 /*  
-select rt.getauditlogbyeventid('7b3d299e-7ed0-4d1d-ae14-51bb7b345df8')
+select rt.getauditlogsbyeventid('7b3d299e-7ed0-4d1d-ae14-51bb7b345df8')
 */

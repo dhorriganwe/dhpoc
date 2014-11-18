@@ -17,6 +17,7 @@ BEGIN
 		  Category character varying(100),
 		  MessageCode character varying,
 		  Messages text,
+		  AdditionalInfo text,
 		  TraceLevel character varying(20),
 		  LoginName character varying(100),
 		  AuditedOn timestamp without time zone,

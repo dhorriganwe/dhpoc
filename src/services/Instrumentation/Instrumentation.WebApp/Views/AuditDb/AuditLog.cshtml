@@ -59,7 +59,10 @@
                     <td>
                         <a href="AuditLogById/@auditLog.Id" title="@auditLog.Id">@auditLog.Id</a>
                     </td>
-                    <td class="eventId">@auditLog.EventId</td>
+                    <td class="eventId">
+                        <a href="AuditLogsByEventId/@auditLog.EventId" title="@auditLog.EventId">@auditLog.EventId</a>
+                    </td>
+
                     <td>@auditLog.ApplicationName</td>
                     <td>@auditLog.FeatureName</td>
                     <td>@auditLog.Category</td>

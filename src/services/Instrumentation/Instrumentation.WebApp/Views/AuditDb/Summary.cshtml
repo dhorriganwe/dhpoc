@@ -1,0 +1,36 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogSummary
+@{
+    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
+}
+
+<div>
+    
+    @Html.Action("Header", "Home", Model.ViewQueryCommon)
+
+    @using (@Html.BeginForm())
+    {
+        <div style="padding: 5px; border: solid thin black">
+
+            <div>
+                <table>
+                    <tr>
+                        <th class="TextLabelLeft">Summary</th><th></th>
+                    </tr>
+                </table>
+            </div>
+    
+            <div>
+                <table class="alternate_color">
+                    <tr>
+                        <td>TotalRecordCount</td>
+                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.TotalRecordCount, null, null)</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+            </div>
+        </div>
+    }
+</div>
+        
