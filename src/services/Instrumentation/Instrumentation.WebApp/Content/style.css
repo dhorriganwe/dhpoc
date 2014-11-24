@@ -2,6 +2,10 @@
     font-size: x-small;
 }
 
+.PageRoot {
+    padding: 5px;
+}
+
 table.alternate_color {
     /*border-collapse: collapse;*/
 }

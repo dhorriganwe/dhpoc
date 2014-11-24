@@ -27,12 +27,27 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new ViewQueryAuditLog();
             query.ViewQueryCommon.ViewName = "AuditLog";
-            query.ReleaseVersion = Configurations.ReleaseVersion;
 
             var auditLogs = GetAuditLogsAll();
 
-            query.Count = auditLogs.Count;
             query.AuditLogs = auditLogs;
+
+            return View(query);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLog(ViewQueryAuditLog query, string command)
+        {
+            query.ViewQueryCommon.ViewName = "AuditLog";
+
+            if (command == "Refresh")
+            {
+                query.AuditLogs = GetAuditLogsAll();
+            }
+            else
+            {
+                query.AuditLogs = new List<AuditLog>();
+            }
 
             return View(query);
         }

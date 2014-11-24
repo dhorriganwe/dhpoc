@@ -26,3 +26,17 @@ END;
 $BODY$;
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+--------------- Add AdditionalInfo text column to rt.AuditLog  ---------------------------------------------------------------------------------
+
+DO
+$BODY$
+BEGIN
+IF NOT EXISTS (SELECT 1 FROM Information_Schema.Columns
+	WHERE Table_Schema ILIKE 'RT' AND Table_Name ILIKE 'AuditLog' AND Column_Name ILIKE 'AdditionalInfo')
+THEN
+	ALTER TABLE RT.AuditLog ADD COLUMN AdditionalInfo text;
+END IF;
+END;
+$BODY$;
+
