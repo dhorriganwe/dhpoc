@@ -7,72 +7,72 @@
 
     @if (Model.ViewName == "Home")
     {
-    <h3>Instrumentation Views</h3>
-                        <table class="alternate_color">
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("Home", "Index", "Home")
-                                </td>
-                            </tr>
+        <h3>Instrumentation Views</h3>
+        <table class="alternate_color">
+            <tr>
+                <td>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </td>
+            </tr>
 
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("Summary", "Summary", "AuditDb")
-                                </td>
-                            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Summary", "Summary", "AuditDb")
+                </td>
+            </tr>
                             
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb")
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb")
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb")
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
-                                </td>
-                            </tr>
-                        </table>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb")
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
+                </td>
+            </tr>
+        </table>
     }
     else
     {
         @Html.ActionLink("Home", "Index", "Home")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)124).ToString())
-        @Html.Raw(((char)124).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 124).ToString())
+        @Html.Raw(((char) 124).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("Summary", "Summary", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLog", "AuditLog", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
     }
 
 <hr />

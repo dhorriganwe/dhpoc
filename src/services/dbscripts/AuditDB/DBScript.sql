@@ -9,6 +9,8 @@
 \ir ./rt.GetCategories.sql
 \ir ./rt.GetFeatureNames.sql
 \ir ./rt.GetAuditLogAll.sql
+\ir ./rt.GetAuditLogByApplicationName.sql
+\ir ./rt.GetAuditLogByCategory.sql
 \ir ./rt.GetAuditLogByEventId.sql
 \ir ./rt.GetAuditLogById.sql
 \ir ./rt.GetAuditLogByTraceLevel.sql

@@ -3,13 +3,13 @@
     Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
 }
 
-<div>
+<div class="PageRoot">
     
     @Html.Action("Header", "Home", Model.ViewQueryCommon)
 
     @using (@Html.BeginForm())
     {
-        <div style="padding: 5px; border: solid thin black">
+        <div class="PageSectionWithBorder">
 
             <div>
                 <table>
@@ -24,37 +24,17 @@
                     <tr>
                         <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.EventId, null, null)</td>
                         <td><input type="submit" name="Command" value="Search"/></td>
-                        <td><input type="button" onclick="copyToClipboard();" value="Copy" /></td>
                     </tr>
                 </table>
             </div>
 
-            @foreach(var auditLog in Model.AuditLogs)
+            @Html.Action("AuditLogGrid", Model.List)
+
+            @foreach(var auditLog in Model.List.AuditLogs)
             { 
-                @Html.Action("AuditLogRow", auditLog)
+                @Html.Action("AuditLogRecord", auditLog)
                 <br />
             }
         </div>
     }
 </div>
-        
-@section scripts {
-    <script>
-
-        function copyToClipboard() {
-
-            if (window.clipboardData && clipboardData.setData) {
-                clipboardData.setData("Text", BuildJsonDetail());
-            }
-            else {
-                alert("works only in IE4+");
-            }
-        }
-
-        function BuildJsonDetail()
-        {
-            return '@Model.Json';
-        }
-
-   </script>
-}

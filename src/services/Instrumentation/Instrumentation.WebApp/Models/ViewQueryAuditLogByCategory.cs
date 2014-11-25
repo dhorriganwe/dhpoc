@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace Instrumentation.WebApp.Models
 {
     public class ViewQueryAuditLogByCategory : ViewQueryBase
     {
-        //public string AuditLogId { get; set; }
-        //public AuditLog AuditLog { get; set; }
-        //public string Json { get; set; }
+        public ViewQueryAuditLogByCategory()
+        {
+            List = new ViewQueryAuditLogList();
+        }
+
+        public string Category { get; set; }
+        public ViewQueryAuditLogList List { get; set; }
     }
 }

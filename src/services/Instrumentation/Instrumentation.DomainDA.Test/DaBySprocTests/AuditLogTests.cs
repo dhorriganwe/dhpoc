@@ -128,6 +128,56 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
+        public void GetAuditLogByApplicationName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var applicationName = "AgVerdict-AdvancedRec";
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByApplicationName(applicationName).ToList();
+
+            Assert.IsTrue(auditLogs.Count > 0);
+            auditLogs.ForEach(al => Assert.AreEqual(al.ApplicationName, applicationName));
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
+        public void GetAuditLogByCategory()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var category = "Web unhandled exception";
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByCategory(category).ToList();
+
+            Assert.IsTrue(auditLogs.Count > 0);
+            auditLogs.ForEach(al => Assert.AreEqual(al.Category, category));
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
         public void GetAuditLogsByTraceLevel()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();

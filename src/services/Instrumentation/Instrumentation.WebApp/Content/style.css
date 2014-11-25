@@ -1,9 +1,15 @@
-﻿.LabelCheck {
+﻿.BodyRoot {
     font-size: x-small;
+}
+
+.BodyRoot h2 {
+    margin: 0;
+    padding: 0;
 }
 
 .PageSection {
     float: left;
+    padding: 5px;
 }
 
 .PageSectionWithBorder {
@@ -54,7 +60,7 @@ table.alternate_color td.eventId{
 }
 
 table.alternate_color td.messages{
-    max-width: 500px;
+    max-width: 400px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

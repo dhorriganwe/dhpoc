@@ -3,13 +3,13 @@
     Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
 }
 
-<div>
+<div class="PageRoot">
     
     @Html.Action("Header", "Home", Model.ViewQueryCommon)
 
     @using (@Html.BeginForm())
     {
-        <div style="padding: 5px; border: solid thin black">
+        <div class="PageSectionWithBorder">
 
             <div>
                 <table>
@@ -29,7 +29,7 @@
                 </table>
             </div>
 
-            @Html.Action("AuditLogRow", Model.AuditLog)
+            @Html.Action("AuditLogRecord", Model.AuditLog)
 
         </div>
     }

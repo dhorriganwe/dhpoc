@@ -8,6 +8,8 @@ namespace Instrumentation.DomainDA.DataServices
 {
     public interface IAuditLogDataService
     {
+        IList<AuditLog> GetAuditLogByApplicationName(string applicationName);
+        IList<AuditLog> GetAuditLogByCategory(string category);
         IList<AuditLog> GetAuditLogByEventId(string eventid);
         IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel);
         IList<AuditLog> GetAuditLogAll();
@@ -26,6 +28,8 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETAUDITLOGAll = "GetAuditLogAll";
         private const string GETAUDITLOGBYID = "GetAuditLogById";
         private const string GETAUDITLOGBYEVENTID = "GetAuditLogByEventId";
+        private const string GETAUDITLOGBYAPPLICATIONNAME = "GetAuditLogByApplicationName";
+        private const string GETAUDITLOGBYCATEGORY = "GetAuditLogByCategory";
         private const string GETAUDITLOGBYTRACELEVEL = "GetAuditLogByTraceLevel";
         private const string GETAUDITLOGSUMMARY = "GetAuditLogSummary";
         private const string GETAPPLICATIONNAMES = "GetApplicationNames";
@@ -189,6 +193,28 @@ namespace Instrumentation.DomainDA.DataServices
                 new Dictionary<string, object>
                 {
                     {"EventId", eventId},
+                });
+
+            return auditLogs;
+        }
+
+        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName)
+        {
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYAPPLICATIONNAME,
+                new Dictionary<string, object>
+                {
+                    {"ApplicationName", applicationName},
+                });
+
+            return auditLogs;
+        }
+
+        public IList<AuditLog> GetAuditLogByCategory(string category)
+        {
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYCATEGORY,
+                new Dictionary<string, object>
+                {
+                    {"Category", category},
                 });
 
             return auditLogs;
