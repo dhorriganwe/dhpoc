@@ -5,7 +5,11 @@
 \ir SchemaChanges.sql
 
 \ir ./rt.AddAuditLog.sql
+\ir ./rt.GetApplicationNames.sql
+\ir ./rt.GetCategories.sql
+\ir ./rt.GetFeatureNames.sql
+\ir ./rt.GetAuditLogAll.sql
+\ir ./rt.GetAuditLogByEventId.sql
 \ir ./rt.GetAuditLogById.sql
-\ir ./rt.GetAuditLogsAll.sql
-\ir ./rt.GetAuditLogsByEventId.sql
-\ir ./rt.GetAuditLogsByTraceLevel.sql
+\ir ./rt.GetAuditLogByTraceLevel.sql
+\ir ./rt.GetAuditLogSummary.sql

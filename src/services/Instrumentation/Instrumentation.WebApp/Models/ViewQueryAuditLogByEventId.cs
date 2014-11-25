@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Instrumentation.WebApp.Models
 {
-    public class ViewQueryAuditLogsByEventId : ViewQueryBase
+    public class ViewQueryAuditLogByEventId : ViewQueryBase
     {
         public string EventId { get; set; }
         public List<AuditLog> AuditLogs { get; set; }

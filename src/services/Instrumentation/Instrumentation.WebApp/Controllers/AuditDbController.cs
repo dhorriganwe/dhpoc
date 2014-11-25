@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Instrumentation.DomainDA.DataServices;
-//using Instrumentation.DomainDA.Models;
+using Instrumentation.DomainDA.Models;
 using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
+using AuditLog = Instrumentation.WebApp.Models.AuditLog;
 
 namespace Instrumentation.WebApp.Controllers
 {
@@ -23,12 +22,28 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
+        public ActionResult Summary()
+        {
+            var query = new ViewQueryAuditLogSummary();
+
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var cnt = auditLogDataService.GetAuditLogSummary();
+            query.TotalRecordCount = cnt.TotalRowCount;
+
+            query.ApplicationNames = auditLogDataService.GetApplicationNames();
+            query.FeatureNames = auditLogDataService.GetFeatureNames();
+            query.Categories = auditLogDataService.GetCategories();
+ 
+            return View(query);
+        }
+
         public ActionResult AuditLog()
         {
             var query = new ViewQueryAuditLog();
             query.ViewQueryCommon.ViewName = "AuditLog";
 
-            var auditLogs = GetAuditLogsAll();
+            var auditLogs = GetAuditLogAll();
 
             query.AuditLogs = auditLogs;
 
@@ -42,32 +57,7 @@ namespace Instrumentation.WebApp.Controllers
 
             if (command == "Refresh")
             {
-                query.AuditLogs = GetAuditLogsAll();
-            }
-            else
-            {
-                query.AuditLogs = new List<AuditLog>();
-            }
-
-            return View(query);
-        }
-
-        public ActionResult AuditLogsByEventId(string id)
-        {
-            var query = new ViewQueryAuditLogsByEventId();
-            query.EventId = id;
-
-            return AuditLogsByEventId(query, "Search");
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogsByEventId(ViewQueryAuditLogsByEventId query, string command)
-        {
-            query.ViewQueryCommon.ViewName = "AuditLogsByEventId";
-
-            if (command == "Search")
-            {
-                query.AuditLogs = GetAuditLogsByEventId(query.EventId);
+                query.AuditLogs = GetAuditLogAll();
             }
             else
             {
@@ -108,12 +98,35 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult Summary()
+        public ActionResult AuditLogByEventId(string id)
         {
-            var query = new ViewQueryAuditLogSummary();
-            //query.AuditLogId = id;
+            var query = new ViewQueryAuditLogByEventId();
+            query.EventId = id;
 
-            query.TotalRecordCount = 8;
+            return AuditLogByEventId(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLogByEventId(ViewQueryAuditLogByEventId query, string command)
+        {
+            query.ViewQueryCommon.ViewName = "AuditLogsByEventId";
+
+            if (command == "Search")
+            {
+                query.AuditLogs = GetAuditLogByEventId(query.EventId);
+            }
+            else
+            {
+                query.AuditLogs = new List<AuditLog>();
+            }
+
+            return View(query);
+        }
+
+        public ActionResult AuditLogByApplicationName()
+        {
+            var query = new ViewQueryAuditLogByApplicationName();
+            query.ViewQueryCommon.ViewName = "AuditLogByApplicationName";
 
             return View(query);
         }
@@ -123,11 +136,11 @@ namespace Instrumentation.WebApp.Controllers
             return View(auditLog);
         }
 
-        private List<AuditLog> GetAuditLogsAll()
+        private List<AuditLog> GetAuditLogAll()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogsAll().ToList());
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogAll().ToList());
 
             return auditLogs;
         }
@@ -141,13 +154,14 @@ namespace Instrumentation.WebApp.Controllers
             return auditLog;
         }
 
-        private List<AuditLog> GetAuditLogsByEventId(string eventId)
+        private List<AuditLog> GetAuditLogByEventId(string eventId)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogsByEventId(eventId).ToList());
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogByEventId(eventId).ToList());
 
             return auditLogs;
         }
+
     }
 }

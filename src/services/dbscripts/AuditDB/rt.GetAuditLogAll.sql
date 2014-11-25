@@ -1,9 +1,9 @@
-﻿--SELECT RT.DeleteGivenFunction('getauditlogsall');
--- Function: rt.getauditlogsall()
+﻿--SELECT RT.DeleteGivenFunction('getauditlogall');
+-- Function: rt.getauditlogall()
 
--- DROP FUNCTION rt.getauditlogsall();
+-- DROP FUNCTION rt.getauditlogall();
 
-CREATE OR REPLACE FUNCTION rt.getauditlogsall()
+CREATE OR REPLACE FUNCTION rt.getauditlogall()
   RETURNS TABLE(	id bigint, 
 			eventId character varying, 
 			applicationname character varying, 
@@ -35,7 +35,7 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getauditlogsall()
+ALTER FUNCTION rt.getauditlogall()
   OWNER TO postgres;
 
--- select rt.getauditlogsall()
+-- select rt.getauditlogall()

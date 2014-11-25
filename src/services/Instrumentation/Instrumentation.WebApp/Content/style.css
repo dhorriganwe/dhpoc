@@ -6,6 +6,13 @@
     padding: 5px;
 }
 
+.TextInputSmall input {
+    text-align:left;
+    float: left;
+    width: 90px;
+}
+
+
 table.alternate_color {
     /*border-collapse: collapse;*/
 }

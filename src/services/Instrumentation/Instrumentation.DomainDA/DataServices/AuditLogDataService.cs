@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using System.Data;
 using Instrumentation.DomainDA.DbFramework;
-using Instrumentation.DomainDA.Helpers;
 using Instrumentation.DomainDA.Models;
 
 namespace Instrumentation.DomainDA.DataServices
 {
     public interface IAuditLogDataService
     {
-        IList<AuditLog> GetAuditLogsByEventId(string eventid);
-        IList<AuditLog> GetAuditLogsByTraceLevel(string travelLevel);
-        IList<AuditLog> GetAuditLogsAll();
+        IList<AuditLog> GetAuditLogByEventId(string eventid);
+        IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel);
+        IList<AuditLog> GetAuditLogAll();
         AuditLog GetAuditLogById(string id);
         void AddAuditLog(AuditLog auditLog);
+        AuditLogSummary GetAuditLogSummary();
+        List<ApplicationName> GetApplicationNames();
+        List<FeatureName> GetFeatureNames();
+        List<Category> GetCategories();
     }
 
     public class AuditLogDataService : IAuditLogDataService
     {
         #region AuditLog
 
-        private const string GETAUDITLOGSBYTRACELEVEL = "GetAuditLogsByTraceLevel";
-        private const string GETAUDITLOGSAll = "getauditlogsall";
-        private const string GETAUDITLOGBYID = "getauditlogbyid";
-        private const string GETAUDITLOGSBYEVENTID = "getauditlogsbyeventid";
+        private const string GETAUDITLOGAll = "GetAuditLogAll";
+        private const string GETAUDITLOGBYID = "GetAuditLogById";
+        private const string GETAUDITLOGBYEVENTID = "GetAuditLogByEventId";
+        private const string GETAUDITLOGBYTRACELEVEL = "GetAuditLogByTraceLevel";
+        private const string GETAUDITLOGSUMMARY = "GetAuditLogSummary";
+        private const string GETAPPLICATIONNAMES = "GetApplicationNames";
+        private const string GETFEATURENAMES = "GetFeatureNames";
+        private const string GETCATEGORIES = "GetCategories";
         private const string ADDAUDITLOG = "addauditlog";
         private const string DBKEY = "rtAudit";
         private const string DBSCHEMA = "rt";
@@ -48,14 +55,123 @@ namespace Instrumentation.DomainDA.DataServices
             auditLog.Id = id.ToString();
         }
 
-        public IList<AuditLog> GetAuditLogsAll()
+        public IList<AuditLog> GetAuditLogAll()
         {
-            return GetAuditLogs(GETAUDITLOGSAll, new Dictionary<string, object>());
+            return GetAuditLog(GETAUDITLOGAll, new Dictionary<string, object>());
+        }
+
+        public AuditLogSummary GetAuditLogSummary()
+        {
+            var procName = GETAUDITLOGSUMMARY;
+            AuditLogSummary summary = null;
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            summary = ToAuditLogSummary(reader);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return summary;
+        }
+
+        public List<ApplicationName> GetApplicationNames()
+        {
+            List<ApplicationName> applicationNames = new List<ApplicationName>();
+            var procName = GETAPPLICATIONNAMES;
+            ApplicationName appName = null;
+
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            appName = ToApplicationName(reader);
+                            applicationNames.Add(appName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return applicationNames;
+        }
+
+        public List<FeatureName> GetFeatureNames()
+        {
+            List<FeatureName> featureNames = new List<FeatureName>();
+            var procName = GETFEATURENAMES;
+            FeatureName featureName = null;
+
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            featureName = ToFeatureName(reader);
+                            featureNames.Add(featureName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return featureNames;
+        }
+
+        public List<Category> GetCategories()
+        {
+            List<Category> categories = new List<Category>();
+            var procName = GETCATEGORIES;
+            Category category = null;
+
+            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            category = ToCategory(reader);
+                            categories.Add(category);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return categories;
         }
 
         public AuditLog GetAuditLogById(string id)
         {
-            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGBYID, 
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYID, 
                 new Dictionary<string, object>
                 {
                     {"Id", id},
@@ -67,9 +183,9 @@ namespace Instrumentation.DomainDA.DataServices
                 return new AuditLog();
         }
 
-        public IList<AuditLog> GetAuditLogsByEventId(string eventId)
+        public IList<AuditLog> GetAuditLogByEventId(string eventId)
         {
-            IList<AuditLog> auditLogs = GetAuditLogs(GETAUDITLOGSBYEVENTID,
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYEVENTID,
                 new Dictionary<string, object>
                 {
                     {"EventId", eventId},
@@ -78,9 +194,9 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogsByTraceLevel(string travelLevel)
+        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel)
         {
-            return GetAuditLogs(GETAUDITLOGSBYTRACELEVEL,
+            return GetAuditLog(GETAUDITLOGBYTRACELEVEL,
                 new Dictionary<string, object>
                 {
                     {"TraceLevel", travelLevel}
@@ -103,7 +219,7 @@ namespace Instrumentation.DomainDA.DataServices
             return id;
         }
 
-        private static IList<AuditLog> GetAuditLogs(string storedProcedureName, IDictionary<string, object> parameters)
+        private static IList<AuditLog> GetAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
         {
             var auditLogs = new List<AuditLog>();
 
@@ -146,6 +262,68 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
+        private static AuditLogSummary ToAuditLogSummary(IDataReader reader)
+        {
+            return new AuditLogSummary()
+            {
+                TotalRowCount = reader["totalrowcount"].ReturnDefaultOrValue<long>(),
+            };
+        }
+
+        private static ApplicationName ToApplicationName(IDataReader reader)
+        {
+            return new ApplicationName()
+            {
+                Name = StringField(reader, "name"),
+                Count = LongField(reader, "count") 
+            };
+        }
+
+        private static FeatureName ToFeatureName(IDataReader reader)
+        {
+            return new FeatureName()
+            {
+                Name = StringField(reader, "name"),
+                Count = LongField(reader, "count")
+            };
+        }
+
+        private static Category ToCategory(IDataReader reader)
+        {
+            return new Category()
+            {
+                Name = StringField(reader, "name"),
+                Count = LongField(reader, "count")
+            };
+        }
+
+        private static string StringField(IDataReader reader, string fieldName)
+        {
+            string val = null;
+            try
+            {
+                val = reader[fieldName].ReturnDefaultOrValue<string>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("fieldName: {0}", fieldName), e);
+            }
+            return val;
+        }
+
+        private static long LongField(IDataReader reader, string fieldName)
+        {
+            long val = 0;
+            try
+            {
+                val = reader[fieldName].ReturnDefaultOrValue<long>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("fieldName: {0}", fieldName), e);
+            }
+            return val;
+        }
         #endregion
     }
 }

@@ -8,9 +8,14 @@ namespace Instrumentation.WebApp.Models
 {
     public class ViewQueryAuditLogSummary : ViewQueryBase
     {
+        public ViewQueryAuditLogSummary()
+        {
+            ApplicationNames = new List<ApplicationName>();
+            FeatureNames = new List<FeatureName>();
+        }
         public long TotalRecordCount { get; set; }
-        public List<string> ApplicationNames { get; set; }
-        public List<string> FeatureNames { get; set; }
-        public List<string> Categories { get; set; }
+        public List<ApplicationName> ApplicationNames { get; set; }
+        public List<FeatureName> FeatureNames { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿-- Function: rt.getauditlogsbyeventid(character varying)
+﻿-- Function: rt.getauditlogbytracelevel(character varying)
 
--- DROP FUNCTION rt.getauditlogsbyeventid(character varying);
+-- DROP FUNCTION rt.getauditlogbytracelevel(character varying);
 
-CREATE OR REPLACE FUNCTION rt.getauditlogsbyeventid(IN i_eventId character varying)
+CREATE OR REPLACE FUNCTION rt.getauditlogbytracelevel(IN i_tracelevel character varying)
   RETURNS TABLE(	id bigint, 
 					eventid character varying, 
 					applicationname character varying, 
@@ -14,9 +14,10 @@ CREATE OR REPLACE FUNCTION rt.getauditlogsbyeventid(IN i_eventId character varyi
 					loginname character varying, 
 					auditedon timestamp without time zone,
 					AdditionalInfo text) AS
+
 $BODY$BEGIN
 RETURN QUERY
-	SELECT al.Id
+	SELECT al.id
 		,al.EventId
 		,al.ApplicationName
 		,al.FeatureName
@@ -28,15 +29,15 @@ RETURN QUERY
 		,al.AuditedOn 
 		,al.AdditionalInfo
 	FROM rt.AuditLog al 
-	WHERE al.EventId = i_eventId
+	WHERE al.TraceLevel = i_traceLevel
 	ORDER BY al.id;
 END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getauditlogsbyeventid(character varying)
+ALTER FUNCTION rt.getauditlogbytracelevel(character varying)
   OWNER TO postgres;
 
 /*  
-select rt.getauditlogsbyeventid('7b3d299e-7ed0-4d1d-ae14-51bb7b345df8')
+select rt.getauditlogbytracelevel('error')
 */

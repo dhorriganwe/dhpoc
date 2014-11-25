@@ -36,6 +36,11 @@
                                     @Html.ActionLink("AuditLogsByEventId", "AuditLogsByEventId", "AuditDb")
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("AuditLogsByApplicationName", "AuditLogsByApplicationName", "AuditDb")
+                                </td>
+                            </tr>
                         </table>
     }
     else
@@ -55,6 +60,9 @@
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
         @Html.ActionLink("AuditLogsByEventId", "AuditLogsByEventId", "AuditDb")
+        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char)160).ToString())
+        @Html.ActionLink("AuditLogsByApplicationName", "AuditLogsByApplicationName", "AuditDb")
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
     }

@@ -13,32 +13,105 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         private static string NL = Environment.NewLine;
 
         [TestMethod]
+        public void GetAuditLogSummary()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            AuditLogSummary auditLogSummary = auditLogDataService.GetAuditLogSummary();
+            
+            Console.WriteLine(string.Format("{0} {1} ",
+                NL,
+                auditLogSummary.TotalRowCount));
+
+            Assert.IsTrue(auditLogSummary.TotalRowCount > 0);
+        }
+
+        [TestMethod]
+        public void GetApplicationNames()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<ApplicationName> applicationNames = auditLogDataService.GetApplicationNames();
+
+            Assert.IsTrue(applicationNames.Count > 0);
+
+            foreach (var applicationName in applicationNames)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    applicationName.Name,
+                    applicationName.Count));
+            }
+        }
+
+        [TestMethod]
+        public void GetCategories()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<Category> categories = auditLogDataService.GetCategories();
+
+            Assert.IsTrue(categories.Count > 0);
+
+            foreach (var category in categories)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    category.Name,
+                    category.Count));
+            }
+        }
+
+        [TestMethod]
+        public void GetFeatureNames()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<FeatureName> featureNames = auditLogDataService.GetFeatureNames();
+
+            Assert.IsTrue(featureNames.Count > 0);
+
+            foreach (var featureName in featureNames)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    featureName.Name,
+                    featureName.Count));
+            }
+        }
+
+        [TestMethod]
         public void GetAuditLogById()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            AuditLog al = auditLogDataService.GetAuditLogById("208000");
-            
+            var id = "256";
+            AuditLog auditLog = auditLogDataService.GetAuditLogById(id);
+
+            Assert.AreEqual(auditLog.Id, id);
+
             Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
                 NL,
-                al.Id,
-                al.EventId,
-                al.ApplicationName,
-                al.FeatureName,
-                al.Category,
-                al.MessageCode,
+                auditLog.Id,
+                auditLog.EventId,
+                auditLog.ApplicationName,
+                auditLog.FeatureName,
+                auditLog.Category,
+                auditLog.MessageCode,
                 //al.Messages,
-                al.TraceLevel,
-                al.LoginName,
-                al.AuditedOn));
+                auditLog.TraceLevel,
+                auditLog.LoginName,
+                auditLog.AuditedOn));
         }
+
 
         [TestMethod]
         public void GetAuditLogByEventId()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsByEventId("208000").ToList();
+            var eventId = "a62c97f1-1757-458b-accd-25626b8c0d3d";
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByEventId(eventId).ToList();
+
+            Assert.IsTrue(auditLogs.Count > 0);
+            auditLogs.ForEach(al => Assert.AreEqual(al.EventId, eventId));
 
             auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
                 "",
@@ -55,34 +128,16 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogsAll()
+        public void GetAuditLogsByTraceLevel()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsAll().ToList();
+            var traceLevel = "error";
 
-            Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByTraceLevel(traceLevel).ToList();
 
-            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ", 
-                "",
-                al.Id, 
-                al.EventId,
-                al.ApplicationName,
-                al.FeatureName,
-                al.Category,
-                al.MessageCode,
-                //al.Messages,
-                al.TraceLevel,
-                al.LoginName,
-                al.AuditedOn)));
-        }
-
-        [TestMethod]
-        public void GetAuditLogsByTraceLevel_sproc()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogsByTraceLevel("error").ToList();
+            Assert.IsTrue(auditLogs.Count > 0);
+            auditLogs.ForEach(al => Assert.AreEqual(al.TraceLevel, traceLevel));
 
             auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}",
                 al.Id,
@@ -98,7 +153,30 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void AddAuditLog_sproc()
+        public void GetAuditLogsAll()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogAll().ToList();
+
+            Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
+        public void AddAuditLog()
         {
             var auditLogDataService = new AuditLogDataService();
 
