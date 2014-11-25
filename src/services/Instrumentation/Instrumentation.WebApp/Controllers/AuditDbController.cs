@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using Instrumentation.DomainDA.DataServices;
-using Instrumentation.DomainDA.Models;
 using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
 using AuditLog = Instrumentation.WebApp.Models.AuditLog;
@@ -127,6 +126,14 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new ViewQueryAuditLogByApplicationName();
             query.ViewQueryCommon.ViewName = "AuditLogByApplicationName";
+
+            return View(query);
+        }
+
+        public ActionResult AuditLogByCategory()
+        {
+            var query = new ViewQueryAuditLogByApplicationName();
+            query.ViewQueryCommon.ViewName = "AuditLogByCategory";
 
             return View(query);
         }

@@ -2,6 +2,17 @@
     font-size: x-small;
 }
 
+.PageSection {
+    float: left;
+}
+
+.PageSectionWithBorder {
+    float: left;
+    padding: 5px;
+    border: solid thin black;
+}
+
+
 .PageRoot {
     padding: 5px;
 }

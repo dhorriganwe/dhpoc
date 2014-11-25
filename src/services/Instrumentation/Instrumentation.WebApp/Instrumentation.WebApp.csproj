@@ -139,6 +139,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\InstrumentationMapper.cs" />
     <Compile Include="Models\AuditLog.cs" />
+    <Compile Include="Models\ViewQueryAuditLogByCategory.cs" />
     <Compile Include="Models\ViewQueryAuditLogByApplicationName.cs" />
     <Compile Include="Models\ViewQueryAuditLogByEventId.cs" />
     <Compile Include="Models\ViewQueryHome.cs" />
@@ -258,6 +259,7 @@
     <Content Include="Views\AuditDb\AuditLogRow.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByEventId.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByApplicationName.cshtml" />
+    <Content Include="Views\AuditDb\AuditLogByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

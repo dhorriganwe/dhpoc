@@ -33,12 +33,17 @@
                             </tr>
                             <tr>
                                 <td>
-                                    @Html.ActionLink("AuditLogsByEventId", "AuditLogsByEventId", "AuditDb")
+                                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb")
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    @Html.ActionLink("AuditLogsByApplicationName", "AuditLogsByApplicationName", "AuditDb")
+                                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb")
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
                                 </td>
                             </tr>
                         </table>
@@ -59,10 +64,13 @@
         @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb")
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
-        @Html.ActionLink("AuditLogsByEventId", "AuditLogsByEventId", "AuditDb")
+        @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb")
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
-        @Html.ActionLink("AuditLogsByApplicationName", "AuditLogsByApplicationName", "AuditDb")
+        @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb")
+        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char)160).ToString())
+        @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
         @Html.Raw(((char)160).ToString())
         @Html.Raw(((char)160).ToString())
     }
