@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataServices\AuditLogDataService.cs" />
+    <Compile Include="DataServices\IAuditLogDataService.cs" />
     <Compile Include="DbFramework\DataReaderExtensionMethods.cs">
       <SubType>Code</SubType>
     </Compile>

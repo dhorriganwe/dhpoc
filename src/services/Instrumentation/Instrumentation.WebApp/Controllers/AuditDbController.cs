@@ -172,6 +172,31 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
+        public ActionResult AuditLogByFeatureName(string id)
+        {
+            var query = new ViewQueryAuditLogByFeatureName();
+            query.FeatureName = id;
+
+            return AuditLogByFeatureName(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLogByFeatureName(ViewQueryAuditLogByFeatureName query, string command)
+        {
+            query.ViewQueryCommon.ViewName = "AuditLogByFeatureName";
+
+            if (command == "Search")
+            {
+                query.List.AuditLogs = GetAuditLogByFeatureName(query.FeatureName);
+            }
+            else
+            {
+                query.List.AuditLogs = new List<AuditLog>();
+            }
+
+            return View(query);
+        }
+
         public ActionResult AuditLogRecord(AuditLog auditLog)
         {
             return View(auditLog);
@@ -223,6 +248,15 @@ namespace Instrumentation.WebApp.Controllers
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
             List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogByCategory(category).ToList());
+
+            return auditLogs;
+        }
+
+        private List<AuditLog> GetAuditLogByFeatureName(string featureName)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogByFeatureName(featureName).ToList());
 
             return auditLogs;
         }

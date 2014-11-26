@@ -1,5 +1,5 @@
 \encoding UTF8
-\connect Audit
+\connect rtaudit_20141124
 \encoding UTF8
 
 \ir SchemaChanges.sql
@@ -12,6 +12,7 @@
 \ir ./rt.GetAuditLogByApplicationName.sql
 \ir ./rt.GetAuditLogByCategory.sql
 \ir ./rt.GetAuditLogByEventId.sql
+\ir ./rt.GetAuditLogByFeatureName.sql
 \ir ./rt.GetAuditLogById.sql
 \ir ./rt.GetAuditLogByTraceLevel.sql
 \ir ./rt.GetAuditLogSummary.sql

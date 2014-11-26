@@ -107,7 +107,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            var eventId = "a62c97f1-1757-458b-accd-25626b8c0d3d";
+            var eventId = "eventid";
             List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByEventId(eventId).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
@@ -132,7 +132,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            var applicationName = "AgVerdict-AdvancedRec";
+            var applicationName = "appname";
             List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByApplicationName(applicationName).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
@@ -178,11 +178,36 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
+        public void GetAuditLogByFeatureName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var featureName = "feature";
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFeatureName(featureName).ToList();
+
+            Assert.IsTrue(auditLogs.Count > 0);
+            auditLogs.ForEach(al => Assert.AreEqual(al.FeatureName, featureName));
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
         public void GetAuditLogsByTraceLevel()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            var traceLevel = "error";
+            var traceLevel = "traceLevel";
 
             List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByTraceLevel(traceLevel).ToList();
 
@@ -226,6 +251,30 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
+        public void GetAuditLogsAll_LimitRowcount()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+            int rowcount = 10;
+            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogAll(rowcount).ToList();
+
+            Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
+            Assert.AreEqual(rowcount, auditLogs.Count);
+
+            auditLogs.ForEach(al => Console.WriteLine(string.Format("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9} ",
+                "",
+                al.Id,
+                al.EventId,
+                al.ApplicationName,
+                al.FeatureName,
+                al.Category,
+                al.MessageCode,
+                //al.Messages,
+                al.TraceLevel,
+                al.LoginName,
+                al.AuditedOn)));
+        }
+
+        [TestMethod]
         public void AddAuditLog()
         {
             var auditLogDataService = new AuditLogDataService();
@@ -237,7 +286,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             auditLog.Category = "category1";
             auditLog.MessageCode = "code1";
             auditLog.Messages = "real message";
-            auditLog.TraceLevel = "error";
+            auditLog.TraceLevel = "traceLevel";
             auditLog.LoginName = "login1";
 
             auditLogDataService.AddAuditLog(auditLog);

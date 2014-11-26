@@ -1,0 +1,41 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogByFeatureName
+@{
+    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
+}
+
+<div class="PageRoot">
+    
+    @Html.Action("Header", "Home", Model.ViewQueryCommon)
+
+    @using (@Html.BeginForm())
+    {
+        <div class="PageSectionWithBorder">
+
+            <div>
+                <table>
+                    <tr>
+                        <th class="TextLabelLeft">AuditLogByFeatureName</th><th></th>
+                    </tr>
+                </table>
+            </div>
+    
+            <div>
+                <table class="alternate_color">
+                    <tr>
+                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.FeatureName, null, null)</td>
+                        <td><input type="submit" name="Command" value="Search"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            @Html.Action("AuditLogGrid", Model.List)
+
+            @foreach(var auditLog in Model.List.AuditLogs)
+            { 
+                @Html.Action("AuditLogRecord", auditLog)
+                <br />
+            }
+        </div>
+    }
+</div>
+        

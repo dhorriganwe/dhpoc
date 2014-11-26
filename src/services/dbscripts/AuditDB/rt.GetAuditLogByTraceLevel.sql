@@ -1,8 +1,8 @@
-﻿-- Function: rt.getauditlogbytracelevel(character varying)
+﻿-- Function: rt.getauditlogbytracelevel(character varying, int)
 
--- DROP FUNCTION rt.getauditlogbytracelevel(character varying);
+-- DROP FUNCTION rt.getauditlogbytracelevel(character varying, int);
 
-CREATE OR REPLACE FUNCTION rt.getauditlogbytracelevel(IN i_tracelevel character varying)
+CREATE OR REPLACE FUNCTION rt.getauditlogbytracelevel(IN i_tracelevel character varying, IN i_rowcount int)
   RETURNS TABLE(	id bigint, 
 					eventid character varying, 
 					applicationname character varying, 
@@ -30,14 +30,15 @@ RETURN QUERY
 		,al.AdditionalInfo
 	FROM rt.AuditLog al 
 	WHERE al.TraceLevel = i_traceLevel
-	ORDER BY al.id;
+	ORDER BY al.id DESC
+	LIMIT i_rowcount;
 END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getauditlogbytracelevel(character varying)
+ALTER FUNCTION rt.getauditlogbytracelevel(character varying, int)
   OWNER TO postgres;
 
 /*  
-select rt.getauditlogbytracelevel('error')
+select rt.getauditlogbytracelevel('error', 100)
 */

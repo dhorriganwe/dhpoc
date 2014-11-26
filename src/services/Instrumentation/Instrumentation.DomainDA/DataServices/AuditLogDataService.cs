@@ -2,25 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using Instrumentation.DomainDA.DbFramework;
+using Instrumentation.DomainDA.Helpers;
 using Instrumentation.DomainDA.Models;
 
 namespace Instrumentation.DomainDA.DataServices
 {
-    public interface IAuditLogDataService
-    {
-        IList<AuditLog> GetAuditLogByApplicationName(string applicationName);
-        IList<AuditLog> GetAuditLogByCategory(string category);
-        IList<AuditLog> GetAuditLogByEventId(string eventid);
-        IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel);
-        IList<AuditLog> GetAuditLogAll();
-        AuditLog GetAuditLogById(string id);
-        void AddAuditLog(AuditLog auditLog);
-        AuditLogSummary GetAuditLogSummary();
-        List<ApplicationName> GetApplicationNames();
-        List<FeatureName> GetFeatureNames();
-        List<Category> GetCategories();
-    }
-
     public class AuditLogDataService : IAuditLogDataService
     {
         #region AuditLog
@@ -29,6 +15,7 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETAUDITLOGBYID = "GetAuditLogById";
         private const string GETAUDITLOGBYEVENTID = "GetAuditLogByEventId";
         private const string GETAUDITLOGBYAPPLICATIONNAME = "GetAuditLogByApplicationName";
+        private const string GETAUDITLOGBYFEATURENAME = "GetAuditLogByFeatureName";
         private const string GETAUDITLOGBYCATEGORY = "GetAuditLogByCategory";
         private const string GETAUDITLOGBYTRACELEVEL = "GetAuditLogByTraceLevel";
         private const string GETAUDITLOGSUMMARY = "GetAuditLogSummary";
@@ -38,7 +25,6 @@ namespace Instrumentation.DomainDA.DataServices
         private const string ADDAUDITLOG = "addauditlog";
         private const string DBKEY = "rtAudit";
         private const string DBSCHEMA = "rt";
-
         private static string NL = Environment.NewLine;
 
         public void AddAuditLog(AuditLog auditLog)
@@ -59,9 +45,14 @@ namespace Instrumentation.DomainDA.DataServices
             auditLog.Id = id.ToString();
         }
 
-        public IList<AuditLog> GetAuditLogAll()
+        public IList<AuditLog> GetAuditLogAll(int rowcount = Constants.ROWCOUNT)
         {
-            return GetAuditLog(GETAUDITLOGAll, new Dictionary<string, object>());
+            return GetAuditLog(GETAUDITLOGAll,
+                                new Dictionary<string, object>
+                                {
+                                    {"Rowcount", rowcount}
+                                });
+
         }
 
         public AuditLogSummary GetAuditLogSummary()
@@ -187,45 +178,61 @@ namespace Instrumentation.DomainDA.DataServices
                 return new AuditLog();
         }
 
-        public IList<AuditLog> GetAuditLogByEventId(string eventId)
-        {
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYEVENTID,
-                new Dictionary<string, object>
-                {
-                    {"EventId", eventId},
-                });
-
-            return auditLogs;
-        }
-
-        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName)
+        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int rowcount = Constants.ROWCOUNT)
         {
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYAPPLICATIONNAME,
                 new Dictionary<string, object>
                 {
                     {"ApplicationName", applicationName},
+                    {"Rowcount", rowcount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByCategory(string category)
+        public IList<AuditLog> GetAuditLogByCategory(string category, int rowcount = Constants.ROWCOUNT)
         {
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYCATEGORY,
                 new Dictionary<string, object>
                 {
                     {"Category", category},
+                    {"Rowcount", rowcount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel)
+        public IList<AuditLog> GetAuditLogByEventId(string eventId, int rowcount = Constants.ROWCOUNT)
+        {
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYEVENTID,
+                new Dictionary<string, object>
+                {
+                    {"EventId", eventId},
+                    {"Rowcount", rowcount},
+                });
+
+            return auditLogs;
+        }
+
+        public IList<AuditLog> GetAuditLogByFeatureName(string featureName, int rowcount = Constants.ROWCOUNT)
+        {
+            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYFEATURENAME,
+                new Dictionary<string, object>
+                {
+                    {"FeatureName", featureName},
+                    {"Rowcount", rowcount},
+                });
+
+            return auditLogs;
+        }
+
+        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel, int rowcount = Constants.ROWCOUNT)
         {
             return GetAuditLog(GETAUDITLOGBYTRACELEVEL,
                 new Dictionary<string, object>
                 {
-                    {"TraceLevel", travelLevel}
+                    {"TraceLevel", travelLevel},
+                    {"Rowcount", rowcount},
                 });
         }
 

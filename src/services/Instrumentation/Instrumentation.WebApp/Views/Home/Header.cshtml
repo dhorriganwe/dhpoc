@@ -46,6 +46,11 @@
                     @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
                 </td>
             </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb")
+                </td>
+            </tr>
         </table>
     }
     else
@@ -71,6 +76,9 @@
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb")
+        @Html.Raw(((char) 160).ToString())
+        @Html.Raw(((char) 160).ToString())
+        @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb")
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 160).ToString())
     }

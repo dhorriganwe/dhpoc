@@ -1,8 +1,8 @@
-﻿-- Function: rt.GetAuditLogByCategory(character varying, int)
+﻿-- Function: rt.GetAuditLogByFeatureName(character varying, int)
 
--- DROP FUNCTION rt.GetAuditLogByCategory(character varying, int);
+-- DROP FUNCTION rt.GetAuditLogByFeatureName(character varying, int);
 
-CREATE OR REPLACE FUNCTION rt.GetAuditLogByCategory(IN i_category character varying, IN i_rowcount int)
+CREATE OR REPLACE FUNCTION rt.GetAuditLogByFeatureName(IN i_featureName character varying, IN i_rowcount int)
   RETURNS TABLE(	id bigint, 
 					eventid character varying, 
 					applicationname character varying, 
@@ -28,16 +28,16 @@ RETURN QUERY
 		,al.AuditedOn 
 		,al.AdditionalInfo
 	FROM rt.AuditLog al 
-	WHERE al.Category = i_category
+	WHERE al.FeatureName = i_featureName
 	ORDER BY al.id DESC
 	LIMIT i_rowcount;
 END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.GetAuditLogByCategory(character varying, int)
+ALTER FUNCTION rt.GetAuditLogByFeatureName(character varying, int)
   OWNER TO postgres;
 
 /*  
-select rt.GetAuditLogByCategory('Web unhandled exception', 100)
+select rt.GetAuditLogByFeatureName('feature', 100)
 */
