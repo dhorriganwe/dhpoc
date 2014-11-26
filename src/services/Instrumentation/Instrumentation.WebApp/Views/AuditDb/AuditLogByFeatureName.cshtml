@@ -10,18 +10,11 @@
     @using (@Html.BeginForm())
     {
         <div class="PageSectionWithBorder">
-
-            <div>
-                <table>
-                    <tr>
-                        <th class="TextLabelLeft">AuditLogByFeatureName</th><th></th>
-                    </tr>
-                </table>
-            </div>
     
             <div>
                 <table class="alternate_color">
                     <tr>
+                        <td>FeatureName</td>
                         <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.FeatureName, null, null)</td>
                         <td><input type="submit" name="Command" value="Search"/></td>
                     </tr>

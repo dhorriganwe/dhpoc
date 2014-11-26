@@ -27,21 +27,25 @@
         @foreach (var auditLog in Model.AuditLogs)
         {
             <tr>
-                <td>
-                    <a href="AuditLogById/@auditLog.Id">@auditLog.Id</a>
-                </td>
-                <td class="eventId">
-                    <a href="AuditLogByEventId/@auditLog.EventId">@auditLog.EventId</a>
-                </td>
-                <td>
-                    <a href="AuditLogByApplicationName/@auditLog.ApplicationName">@auditLog.ApplicationName</a>
-                </td>
-                <td>
-                    <a href="AuditLogByFeatureName/@auditLog.FeatureName">@auditLog.FeatureName</a>
-                </td>
-                <td>
-                    <a href="AuditLogByCategory/@auditLog.Category">@auditLog.Category</a>
-                </td>
+                <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new {id = auditLog.Id}, null)</td>
+
+                @if (string.IsNullOrEmpty(auditLog.EventId)){ <td></td> }
+                else {
+                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId }, null )</td>
+                }
+                @if (string.IsNullOrEmpty(auditLog.ApplicationName)){ <td></td> }
+                else {
+                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName }, null )</td>
+                }
+                @if (string.IsNullOrEmpty(auditLog.FeatureName)){ <td></td> }
+                else {
+                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { id = auditLog.FeatureName }, null )</td>
+                }
+                @if (string.IsNullOrEmpty(auditLog.Category)){ <td></td> }
+                else {
+                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category }, null )</td>
+                }
+
                 <td>@auditLog.MessageCode</td>
                 <td class="messages">
                     <span title="@auditLog.Messages">@auditLog.Messages</span>
@@ -49,7 +53,9 @@
                 <td>@auditLog.TraceLevel</td>
                 <td>@auditLog.LoginName</td>
                 <td>@auditLog.AuditedOn</td>
-                <td>@auditLog.AdditionalInfo</td>
+                <td class="messages">
+                    <span title="@auditLog.AdditionalInfo">@auditLog.AdditionalInfo</span>
+                </td>
             </tr>
         }
     </table>

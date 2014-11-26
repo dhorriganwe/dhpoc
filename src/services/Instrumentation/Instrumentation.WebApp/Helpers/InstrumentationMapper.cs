@@ -39,5 +39,6 @@ namespace Instrumentation.WebApp.Helpers
 
             return auditLogUis;
         }
+
     }
 }

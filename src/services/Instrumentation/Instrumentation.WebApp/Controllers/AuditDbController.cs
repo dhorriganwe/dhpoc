@@ -33,7 +33,7 @@ namespace Instrumentation.WebApp.Controllers
             query.ApplicationNames = auditLogDataService.GetApplicationNames();
             query.FeatureNames = auditLogDataService.GetFeatureNames();
             query.Categories = auditLogDataService.GetCategories();
- 
+
             return View(query);
         }
 

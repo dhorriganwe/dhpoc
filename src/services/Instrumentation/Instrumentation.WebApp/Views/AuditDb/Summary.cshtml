@@ -35,9 +35,10 @@
                 @foreach (var appName in Model.ApplicationNames)
                 {
                     <tr>
-                        <td>
-                            <a href="AuditLogByApplicationName/@appName.Name">@appName.Name</a>
-                        </td>
+                        @if (string.IsNullOrEmpty(appName.Name)) { <td></td> }
+                        else{
+                            <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name }, null )</td>
+                        }
                         <td>
                             @appName.Count
                         </td>
@@ -55,9 +56,10 @@
                 @foreach (var featureName in Model.FeatureNames)
                 {
                     <tr>
-                        <td>
-                            <a href="AuditLogByFeatureName/@featureName.Name">@featureName.Name</a>
-                        </td>
+                        @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
+                        else{
+                            <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { id = featureName.Name }, null )</td>
+                        }
                         <td>
                             @featureName.Count
                         </td>
@@ -75,9 +77,10 @@
                 @foreach (var category in Model.Categories)
                 {
                     <tr>
-                        <td>
-                            <a href="AuditLogByCategory/@category.Name">@category.Name</a>
-                        </td>
+                        @if (string.IsNullOrEmpty(category.Name)) { <td></td> }
+                        else{
+                            <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name }, null )</td>
+                        }
                         <td>
                             @category.Count
                         </td>
