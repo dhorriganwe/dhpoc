@@ -93,6 +93,9 @@ namespace Instrumentation.DomainDA.Helpers
 
         public static string GetConnectionString(string key, string defaultVal = null, bool allowNull = false)
         {
+            if(ConfigurationManager.ConnectionStrings[key] == null)
+                throw new ConfigurationErrorsException(string.Format("connection String not found for key: {0}", key));
+
             string val = null;
             val = ConfigurationManager.ConnectionStrings[key].ConnectionString;
             if (string.IsNullOrEmpty(val))

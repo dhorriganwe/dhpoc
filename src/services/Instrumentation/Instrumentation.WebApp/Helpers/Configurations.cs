@@ -7,15 +7,13 @@ namespace Instrumentation.WebApp.Helpers
 {
     public class Configurations
     {
-        public static string AjaxUrlRoot { get; private set; }
         public static string ReleaseVersion { get; private set; }
-        public static string LogsPath { get; private set; }
+        public static string DbKeys { get; private set; }
 
         static Configurations()
         {
-            AjaxUrlRoot = GetStringConfiguration(Constants.ConfigKey_AjaxUrlRoot, allowNull:true);
             ReleaseVersion = GetStringConfiguration(Constants.ConfigKey_ReleaseVersion, allowNull: true);
-            LogsPath = GetStringConfiguration(Constants.ConfigKey_LogsPath, allowNull: true);
+            DbKeys = GetStringConfiguration(Constants.ConfigKey_DbKeys);
         }
 
         public static Dictionary<string, Dictionary<string, string>> GetConfigurationItems(Dictionary<string, Dictionary<string, string>> configurationItems = null)
@@ -24,8 +22,6 @@ namespace Instrumentation.WebApp.Helpers
 
             var itemGroup = new Dictionary<string, string>();
             configurationItems.Add("Instrumentation Configurations", itemGroup);
-            itemGroup.Add("AjaxUrlRoot", AjaxUrlRoot);
-            itemGroup.Add("LogsPath", LogsPath);
             itemGroup.Add("ReleaseVersion", ReleaseVersion);
 
             return configurationItems;
@@ -96,6 +92,9 @@ namespace Instrumentation.WebApp.Helpers
 
         public static string GetConnectionString(string key, string defaultVal = null, bool allowNull = false)
         {
+            if (ConfigurationManager.ConnectionStrings[key] == null)
+                throw new ConfigurationErrorsException(string.Format("connection String not found for key: {0}", key));
+
             string val = null;
             val = ConfigurationManager.ConnectionStrings[key].ConnectionString;
             if (string.IsNullOrEmpty(val))

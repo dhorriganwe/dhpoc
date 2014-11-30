@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Web.Mvc;
 
 namespace Instrumentation.WebApp.Models
 {
     public class ViewQueryBase
     {
-        public ViewQueryBase()
-        {
-            ViewQueryCommon = new ViewQueryCommon();
-        }
+        public string ViewName { get; set; }
+        public string ViewTitle { get; set; }
         public string SessionId { get; set; }
-        public ViewQueryCommon ViewQueryCommon { get; set; }
         public string ReleaseVersion { get; set; }
-        public string RequestDuration { get; set; }
-        public string FailMessage { get; set; }
-        public List<FailDetail> FailDetails { get; set; }
-        public string AjaxUrlRoot { get; set; }
-        public bool QueryProduction { get; set; }
+
+        public string DbKey { get; set; }
+        public SelectList DbOptionSelectList { get; set; }
     }
 }

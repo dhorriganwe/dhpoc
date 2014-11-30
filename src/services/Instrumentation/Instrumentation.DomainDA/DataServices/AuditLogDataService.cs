@@ -23,9 +23,18 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETFEATURENAMES = "GetFeatureNames";
         private const string GETCATEGORIES = "GetCategories";
         private const string ADDAUDITLOG = "addauditlog";
-        private const string DBKEY = "rtAudit";
         private const string DBSCHEMA = "rt";
+        private const string DEFAULTDBKEY = "rtAudit";
         private static string NL = Environment.NewLine;
+        private string _dbkey = null;
+
+        public AuditLogDataService(string dbKey = "rtAudit")
+        {
+            if (string.IsNullOrEmpty(dbKey))
+                _dbkey = DEFAULTDBKEY;
+            else
+                _dbkey = dbKey;
+        }
 
         public void AddAuditLog(AuditLog auditLog)
         {
@@ -59,7 +68,7 @@ namespace Instrumentation.DomainDA.DataServices
         {
             var procName = GETAUDITLOGSUMMARY;
             AuditLogSummary summary = null;
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
                 {
@@ -86,7 +95,7 @@ namespace Instrumentation.DomainDA.DataServices
             var procName = GETAPPLICATIONNAMES;
             ApplicationName appName = null;
 
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
                 {
@@ -114,7 +123,7 @@ namespace Instrumentation.DomainDA.DataServices
             var procName = GETFEATURENAMES;
             FeatureName featureName = null;
 
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
                 {
@@ -142,7 +151,7 @@ namespace Instrumentation.DomainDA.DataServices
             var procName = GETCATEGORIES;
             Category category = null;
 
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
                 {
@@ -236,10 +245,10 @@ namespace Instrumentation.DomainDA.DataServices
                 });
         }
 
-        private static long AddAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
+        private long AddAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
         {
             long id = -1;
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(storedProcedureName, parameters))
                 {
@@ -252,11 +261,11 @@ namespace Instrumentation.DomainDA.DataServices
             return id;
         }
 
-        private static IList<AuditLog> GetAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
+        private IList<AuditLog> GetAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
         {
             var auditLogs = new List<AuditLog>();
 
-            using (var dbContext = new SqlCommand(DBKEY, DBSCHEMA))
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(storedProcedureName, parameters))
                 {
@@ -277,7 +286,7 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        private static AuditLog ToAuditLog(IDataReader reader)
+        private AuditLog ToAuditLog(IDataReader reader)
         {
             return new AuditLog()
             {
@@ -295,7 +304,7 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private static AuditLogSummary ToAuditLogSummary(IDataReader reader)
+        private AuditLogSummary ToAuditLogSummary(IDataReader reader)
         {
             return new AuditLogSummary()
             {
@@ -303,7 +312,7 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private static ApplicationName ToApplicationName(IDataReader reader)
+        private ApplicationName ToApplicationName(IDataReader reader)
         {
             return new ApplicationName()
             {
@@ -312,7 +321,7 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private static FeatureName ToFeatureName(IDataReader reader)
+        private FeatureName ToFeatureName(IDataReader reader)
         {
             return new FeatureName()
             {
@@ -321,7 +330,7 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private static Category ToCategory(IDataReader reader)
+        private Category ToCategory(IDataReader reader)
         {
             return new Category()
             {
@@ -330,7 +339,7 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private static string StringField(IDataReader reader, string fieldName)
+        private string StringField(IDataReader reader, string fieldName)
         {
             string val = null;
             try
@@ -344,7 +353,7 @@ namespace Instrumentation.DomainDA.DataServices
             return val;
         }
 
-        private static long LongField(IDataReader reader, string fieldName)
+        private long LongField(IDataReader reader, string fieldName)
         {
             long val = 0;
             try

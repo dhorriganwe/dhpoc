@@ -1,22 +1,25 @@
 ﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogSummary
 @{
-    Model.ViewQueryCommon.ViewTitle = "Instrumentation Viewer";
+    Model.ViewTitle = "Instrumentation Viewer";
 }
 
 <div class="PageRoot">
     
-    @Html.Action("Header", "Home", Model.ViewQueryCommon)
+    @Html.Action("Header", "Home", Model)
 
     @using (@Html.BeginForm())
     {
         <div>
             <table>
                 <tr>
-                    <th class="TextLabelLeft">AuditLog Summary</th><th></th>
+                    <th class="TextLabelLeft">AuditLog Summary</th>
+                    <th></th>
                 </tr>
             </table>
         </div>
     
+        @Html.Action("DbSelect", "AuditDb", Model)
+
         <div class="PageSection">
             <table class="alternate_color">
                 <tr>
@@ -88,6 +91,8 @@
                 }
             </table>
         </div>
+        
+
     }
 </div>
         

@@ -1,0 +1,16 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+@{
+    Layout = null;
+}
+
+<div>
+    <table>
+        <tr>
+            <td>DbOption</td>
+            <td>@Html.DropDownListFor(q => q.DbKey, Model.DbOptionSelectList)</td>
+            <td >
+                <input type="submit" name="Command" value="Refresh"/>
+            </td>
+        </tr>
+    </table>
+</div>
