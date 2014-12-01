@@ -9,11 +9,15 @@ namespace Instrumentation.DomainDA.Helpers
     {
         public static string LogsPath { get; private set; }
         public static bool CdmsRequestLoggingEnabled { get; set; }
+        public static string DbKeyDefault { get; private set; }
+        public static int MaxRowCountDefault { get; private set; }
 
         static Configurations()
         {
             LogsPath = GetStringConfiguration(Constants.ConfigKey_LogsPath, allowNull: true, defaultVal: "");
             CdmsRequestLoggingEnabled = GetBoolConfiguration(Constants.ConfigKey_CdmsRequestLoggingEnabled);
+            DbKeyDefault = GetStringConfiguration(Constants.ConfigKey_DbKeyDefault);
+            MaxRowCountDefault = GetIntConfiguration(Constants.ConfigKey_MaxRowCountDefault, 0);
         }
 
         public static Dictionary<string, Dictionary<string, string>> GetConfigurationItems(Dictionary<string, Dictionary<string, string>> configurationItems = null)

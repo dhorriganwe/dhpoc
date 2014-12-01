@@ -23,9 +23,9 @@
                 </table>
             </div>
 
-            @Html.Action("AuditLogGrid", Model.List)
+            @Html.Action("AuditLogGrid", Model)
 
-            @foreach(var auditLog in Model.List.AuditLogs)
+            @foreach(var auditLog in Model.AuditLogs)
             { 
                 @Html.Action("AuditLogRecord", auditLog)
                 <br />

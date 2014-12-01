@@ -82,7 +82,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            var id = "256";
+            var id = AddAuditLogRow();
             AuditLog auditLog = auditLogDataService.GetAuditLogById(id);
 
             Assert.AreEqual(auditLog.Id, id);
@@ -277,6 +277,11 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void AddAuditLog()
         {
+            AddAuditLogRow();
+        }
+
+        public string AddAuditLogRow()
+        {
             var auditLogDataService = new AuditLogDataService();
 
             AuditLog auditLog = new AuditLog();
@@ -290,6 +295,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             auditLog.LoginName = "login1";
 
             auditLogDataService.AddAuditLog(auditLog);
+
+            return auditLog.Id;
         }
     }
 }

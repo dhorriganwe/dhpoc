@@ -1,8 +1,5 @@
 ﻿using Instrumentation.WebApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Instrumentation.WebApp.Helpers
 {
@@ -24,6 +21,22 @@ namespace Instrumentation.WebApp.Helpers
             auditLogUi.AuditedOn = auditLogDa.AuditedOn;
 
             auditLogUi.Messages = auditLogDa.Messages;
+
+
+            if (!string.IsNullOrEmpty(auditLogUi.Id))
+                auditLogUi.Id = auditLogUi.Id.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.EventId))
+                auditLogUi.EventId = auditLogUi.EventId.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.ApplicationName))
+                auditLogUi.ApplicationName = auditLogUi.ApplicationName.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.FeatureName))
+                auditLogUi.FeatureName = auditLogUi.FeatureName.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.Category))
+                auditLogUi.Category = auditLogUi.Category.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.TraceLevel))
+                auditLogUi.TraceLevel = auditLogUi.TraceLevel.Trim();
+            if (!string.IsNullOrEmpty(auditLogUi.MessageCode))
+                auditLogUi.MessageCode = auditLogUi.MessageCode.Trim();
 
             return auditLogUi;
         }

@@ -141,7 +141,6 @@
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFeatureName.cs" />
-    <Compile Include="Models\ViewQueryAuditLogList.cs" />
     <Compile Include="Models\ViewQueryAuditLogByCategory.cs" />
     <Compile Include="Models\ViewQueryAuditLogByApplicationName.cs" />
     <Compile Include="Models\ViewQueryAuditLogByEventId.cs" />

@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLog
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
     Model.ViewTitle = "Instrumentation Viewer";
 }
@@ -25,7 +25,7 @@
         </div>
         
         
-        @Html.Action("AuditLogGrid", Model.List)
+        @Html.Action("AuditLogGrid", Model)
 
     }
 </div>

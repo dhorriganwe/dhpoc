@@ -24,12 +24,14 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETCATEGORIES = "GetCategories";
         private const string ADDAUDITLOG = "addauditlog";
         private const string DBSCHEMA = "rt";
-        private const string DEFAULTDBKEY = "rtAudit";
+        private readonly string DEFAULTDBKEY = "rtAudit";
         private static string NL = Environment.NewLine;
         private string _dbkey = null;
 
         public AuditLogDataService(string dbKey = "rtAudit")
         {
+            DEFAULTDBKEY = Configurations.DbKeyDefault;
+
             if (string.IsNullOrEmpty(dbKey))
                 _dbkey = DEFAULTDBKEY;
             else
@@ -54,12 +56,15 @@ namespace Instrumentation.DomainDA.DataServices
             auditLog.Id = id.ToString();
         }
 
-        public IList<AuditLog> GetAuditLogAll(int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogAll(int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             return GetAuditLog(GETAUDITLOGAll,
                                 new Dictionary<string, object>
                                 {
-                                    {"Rowcount", rowcount}
+                                    {"Rowcount", maxRowCount}
                                 });
 
         }
@@ -187,61 +192,76 @@ namespace Instrumentation.DomainDA.DataServices
                 return new AuditLog();
         }
 
-        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYAPPLICATIONNAME,
                 new Dictionary<string, object>
                 {
                     {"ApplicationName", applicationName},
-                    {"Rowcount", rowcount},
+                    {"Rowcount", maxRowCount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByCategory(string category, int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogByCategory(string category, int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYCATEGORY,
                 new Dictionary<string, object>
                 {
                     {"Category", category},
-                    {"Rowcount", rowcount},
+                    {"Rowcount", maxRowCount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByEventId(string eventId, int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogByEventId(string eventId, int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYEVENTID,
                 new Dictionary<string, object>
                 {
                     {"EventId", eventId},
-                    {"Rowcount", rowcount},
+                    {"Rowcount", maxRowCount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByFeatureName(string featureName, int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogByFeatureName(string featureName, int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYFEATURENAME,
                 new Dictionary<string, object>
                 {
                     {"FeatureName", featureName},
-                    {"Rowcount", rowcount},
+                    {"Rowcount", maxRowCount},
                 });
 
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel, int rowcount = Constants.ROWCOUNT)
+        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel, int maxRowCount = -1)
         {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
             return GetAuditLog(GETAUDITLOGBYTRACELEVEL,
                 new Dictionary<string, object>
                 {
                     {"TraceLevel", travelLevel},
-                    {"Rowcount", rowcount},
+                    {"Rowcount", maxRowCount},
                 });
         }
 
@@ -314,29 +334,44 @@ namespace Instrumentation.DomainDA.DataServices
 
         private ApplicationName ToApplicationName(IDataReader reader)
         {
-            return new ApplicationName()
+            var applicationName = new ApplicationName()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count") 
             };
+
+            if (!string.IsNullOrEmpty(applicationName.Name))
+                applicationName.Name = applicationName.Name.Trim();
+
+            return applicationName;
         }
 
         private FeatureName ToFeatureName(IDataReader reader)
         {
-            return new FeatureName()
+            var featureName = new FeatureName()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count")
             };
+
+            if (!string.IsNullOrEmpty(featureName.Name))
+                featureName.Name = featureName.Name.Trim();
+
+            return featureName;
         }
 
         private Category ToCategory(IDataReader reader)
         {
-            return new Category()
+            Category category = new Category()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count")
             };
+
+            if (!string.IsNullOrEmpty(category.Name))
+                category.Name = category.Name.Trim();
+
+            return category;
         }
 
         private string StringField(IDataReader reader, string fieldName)

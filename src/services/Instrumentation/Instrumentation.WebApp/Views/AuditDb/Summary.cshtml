@@ -40,7 +40,7 @@
                     <tr>
                         @if (string.IsNullOrEmpty(appName.Name)) { <td></td> }
                         else{
-                            <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name }, null )</td>
+                            <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name, dbkey = Model.DbKey }, null )</td>
                         }
                         <td>
                             @appName.Count
@@ -61,7 +61,7 @@
                     <tr>
                         @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
                         else{
-                            <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { id = featureName.Name }, null )</td>
+                            <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { id = featureName.Name, dbkey = Model.DbKey }, null)</td>
                         }
                         <td>
                             @featureName.Count
@@ -82,7 +82,7 @@
                     <tr>
                         @if (string.IsNullOrEmpty(category.Name)) { <td></td> }
                         else{
-                            <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name }, null )</td>
+                            <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name, dbkey = Model.DbKey }, null)</td>
                         }
                         <td>
                             @category.Count

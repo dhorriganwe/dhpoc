@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogList
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
     Layout = null;
 }
@@ -27,23 +27,23 @@
         @foreach (var auditLog in Model.AuditLogs)
         {
             <tr>
-                <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new {id = auditLog.Id}, null)</td>
+                <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new { id = auditLog.Id, dbkey = Model.DbKey }, null)</td>
 
                 @if (string.IsNullOrEmpty(auditLog.EventId)){ <td></td> }
                 else {
-                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId }, null )</td>
+                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.ApplicationName)){ <td></td> }
                 else {
-                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName }, null )</td>
+                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.FeatureName)){ <td></td> }
                 else {
-                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { id = auditLog.FeatureName }, null )</td>
+                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { id = auditLog.FeatureName, dbkey = Model.DbKey }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.Category)){ <td></td> }
                 else {
-                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category }, null )</td>
+                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey }, null)</td>
                 }
 
                 <td>@auditLog.MessageCode</td>
