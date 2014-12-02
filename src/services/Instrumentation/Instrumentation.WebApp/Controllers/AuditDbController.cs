@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Instrumentation.DomainDA.DataServices;
 using Instrumentation.WebApp.Helpers;
@@ -207,10 +208,10 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult AuditLogByFeatureName(string id, string dbkey = null)
+        public ActionResult AuditLogByFeatureName(string id, string dbkey = null, string name = null)
         {
             var query = new ViewQueryAuditLogByFeatureName();
-            query.FeatureName = id;
+            query.FeatureName = name;
             query.DbKey = dbkey;
 
             return AuditLogByFeatureName(query, "Search");
@@ -223,6 +224,8 @@ namespace Instrumentation.WebApp.Controllers
 
             if (command == "Search")
             {
+                query.FeatureName = HttpUtility.UrlDecode(query.FeatureName);
+
                 query.AuditLogs = GetAuditLogByFeatureName(query);
             }
             else

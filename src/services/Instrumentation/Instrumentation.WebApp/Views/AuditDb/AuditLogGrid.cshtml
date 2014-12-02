@@ -13,9 +13,9 @@
     <table class="alternate_color">
         <tr>
             <th>Id</th>
-            <th>EventId</th>
-            <th>ApplicationName</th>
-            <th>FeatureName</th>
+            <th>CorrelationId</th>
+            <th>EventSource</th>
+            <th>Feature</th>
             <th>Category</th>
             <th>MessageCode</th>
             <th>Messages</th>
@@ -39,7 +39,7 @@
                 }
                 @if (string.IsNullOrEmpty(auditLog.FeatureName)){ <td></td> }
                 else {
-                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { id = auditLog.FeatureName, dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.Category)){ <td></td> }
                 else {
@@ -47,13 +47,13 @@
                 }
 
                 <td>@auditLog.MessageCode</td>
-                <td class="messages">
+                <td class="messagePreview">
                     <span title="@auditLog.Messages">@auditLog.Messages</span>
                 </td>
                 <td>@auditLog.TraceLevel</td>
                 <td>@auditLog.LoginName</td>
                 <td>@auditLog.AuditedOn</td>
-                <td class="messages">
+                <td class="messagePreview">
                     <span title="@auditLog.AdditionalInfo">@auditLog.AdditionalInfo</span>
                 </td>
             </tr>
