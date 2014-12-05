@@ -78,6 +78,27 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
+        public void GetFeatureNames_Filtered()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+            
+            var applicationName = "";
+            var featureName = "";
+            var category = "";
+
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItems(applicationName, featureName, category);
+
+            Assert.IsTrue(summaryItems.Count > 0);
+
+            foreach (var summaryItem in summaryItems)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    summaryItem.ApplicationName,
+                    summaryItem.Count));
+            }
+        }
+
+        [TestMethod]
         public void GetAuditLogById()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();

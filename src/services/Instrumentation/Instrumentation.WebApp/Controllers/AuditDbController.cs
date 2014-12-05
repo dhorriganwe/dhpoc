@@ -164,7 +164,9 @@ namespace Instrumentation.WebApp.Controllers
 
             if (command == "Search")
             {
-                query.AuditLogs = GetAuditLogByApplicationName(query);
+                //query.AuditLogs = GetAuditLogByApplicationName(query);
+
+                query = GetAuditLogByApplicationName2(query);
             }
             else
             {
@@ -305,6 +307,26 @@ namespace Instrumentation.WebApp.Controllers
                                             .ToList());
 
             return auditLogs;
+        }
+
+        private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName2(ViewQueryAuditLogByApplicationName query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByApplicationName(
+                query.ApplicationName,
+                query.MaxRowCount);
+
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            query.AuditLogs = auditLogs;
+
+            var summary = auditLogDataService.GetSummaryByApplicationName("FeatureName", query.ApplicationName);
+
+            //query.FeatureNames = summary.
+
+            
+            return query;
         }
 
         private List<AuditLog> GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)

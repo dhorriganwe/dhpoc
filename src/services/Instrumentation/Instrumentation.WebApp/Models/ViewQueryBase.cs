@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Instrumentation.DomainDA.Helpers;
+using Instrumentation.DomainDA.Models;
 
 namespace Instrumentation.WebApp.Models
 {
@@ -10,6 +11,9 @@ namespace Instrumentation.WebApp.Models
         public ViewQueryBase()
         {
             MaxRowCount = Configurations.MaxRowCountDefault;
+            ApplicationNames = new List<ApplicationName>();
+            FeatureNames = new List<FeatureName>();
+            Categories = new List<Category>();
         }
 
         public string ViewName { get; set; }
@@ -22,5 +26,9 @@ namespace Instrumentation.WebApp.Models
         public SelectList DbOptionSelectList { get; set; }
 
         public List<AuditLog> AuditLogs { get; set; }
+
+        public List<ApplicationName> ApplicationNames { get; set; }
+        public List<FeatureName> FeatureNames { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

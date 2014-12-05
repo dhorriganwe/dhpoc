@@ -1,5 +1,5 @@
 \encoding UTF8
-\connect Audit
+\connect rtaudit_20141204
 \encoding UTF8
 
 \ir SchemaChanges.sql

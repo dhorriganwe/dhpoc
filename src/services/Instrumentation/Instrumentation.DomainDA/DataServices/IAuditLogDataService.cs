@@ -17,5 +17,10 @@ namespace Instrumentation.DomainDA.DataServices
         List<ApplicationName> GetApplicationNames();
         List<FeatureName> GetFeatureNames();
         List<Category> GetCategories();
+
+        List<SummaryItem> GetSummaryItems(string applicationName, string featureName, string category);
+
+        //IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int maxRowCount = -1);
+        AuditLogSummary GetSummaryByApplicationName(string summaryType, string applicationName);
     }
 }
