@@ -26,7 +26,7 @@ BEGIN
 END;
 END IF;
 
-IF i_summaryType = 'Category' THEN -- Categories
+IF i_summaryType = 'Category' THEN -- Category
 BEGIN
                 RETURN QUERY
                 select al.Category, count(*) 
@@ -49,6 +49,7 @@ ALTER FUNCTION rt.GetSummaryByApplicationName(character varying, character varyi
 
 /*  
 select rt.GetSummaryByApplicationName('FeatureName', 'RisingTide')
+select rt.GetSummaryByApplicationName('FeatureName', '')
 select rt.GetSummaryByApplicationName('Category', 'RisingTide')
 select rt.GetSummaryByApplicationName('xxx', 'RisingTide')
 

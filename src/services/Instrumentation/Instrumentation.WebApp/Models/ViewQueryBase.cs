@@ -11,9 +11,9 @@ namespace Instrumentation.WebApp.Models
         public ViewQueryBase()
         {
             MaxRowCount = Configurations.MaxRowCountDefault;
-            ApplicationNames = new List<ApplicationName>();
-            FeatureNames = new List<FeatureName>();
-            Categories = new List<Category>();
+            ApplicationNames = new List<SummaryItem>();
+            FeatureNames = new List<SummaryItem>();
+            Categories = new List<SummaryItem>();
         }
 
         public string ViewName { get; set; }
@@ -27,8 +27,8 @@ namespace Instrumentation.WebApp.Models
 
         public List<AuditLog> AuditLogs { get; set; }
 
-        public List<ApplicationName> ApplicationNames { get; set; }
-        public List<FeatureName> FeatureNames { get; set; }
-        public List<Category> Categories { get; set; }
+        public List<SummaryItem> ApplicationNames { get; set; }
+        public List<SummaryItem> FeatureNames { get; set; }
+        public List<SummaryItem> Categories { get; set; }
     }
 }

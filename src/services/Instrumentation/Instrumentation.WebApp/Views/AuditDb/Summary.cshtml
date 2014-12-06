@@ -29,69 +29,11 @@
             </table>
         </div>
 
-        <div class="PageSection">
-            <table class="alternate_color">
-                <tr>
-                    <th>ApplicationName</th>
-                    <th>Count</th>
-                </tr>
-                @foreach (var appName in Model.ApplicationNames)
-                {
-                    <tr>
-                        @if (string.IsNullOrEmpty(appName.Name)) { <td></td> }
-                        else{
-                            <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name, dbkey = Model.DbKey }, null )</td>
-                        }
-                        <td>
-                            @appName.Count
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-            
-        <div class="PageSection">
-            <table class="alternate_color">
-                <tr>
-                    <th>FeatureName</th>
-                    <th>Count</th>
-                </tr>
-                @foreach (var featureName in Model.FeatureNames)
-                {
-                    <tr>
-                        @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
-                        else{
-                            <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.DbKey }, null)</td>
-                        }
-                        <td>
-                            @featureName.Count
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
+    @Html.Action("SummaryApplicationNames", "AuditDb", Model)
 
-        <div class="PageSection">
-            <table class="alternate_color">
-                <tr>
-                    <th>Categories</th>
-                    <th>Count</th>
-                </tr>
-                @foreach (var category in Model.Categories)
-                {
-                    <tr>
-                        @if (string.IsNullOrEmpty(category.Name)) { <td></td> }
-                        else{
-                            <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name, dbkey = Model.DbKey }, null)</td>
-                        }
-                        <td>
-                            @category.Count
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-        
+    @Html.Action("SummaryFeatureNames", "AuditDb", Model)
+
+    @Html.Action("SummaryCategoryNames", "AuditDb", Model)
 
     }
 </div>

@@ -257,6 +257,21 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
+        public ActionResult SummaryFeatureNames(ViewQueryBase query)
+        {
+            return View(query);
+        }
+
+        public ActionResult SummaryApplicationNames(ViewQueryBase query)
+        {
+            return View(query);
+        }
+
+        public ActionResult SummaryCategoryNames(ViewQueryBase query)
+        {
+            return View(query);
+        }
+        
         private void InitDbOptionSelectList(ViewQueryBase query)
         {
             query.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
@@ -321,9 +336,9 @@ namespace Instrumentation.WebApp.Controllers
 
             query.AuditLogs = auditLogs;
 
-            var summary = auditLogDataService.GetSummaryByApplicationName("FeatureName", query.ApplicationName);
+            var featureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
 
-            //query.FeatureNames = summary.
+            query.FeatureNames = featureNames;
 
             
             return query;

@@ -31,7 +31,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<ApplicationName> applicationNames = auditLogDataService.GetApplicationNames();
+            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
 
             Assert.IsTrue(applicationNames.Count > 0);
 
@@ -48,7 +48,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<Category> categories = auditLogDataService.GetCategories();
+            List<SummaryItem> categories = auditLogDataService.GetCategories();
 
             Assert.IsTrue(categories.Count > 0);
 
@@ -65,7 +65,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<FeatureName> featureNames = auditLogDataService.GetFeatureNames();
+            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNames();
 
             Assert.IsTrue(featureNames.Count > 0);
 
@@ -78,24 +78,69 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetFeatureNames_Filtered()
+        public void GetFeatureNameNamesByApplicationName()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
             
-            var applicationName = "";
-            var featureName = "";
-            var category = "";
-
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItems(applicationName, featureName, category);
+            var applicationName = "RisingTide";
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", applicationName);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
             foreach (var summaryItem in summaryItems)
             {
                 Console.WriteLine(string.Format("{0} {1}",
-                    summaryItem.ApplicationName,
+                    summaryItem.Name,
                     summaryItem.Count));
             }
+
+            Console.WriteLine();
+            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNames();
+
+            foreach (var featureName in featureNames)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    featureName.Name,
+                    featureName.Count));
+            }
+
+            summaryItems.ForEach(si =>
+            {
+                Assert.IsTrue(featureNames.Exists(fn => fn.Name == si.Name), "expected SummaryItem in FeatureNames: " + si.Name);
+            });
+        }
+
+        [TestMethod]
+        public void GetCategoriesByApplicationName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var applicationName = "RisingTide";
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByApplicationName("Category", applicationName);
+
+            Assert.IsTrue(summaryItems.Count > 0);
+
+            foreach (var summaryItem in summaryItems)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    summaryItem.Name,
+                    summaryItem.Count));
+            }
+
+            Console.WriteLine();
+            List<SummaryItem> categories = auditLogDataService.GetCategories();
+
+            foreach (var category in categories)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    category.Name,
+                    category.Count));
+            }
+
+            summaryItems.ForEach(si =>
+            {
+                Assert.IsTrue(categories.Exists(fn => fn.Name == si.Name), "expected SummaryItem in FeatureNames: " + si.Name);
+            });
         }
 
         [TestMethod]

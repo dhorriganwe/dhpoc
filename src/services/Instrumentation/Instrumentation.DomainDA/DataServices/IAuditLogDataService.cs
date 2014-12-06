@@ -14,13 +14,13 @@ namespace Instrumentation.DomainDA.DataServices
         AuditLog GetAuditLogById(string id);
         void AddAuditLog(AuditLog auditLog);
         AuditLogSummary GetAuditLogSummary();
-        List<ApplicationName> GetApplicationNames();
-        List<FeatureName> GetFeatureNames();
-        List<Category> GetCategories();
+        List<SummaryItem> GetApplicationNames();
+        List<SummaryItem> GetFeatureNames();
+        List<SummaryItem> GetCategories();
 
-        List<SummaryItem> GetSummaryItems(string applicationName, string featureName, string category);
+        //List<SummaryItem> GetSummaryItems();
 
         //IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int maxRowCount = -1);
-        AuditLogSummary GetSummaryByApplicationName(string summaryType, string applicationName);
+        List<SummaryItem> GetSummaryItemsByApplicationName(string summaryType, string applicationName);
     }
 }

@@ -266,7 +266,9 @@
     <Content Include="Views\AuditDb\AuditLogGrid.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByFeatureName.cshtml" />
     <Content Include="Views\AuditDb\DbSelect.cshtml" />
-    <Content Include="Views\AuditDb\SummaryFeatureName.cshtml" />
+    <Content Include="Views\AuditDb\SummaryFeatureNames.cshtml" />
+    <Content Include="Views\AuditDb\SummaryApplicationNames.cshtml" />
+    <Content Include="Views\AuditDb\SummaryCategoryNames.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

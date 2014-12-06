@@ -25,6 +25,9 @@
             
 @*            Summary*@
 
+            @Html.Action("SummaryFeatureNames", "AuditDb", Model)
+
+
             @Html.Action("AuditLogGrid", Model)
 
             @foreach(var auditLog in Model.AuditLogs)

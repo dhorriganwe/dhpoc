@@ -96,10 +96,13 @@ namespace Instrumentation.DomainDA.DataServices
             return summary;
         }
 
-        public AuditLogSummary GetSummaryByApplicationName(string summaryType, string applicationName)
+        public List<SummaryItem> GetSummaryItemsByApplicationName(string summaryType, string applicationName)
         {
             var procName = GETSUMMARYBYAPPLICATIONNAME;
-            AuditLogSummary summary = null;
+
+            List<SummaryItem> summaryItems = new List<SummaryItem>();
+            SummaryItem summaryItem = null;
+            
             using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object>
@@ -112,7 +115,8 @@ namespace Instrumentation.DomainDA.DataServices
                     {
                         while (!reader.IsClosed && reader.Read())
                         {
-                            summary = ToAuditLogSummary(reader);
+                            summaryItem = ToAuditLogSummaryItem(reader);
+                            summaryItems.Add(summaryItem);
                         }
                     }
                     catch (Exception e)
@@ -122,14 +126,14 @@ namespace Instrumentation.DomainDA.DataServices
                 }
             }
 
-            return summary;
+            return summaryItems;
         }
 
-        public List<ApplicationName> GetApplicationNames()
+        public List<SummaryItem> GetApplicationNames()
         {
-            List<ApplicationName> applicationNames = new List<ApplicationName>();
+            List<SummaryItem> applicationNames = new List<SummaryItem>();
             var procName = GETAPPLICATIONNAMES;
-            ApplicationName appName = null;
+            SummaryItem appName = null;
 
             using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
@@ -153,11 +157,11 @@ namespace Instrumentation.DomainDA.DataServices
             return applicationNames;
         }
 
-        public List<FeatureName> GetFeatureNames()
+        public List<SummaryItem> GetFeatureNames()
         {
-            List<FeatureName> featureNames = new List<FeatureName>();
+            var featureNames = new List<SummaryItem>();
             var procName = GETFEATURENAMES;
-            FeatureName featureName = null;
+            SummaryItem featureName = null;
 
             using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
@@ -181,11 +185,11 @@ namespace Instrumentation.DomainDA.DataServices
             return featureNames;
         }
 
-        public List<Category> GetCategories()
+        public List<SummaryItem> GetCategories()
         {
-            List<Category> categories = new List<Category>();
+            List<SummaryItem> categories = new List<SummaryItem>();
             var procName = GETCATEGORIES;
-            Category category = null;
+            SummaryItem category = null;
 
             using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
@@ -209,44 +213,42 @@ namespace Instrumentation.DomainDA.DataServices
             return categories;
         }
 
-        public List<SummaryItem> GetSummaryItems(
-            string applicationName, 
-            string featureName, 
-            string category)
-        {
-            List<SummaryItem> summaryItems = new List<SummaryItem>();
-            SummaryItem summaryItem = null;
+        //public List<SummaryItem> xGetSummaryItems()
+        //{
+        //    List<SummaryItem> summaryItems = new List<SummaryItem>();
+        //    SummaryItem summaryItem = null;
 
-            var procName = GETSUMMARY;
+        //    var procName = GETSUMMARY;
 
-            var parms = new Dictionary<string, object>
-            {
-                {"applicationName", applicationName},
-                {"featureName", featureName},
-                {"category", category},
-            };
+        //    var parms = new Dictionary<string, object> {};
+        //    //var parms = new Dictionary<string, object>
+        //    //{
+        //    //    {"applicationName", applicationName},
+        //    //    {"featureName", featureName},
+        //    //    {"category", category},
+        //    //};
 
-            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
-            {
-                using (var reader = dbContext.ExecuteReader(procName, parms))
-                {
-                    try
-                    {
-                        while (!reader.IsClosed && reader.Read())
-                        {
-                            summaryItem = ToSummaryItem(reader);
-                            summaryItems.Add(summaryItem);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
-                    }
-                }
-            }
+        //    using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
+        //    {
+        //        using (var reader = dbContext.ExecuteReader(procName, parms))
+        //        {
+        //            try
+        //            {
+        //                while (!reader.IsClosed && reader.Read())
+        //                {
+        //                    summaryItem = ToSummaryItem(reader);
+        //                    summaryItems.Add(summaryItem);
+        //                }
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+        //            }
+        //        }
+        //    }
 
-            return summaryItems;
-        }
+        //    return summaryItems;
+        //}
 
         public AuditLog GetAuditLogById(string id)
         {
@@ -402,9 +404,22 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
-        private ApplicationName ToApplicationName(IDataReader reader)
+        private SummaryItem ToAuditLogSummaryItem(IDataReader reader)
         {
-            var applicationName = new ApplicationName()
+            SummaryItem summaryItem = new SummaryItem()
+            {
+                Name = StringField(reader, "name"),
+                Count = LongField(reader, "count")
+            };
+
+            if (!string.IsNullOrEmpty(summaryItem.Name))
+                summaryItem.Name = summaryItem.Name.Trim();
+
+            return summaryItem;
+        }
+        private SummaryItem ToApplicationName(IDataReader reader)
+        {
+            var applicationName = new SummaryItem()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count") 
@@ -416,9 +431,9 @@ namespace Instrumentation.DomainDA.DataServices
             return applicationName;
         }
 
-        private FeatureName ToFeatureName(IDataReader reader)
+        private SummaryItem ToFeatureName(IDataReader reader)
         {
-            var featureName = new FeatureName()
+            var featureName = new SummaryItem()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count")
@@ -430,9 +445,9 @@ namespace Instrumentation.DomainDA.DataServices
             return featureName;
         }
 
-        private Category ToCategory(IDataReader reader)
+        private SummaryItem ToCategory(IDataReader reader)
         {
-            Category category = new Category()
+            SummaryItem category = new SummaryItem()
             {
                 Name = StringField(reader, "name"),
                 Count = LongField(reader, "count")
@@ -446,20 +461,20 @@ namespace Instrumentation.DomainDA.DataServices
 
         private SummaryItem ToSummaryItem(IDataReader reader)
         {
-            SummaryItem summaryItem = new SummaryItem()
-            {
-                ApplicationName = StringField(reader, "applicationName"),
-                FeatureName = StringField(reader, "featureName"),
-                Category = StringField(reader, "category"),
-                Count = LongField(reader, "count")
-            };
+            SummaryItem summaryItem = new SummaryItem();
+            //{
+            //    ApplicationName = StringField(reader, "applicationName"),
+            //    FeatureName = StringField(reader, "featureName"),
+            //    Category = StringField(reader, "category"),
+            //    Count = LongField(reader, "count")
+            //};
 
-            if (!string.IsNullOrEmpty(summaryItem.ApplicationName))
-                summaryItem.ApplicationName = summaryItem.ApplicationName.Trim();
-            if (!string.IsNullOrEmpty(summaryItem.FeatureName))
-                summaryItem.FeatureName = summaryItem.FeatureName.Trim();
-            if (!string.IsNullOrEmpty(summaryItem.Category))
-                summaryItem.Category = summaryItem.Category.Trim();
+            //if (!string.IsNullOrEmpty(summaryItem.ApplicationName))
+            //    summaryItem.ApplicationName = summaryItem.ApplicationName.Trim();
+            //if (!string.IsNullOrEmpty(summaryItem.FeatureName))
+            //    summaryItem.FeatureName = summaryItem.FeatureName.Trim();
+            //if (!string.IsNullOrEmpty(summaryItem.Category))
+            //    summaryItem.Category = summaryItem.Category.Trim();
 
             return summaryItem;
         }

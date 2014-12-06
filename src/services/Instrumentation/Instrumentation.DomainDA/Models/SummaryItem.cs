@@ -3,9 +3,8 @@ namespace Instrumentation.DomainDA.Models
 {
     public class SummaryItem
     {
-        public string ApplicationName;
-        public string FeatureName;
-        public string Category;
+        public string SummaryType;
+        public string Name;
         public long Count;
     }
 }
