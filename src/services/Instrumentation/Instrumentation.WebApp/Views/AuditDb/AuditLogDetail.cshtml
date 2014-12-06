@@ -1,0 +1,25 @@
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+@{
+    Layout = null;
+}
+
+<div>
+    <table>
+        <tr>
+            <td>
+                @Html.Action("AuditLogGrid", Model)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    @foreach(var auditLog in Model.AuditLogs)
+                    { 
+                        @Html.Action("AuditLogRecord", auditLog)
+                        <br />
+                    }
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

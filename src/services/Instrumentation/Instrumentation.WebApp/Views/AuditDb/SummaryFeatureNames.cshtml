@@ -13,7 +13,7 @@
         {
             <tr>
                 @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
-                else{
+                else {
                     <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.DbKey }, null)</td>
                 }
                 <td>
@@ -21,6 +21,10 @@
                 </td>
             </tr>
         }
+        <tr>
+            <td>total</td>
+            <td>@Model.FeatureNames.Sum(an => an.Count)</td>
+        </tr>
     </table>
 </div>
 

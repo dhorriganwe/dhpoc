@@ -12,11 +12,8 @@
         @foreach (var category in Model.Categories)
         {
             <tr>
-                @if (string.IsNullOrEmpty(category.Name))
-                {
-                <td></td> }
-                else
-                {
+                @if (string.IsNullOrEmpty(category.Name)) { <td></td> }
+                else {
                     <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name, dbkey = Model.DbKey }, null)</td>
                 }
                 <td>
@@ -24,5 +21,9 @@
                 </td>
             </tr>
         }
+        <tr>
+            <td>total</td>
+            <td>@Model.Categories.Sum(an => an.Count)</td>
+        </tr>
     </table>
 </div>

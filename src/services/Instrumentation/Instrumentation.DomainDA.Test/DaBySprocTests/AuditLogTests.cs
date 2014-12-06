@@ -78,7 +78,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetFeatureNameNamesByApplicationName()
+        public void GetFeatureNamesByApplicationName()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
             
@@ -141,6 +141,84 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             {
                 Assert.IsTrue(categories.Exists(fn => fn.Name == si.Name), "expected SummaryItem in FeatureNames: " + si.Name);
             });
+        }
+
+        [TestMethod]
+        public void ShouldDetectErrorRaisedInSproc()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var featureName = "AccessPermission";
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByFeatureName("xyz", featureName);
+
+            Assert.IsTrue(summaryItems.Count > 0);
+
+        }
+
+        [TestMethod]
+        public void GetApplicationNamesByFeatureName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var featureName = "AccessPermission";
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", featureName);
+
+            Assert.IsTrue(summaryItems.Count > 0);
+
+            foreach (var summaryItem in summaryItems)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    summaryItem.Name,
+                    summaryItem.Count));
+            }
+
+            Console.WriteLine();
+            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
+
+            foreach (var applicationName in applicationNames)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    applicationName.Name,
+                    applicationName.Count));
+            }
+
+            summaryItems.ForEach(
+                si => Assert.IsTrue(
+                    applicationNames.Exists(
+                        fn => fn.Name == si.Name), "expected SummaryItem in ApplicationNames: " + si.Name));
+        }
+
+        [TestMethod]
+        public void GetApplicationNamesByCategoryName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var category = "Security";
+            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByCategory("ApplicationName", category);
+
+            Assert.IsTrue(summaryItems.Count > 0);
+
+            foreach (var summaryItem in summaryItems)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    summaryItem.Name,
+                    summaryItem.Count));
+            }
+
+            Console.WriteLine();
+            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
+
+            foreach (var applicationName in applicationNames)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    applicationName.Name,
+                    applicationName.Count));
+            }
+
+            summaryItems.ForEach(
+                si => Assert.IsTrue(
+                    applicationNames.Exists(
+                        fn => fn.Name == si.Name), "expected SummaryItem in ApplicationNames: " + si.Name));
         }
 
         [TestMethod]

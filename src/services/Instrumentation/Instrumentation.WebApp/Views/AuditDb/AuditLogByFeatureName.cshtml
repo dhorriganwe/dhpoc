@@ -12,24 +12,31 @@
         @Html.Action("DbSelect", "AuditDb", Model)
         
         <div class="PageSectionWithBorder">
-    
-            <div>
-                <table class="alternate_color">
-                    <tr>
-                        <td>FeatureName</td>
-                        <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.FeatureName, null, null)</td>
-                        <td><input type="submit" name="Command" value="Search"/></td>
-                    </tr>
-                </table>
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="PageSection">
+                            <table class="alternate_color">
+                                <tr>
+                                    <td>FeatureName</td>
+                                    <td class="CdmsTextInput4">@Html.TextBoxFor(q => q.FeatureName, null, null)</td>
+                                    <td><input type="submit" name="Command" value="Search"/></td>
+                                </tr>
+                            </table>
+                        </div>
 
-            @Html.Action("AuditLogGrid", Model)
+                        @Html.Action("SummaryApplicationNames", "AuditDb", Model)
+            
+                        @Html.Action("SummaryCategoryNames", "AuditDb", Model)
 
-            @foreach(var auditLog in Model.AuditLogs)
-            { 
-                @Html.Action("AuditLogRecord", auditLog)
-                <br />
-            }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.Action("AuditLogDetail", "AuditDb", Model)
+                    </td>
+                </tr>
+            </table>
         </div>
     }
 </div>

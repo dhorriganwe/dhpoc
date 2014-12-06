@@ -164,9 +164,7 @@ namespace Instrumentation.WebApp.Controllers
 
             if (command == "Search")
             {
-                //query.AuditLogs = GetAuditLogByApplicationName(query);
-
-                query = GetAuditLogByApplicationName2(query);
+                query = GetAuditLogByApplicationName(query);
             }
             else
             {
@@ -196,7 +194,7 @@ namespace Instrumentation.WebApp.Controllers
 
             if (command == "Search")
             {
-                query.AuditLogs = GetAuditLogByCategory(query);
+                query = GetAuditLogByCategory(query);
             }
             else
             {
@@ -228,7 +226,7 @@ namespace Instrumentation.WebApp.Controllers
             {
                 query.FeatureName = HttpUtility.UrlDecode(query.FeatureName);
 
-                query.AuditLogs = GetAuditLogByFeatureName(query);
+                query = GetAuditLogByFeatureName(query);
             }
             else
             {
@@ -239,6 +237,11 @@ namespace Instrumentation.WebApp.Controllers
 
             ModelState.Clear();
 
+            return View(query);
+        }
+
+        public ActionResult AuditLogDetail(ViewQueryBase query)
+        {
             return View(query);
         }
 
@@ -324,7 +327,7 @@ namespace Instrumentation.WebApp.Controllers
             return auditLogs;
         }
 
-        private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName2(ViewQueryAuditLogByApplicationName query)
+        private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
@@ -332,55 +335,44 @@ namespace Instrumentation.WebApp.Controllers
                 query.ApplicationName,
                 query.MaxRowCount);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 
-            query.AuditLogs = auditLogs;
-
-            var featureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
-
-            query.FeatureNames = featureNames;
-
+            query.FeatureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
+            query.Categories = auditLogDataService.GetSummaryItemsByApplicationName("Category", query.ApplicationName);
             
             return query;
         }
 
-        private List<AuditLog> GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)
+        private ViewQueryAuditLogByCategory GetAuditLogByCategory(ViewQueryAuditLogByCategory query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(
-                                            auditLogDataService.GetAuditLogByApplicationName(
-                                                query.ApplicationName, 
-                                                query.MaxRowCount)
-                                            .ToList());
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByCategory(
+                query.Category,
+                query.MaxRowCount);
 
-            return auditLogs;
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            query.FeatureNames = auditLogDataService.GetSummaryItemsByCategory("FeatureName", query.Category);
+            query.ApplicationNames = auditLogDataService.GetSummaryItemsByCategory("ApplicationName", query.Category);
+
+            return query;
         }
 
-        private List<AuditLog> GetAuditLogByCategory(ViewQueryAuditLogByCategory query)
+        private ViewQueryAuditLogByFeatureName GetAuditLogByFeatureName(ViewQueryAuditLogByFeatureName query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(
-                                            auditLogDataService.GetAuditLogByCategory(
-                                                query.Category, 
-                                                query.MaxRowCount)
-                                            .ToList());
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByFeatureName(
+                query.FeatureName,
+                query.MaxRowCount);
 
-            return auditLogs;
-        }
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 
-        private List<AuditLog> GetAuditLogByFeatureName(ViewQueryAuditLogByFeatureName query)
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            query.ApplicationNames = auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", query.FeatureName);
+            query.Categories = auditLogDataService.GetSummaryItemsByFeatureName("Category", query.FeatureName);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(
-                                            auditLogDataService.GetAuditLogByFeatureName(
-                                                query.FeatureName,
-                                                query.MaxRowCount)
-                                            .ToList());
-
-            return auditLogs;
+            return query;
         }
 
     }
