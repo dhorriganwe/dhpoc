@@ -51,8 +51,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="TestBase.cs" />
-    <Compile Include="LogFileParserTests.cs" />
+    <Compile Include="CdmsProviderLogFileParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CdmsLogFileWorkflowTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CdmsLogFileParser\CdmsLogFileParser.csproj">
@@ -65,7 +66,9 @@
     <None Include="SampleData\cf9d80b1-f7ab-4a8f-887a-2331412d845c.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SampleData\eaa55364-2d05-4361-962c-c6c34096b03b.log" />
+    <None Include="SampleData\eaa55364-2d05-4361-962c-c6c34096b03b.log">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

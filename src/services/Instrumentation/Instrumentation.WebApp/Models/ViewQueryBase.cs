@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Instrumentation.DomainDA.Helpers;
 using Instrumentation.DomainDA.Models;

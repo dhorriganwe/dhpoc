@@ -1,73 +1,85 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
 {
     public class CdmsProviderLogFileParser
     {
+        private List<string> _cdmsRequestTypeIdentifiers = new List<string>();
         public CdmsProviderLogFileParser()
         {
-            CdmsRequestTypeIdentifiers.Add("ProductListRequest");
-            CdmsRequestTypeIdentifiers.Add("ProductListResponse");
+            _cdmsRequestTypeIdentifiers.Add("ProductListRequest");
+            _cdmsRequestTypeIdentifiers.Add("ProductListResponse");
 
-            CdmsRequestTypeIdentifiers.Add("LabelCheckMix CheckMixRequest");
-            CdmsRequestTypeIdentifiers.Add("Check Job_Request");
-            CdmsRequestTypeIdentifiers.Add("Check Job_Response");
-            CdmsRequestTypeIdentifiers.Add("LabelCheckMix complete");
+            _cdmsRequestTypeIdentifiers.Add("LabelCheckMix CheckMixRequest");
+            _cdmsRequestTypeIdentifiers.Add("Check Job_Request");
+            _cdmsRequestTypeIdentifiers.Add("Check Job_Response");
+            _cdmsRequestTypeIdentifiers.Add("LabelCheckMix complete");
 
-            CdmsRequestTypeIdentifiers.Add("AnswerQuestionRequest");
-            CdmsRequestTypeIdentifiers.Add("Answer request");
-            CdmsRequestTypeIdentifiers.Add("Answer Job_Response");
-            CdmsRequestTypeIdentifiers.Add("AnswerQuestion complete");
+            _cdmsRequestTypeIdentifiers.Add("AnswerQuestionRequest");
+            _cdmsRequestTypeIdentifiers.Add("Answer request");
+            _cdmsRequestTypeIdentifiers.Add("Answer Job_Response");
+            _cdmsRequestTypeIdentifiers.Add("AnswerQuestion complete");
+            //_cdmsRequestTypeIdentifiers.Add("cdms:");
         }
-
 
         public LogFileLineType SetLogFileLineType(LogFileLine logFileLine)
         {
             if (string.IsNullOrEmpty(logFileLine.Text))
             {
                 logFileLine.LogFileLineType = LogFileLineType.CR;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;
                 return logFileLine.LogFileLineType;
             }
 
             if (logFileLine.Text == Environment.NewLine)
             {
                 logFileLine.LogFileLineType = LogFileLineType.CR;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;
                 return logFileLine.LogFileLineType;
             }
 
             DateTime dateTime;
             if (DateTime.TryParse(logFileLine.Text, out dateTime))
             {
-                logFileLine.LogFileLineType = LogFileLineType.Date;
+                logFileLine.LogFileLineType = LogFileLineType.TimeStamp;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;
                 return logFileLine.LogFileLineType;
             }
 
             if (logFileLine.Text.IndexOf("correlationId", System.StringComparison.Ordinal) == 0)
             {
                 logFileLine.LogFileLineType = LogFileLineType.CorrelationId;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;
                 return logFileLine.LogFileLineType;
             }
 
             if (logFileLine.Text.IndexOf("MachineName", System.StringComparison.Ordinal) == 0)
             {
                 logFileLine.LogFileLineType = LogFileLineType.MachineName;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;
                 return logFileLine.LogFileLineType;
             }
 
-            if (CdmsRequestTypeIdentifiers.Contains(logFileLine.Text))
+            if (_cdmsRequestTypeIdentifiers.Contains(logFileLine.Text))
             {
                 logFileLine.LogFileLineType = LogFileLineType.CdmsRequestType;
-
                 logFileLine.CdmsRequestType = GetCdmsRequestType(logFileLine.Text);
                 return logFileLine.LogFileLineType;
             }
 
-            return LogFileLineType.Unknown;
+            if (logFileLine.Text.Contains("cdms:"))
+            {
+                logFileLine.LogFileLineType = LogFileLineType.PerformanceData;
+                logFileLine.CdmsRequestType = CdmsRequestType.NA;  
+                return logFileLine.LogFileLineType;
+            }
+
+            logFileLine.LogFileLineType = LogFileLineType.Content;
+            logFileLine.CdmsRequestType = CdmsRequestType.NA;
+            
+            return LogFileLineType.Content;
         }
 
         private CdmsRequestType GetCdmsRequestType(string text)
@@ -112,6 +124,27 @@ namespace CdmsLogFileParser
             }
         }
 
-        public List<string> CdmsRequestTypeIdentifiers = new List<string>();
+        public void ParsePerformanceLineToValues(CdmsRequestItem item)
+        {
+            const string cdmsToken = "cdms:";
+            const string pvdrToken = "pvdr:";
+            const string msToken = "ms";
+            int posCdmsVal = -1;
+            int posMs = -1;
+            int posPvdrVal = -1;
+
+            posCdmsVal = item.RequestPerfData.IndexOf(cdmsToken, StringComparison.Ordinal) + cdmsToken.Length;
+            posMs = item.RequestPerfData.IndexOf(msToken, posCdmsVal, StringComparison.Ordinal);
+
+            item.CdmsPerformance = item.RequestPerfData.Substring(posCdmsVal, posMs - posCdmsVal);
+
+            if (item.RequestPerfData.Contains(pvdrToken))
+            {
+                posPvdrVal = item.RequestPerfData.IndexOf(pvdrToken, StringComparison.Ordinal) + pvdrToken.Length;
+                posMs = item.RequestPerfData.IndexOf(msToken, posPvdrVal, StringComparison.Ordinal);
+
+                item.ProviderPerformance = item.RequestPerfData.Substring(posPvdrVal, posMs - posPvdrVal);
+            }
+        }
     }
 }

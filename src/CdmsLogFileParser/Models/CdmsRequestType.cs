@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace CdmsLogFileParser.Models
 {
+    // ProductListRequest
+    // ProductListResponse
     // LabelCheckMix CheckMixRequest
     // Check Job_Request
     // Check Job_Response
@@ -28,6 +25,6 @@ namespace CdmsLogFileParser.Models
         AnswerQuestionRequest,
         AnswerRequest,
         AnswerJob_Response,
-        AnswerQuestionComplete
+        AnswerQuestionComplete,
     }
 }
