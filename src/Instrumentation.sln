@@ -18,9 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.WebApp", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instrumentation.WebApp.Tests", "services\Instrumentation\Instrumentation.WebApp.Tests\Instrumentation.WebApp.Tests.csproj", "{5972CD58-DA91-4335-B574-31FDEB1D5A5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdmsLogFileParser", "CdmsLogFileParser\CdmsLogFileParser.csproj", "{B94D3EDF-5CA2-462A-A2ED-548CE0D14F02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdmsLogFileParser", "services\Instrumentation\CdmsLogFileParser\CdmsLogFileParser.csproj", "{B94D3EDF-5CA2-462A-A2ED-548CE0D14F02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdmsLogFileParser.Tests", "CdmsLogFileParser.Tests\CdmsLogFileParser.Tests.csproj", "{6A2FF3FA-CED8-4B37-A767-45C4AE77F6AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CdmsLogFileParser.Tests", "services\Instrumentation\CdmsLogFileParser.Tests\CdmsLogFileParser.Tests.csproj", "{6A2FF3FA-CED8-4B37-A767-45C4AE77F6AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

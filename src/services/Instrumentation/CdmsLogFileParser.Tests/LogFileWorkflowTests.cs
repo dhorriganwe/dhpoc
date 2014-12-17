@@ -7,12 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace CdmsLogFileParser.Tests
 {
     [TestClass]
-    public class CdmsLogFileWorkflowTests : TestBase
+    public class LogFileWorkflowTests : TestBase
     {
         //const string fileName1 = @"SampleData\cf9d80b1-f7ab-4a8f-887a-2331412d845c.log";
         const string fileName2 = @"SampleData\93e213af-81f4-4a44-95d4-eac7c9534149.log";
 
-        private readonly CdmsLogFileWorkflow _workflow = new CdmsLogFileWorkflow();
+        private readonly LogFileWorkflow _logFileWorkflow = new LogFileWorkflow();
 
         [TestMethod]
         [DeploymentItem(fileName2, "SampleData")]
@@ -33,7 +33,7 @@ namespace CdmsLogFileParser.Tests
             var logFile = new LogFile(fileName2);
             Assert.IsTrue(logFile.FileInfo.Exists, "File does not exist: " + logFile.FileInfo.FullName);
 
-            _workflow.ProcessFile(logFile);
+            _logFileWorkflow.ProcessFile(logFile);
 
             Assert.IsTrue(logFile.Lines.Count > 10);
             Assert.IsTrue(logFile.CdmsPerfLines.Count > 10);
@@ -50,7 +50,7 @@ namespace CdmsLogFileParser.Tests
         {
             var logFile = new LogFile(fileName2);
 
-            _workflow.ProcessFile(logFile);
+            _logFileWorkflow.ProcessFile(logFile);
 
             Assert.IsTrue(logFile.CdmsRequestItems.Count > 1);
 

@@ -42,13 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CdmsLogFileWorkflow.cs" />
-    <Compile Include="CdmsProviderLogFileParser.cs" />
+    <Compile Include="JobResultsAnalyzer.cs" />
+    <Compile Include="LogFileWorkflow.cs" />
+    <Compile Include="LogFileParser.cs" />
     <Compile Include="Helpers\Configurations.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\ResourceReader.cs" />
     <Compile Include="Helpers\ResourceXmlReader.cs" />
-    <Compile Include="LogFileParserJobWorkflow.cs" />
+    <Compile Include="ParseJobWorkflow.cs" />
     <Compile Include="Models\CdmsRequestItem.cs" />
     <Compile Include="Models\CdmsRequestType.cs" />
     <Compile Include="Models\JobSummary.cs" />

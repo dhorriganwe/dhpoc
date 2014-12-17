@@ -4,10 +4,10 @@ using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
 {
-    public class CdmsProviderLogFileParser
+    public class LogFileParser
     {
         private List<string> _cdmsRequestTypeIdentifiers = new List<string>();
-        public CdmsProviderLogFileParser()
+        public LogFileParser()
         {
             _cdmsRequestTypeIdentifiers.Add("ProductListRequest");
             _cdmsRequestTypeIdentifiers.Add("ProductListResponse");

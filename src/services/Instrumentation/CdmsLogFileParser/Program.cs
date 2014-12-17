@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using CdmsLogFileParser.Helpers;
 using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
@@ -22,9 +21,9 @@ namespace CdmsLogFileParser
                     Console.WriteLine("LogFileFolder: " + logFileFolder);
                     Console.WriteLine("Processing log files...");
 
-                    LogFileParserJobWorkflow workflow = new LogFileParserJobWorkflow();
+                    var parseJobWorkflow = new ParseJobWorkflow();
 
-                    JobSummary jobSummary = workflow.ProcessLogFiles(logFileFolder);
+                    var jobSummary = parseJobWorkflow.ProcessLogFiles(logFileFolder);
 
                     DisplaySummary(jobSummary);
                 }
@@ -39,11 +38,6 @@ namespace CdmsLogFileParser
             Console.ReadKey();
         }
 
-        //private static void ProcessFileList(JobSummary jobSummary)
-        //{
-            
-        //}
-
         private static void DisplaySummary(JobSummary jobSummary)
         {
             var sb = new StringBuilder();
@@ -57,22 +51,8 @@ namespace CdmsLogFileParser
             Console.WriteLine("Folder: {0}", jobSummary.Folder);
             Console.WriteLine("FileExtension: {0}", jobSummary.FileExtension);
             Console.WriteLine("FileCount: {0}", jobSummary.FileCount);
+            Console.WriteLine("OutputFileName: {0}", jobSummary.OutputFileName);
         }
-
-        //private static JobSummary SummarizeFolderContents(string logFileFolder)
-        //{
-        //    var jobSummary = new JobSummary();
-        //    jobSummary.Folder = logFileFolder;
-        //    jobSummary.FileExtension = Configurations.FileExtension;
-
-        //    DirectoryInfo di = new DirectoryInfo(logFileFolder);
-
-        //    jobSummary.FileInfos = di.GetFiles(jobSummary.FileExtension).ToList();
-        //    jobSummary.FileCount = jobSummary.FileInfos.Count.ToString();
-        //    jobSummary.FileNames = jobSummary.FileInfos.Select(fi => fi.FullName).ToList();
-
-        //    return jobSummary;
-        //}
 
         private static bool HandleArgs(
             string[] args,
@@ -95,9 +75,6 @@ namespace CdmsLogFileParser
 
         private static void DisplayUsage(string[] args)
         {
-            //PrintConfigurations();
-
-
             StringBuilder sb = new StringBuilder();
             args.ToList().ForEach(a => sb.AppendFormat("{0} ", a));
 

@@ -9,9 +9,41 @@ using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
 {
-    public class LogFileParserJobWorkflow
+    public class ParseJobWorkflow
     {
-        private readonly CdmsLogFileWorkflow _logFileWorkflow = new CdmsLogFileWorkflow();
+        private readonly LogFileWorkflow _logFileWorkflow = new LogFileWorkflow();
+
+        public JobSummary ProcessLogFiles(string logFileFolder)
+        {
+            var jobSummary = SummarizeFolderContents(logFileFolder);
+
+            ProcessLogFiles(jobSummary);
+
+            BuildOutputCsvString(jobSummary);
+
+            WriteOutputCsvFile(jobSummary);
+
+            SummarizeResults(jobSummary);
+
+            return jobSummary;
+        }
+
+        public void ProcessLogFiles(JobSummary jobSummary)
+        {
+            foreach (var fileInfo in jobSummary.FileInfos)
+            {
+                var logFile = new LogFile(fileInfo.FullName);
+
+                _logFileWorkflow.ProcessFile(logFile);
+
+                jobSummary.LogFiles.Add(logFile);
+            }
+
+            foreach (var logFile in jobSummary.LogFiles)
+            {
+                jobSummary.AllRequestItems.AddRange(logFile.CdmsRequestItems);
+            }
+        }
 
         public JobSummary SummarizeFolderContents(string logFileFolder)
         {
@@ -28,17 +60,10 @@ namespace CdmsLogFileParser
             return jobSummary;
         }
 
-        public JobSummary ProcessLogFiles(string logFileFolder)
+        private void SummarizeResults(JobSummary jobSummary)
         {
-            var jobSummary = SummarizeFolderContents(logFileFolder);
+            
 
-            ProcessLogFiles(jobSummary);
-
-            BuildOutputCsvString(jobSummary);
-
-            WriteOutputCsvFile(jobSummary);
-
-            return jobSummary;
         }
 
         private void WriteOutputCsvFile(JobSummary jobSummary)
@@ -46,16 +71,12 @@ namespace CdmsLogFileParser
             var fileName = BuildOutputFilename(jobSummary.Folder);
 
             File.WriteAllText(fileName, jobSummary.OutputCsvText.ToString());
+
+            jobSummary.OutputFileName = fileName;
         }
 
         private void BuildOutputCsvString(JobSummary jobSummary)
         {
-            List<CdmsRequestItem> allRequestItems = new List<CdmsRequestItem>();
-            foreach (var logFile in jobSummary.LogFiles)
-            {
-                allRequestItems.AddRange(logFile.CdmsRequestItems);
-            }
-
             var sb = new StringBuilder();
             sb.AppendFormat("{0};{1};{2};{3};{4};{5}{6}",
                 "CorrelationId",
@@ -66,7 +87,7 @@ namespace CdmsLogFileParser
                 "ProviderPerformance",
                 Environment.NewLine);
 
-            foreach (var requestItem in allRequestItems)
+            foreach (var requestItem in jobSummary.AllRequestItems)
             {
                 sb.AppendFormat("{0};{1};{2};{3};{4};{5}{6}",
                     requestItem.FileCorrelationId,
@@ -79,18 +100,6 @@ namespace CdmsLogFileParser
             }
 
             jobSummary.OutputCsvText = sb;
-        }
-
-        private void ProcessLogFiles(JobSummary jobSummary)
-        {
-            foreach (var fileInfo in jobSummary.FileInfos)
-            {
-                var logFile = new LogFile(fileInfo.FullName);
-
-                _logFileWorkflow.ProcessFile(logFile);
-
-                jobSummary.LogFiles.Add(logFile);
-            }
         }
 
         public string BuildOutputFilename(string directory)

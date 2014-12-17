@@ -6,12 +6,12 @@ using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
 {
-    public class CdmsLogFileWorkflow
+    public class LogFileWorkflow
     {
-        private readonly CdmsProviderLogFileParser _parser = new CdmsProviderLogFileParser();
+        private readonly LogFileParser _logFileParser = new LogFileParser();
         private readonly List<string> _cdmsPerformanceDataRequestTypes = new List<string>();
 
-        public CdmsLogFileWorkflow()
+        public LogFileWorkflow()
         {
             // these are the logged items that correspond to 
             // a single CDMS request and its performance data
@@ -41,7 +41,7 @@ namespace CdmsLogFileParser
         {
             foreach (var item in logFile.CdmsRequestItems)
             {
-                _parser.ParsePerformanceLineToValues(item);
+                _logFileParser.ParsePerformanceLineToValues(item);
             }
 
         }
@@ -144,7 +144,7 @@ namespace CdmsLogFileParser
             foreach (var line in logFile.Lines)
             {
                 var logFileLine = new LogFileLine(line);
-                _parser.SetLogFileLineType(logFileLine);
+                _logFileParser.SetLogFileLineType(logFileLine);
                 logFile.LogFileLines.Add(logFileLine);
             }
         }
