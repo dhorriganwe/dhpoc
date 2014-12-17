@@ -19,10 +19,14 @@ namespace CdmsLogFileParser
                     DisplayUsage(args);
                 else
                 {
-                    var jobSummary = SummarizeFolderContents(logFileFolder);
-                    DisplaySummary(jobSummary);
+                    Console.WriteLine("LogFileFolder: " + logFileFolder);
+                    Console.WriteLine("Processing log files...");
 
-                    ProcessFileList(jobSummary);
+                    LogFileParserJobWorkflow workflow = new LogFileParserJobWorkflow();
+
+                    JobSummary jobSummary = workflow.ProcessLogFiles(logFileFolder);
+
+                    DisplaySummary(jobSummary);
                 }
             }
             catch (Exception e)
@@ -35,10 +39,10 @@ namespace CdmsLogFileParser
             Console.ReadKey();
         }
 
-        private static void ProcessFileList(JobSummary jobSummary)
-        {
+        //private static void ProcessFileList(JobSummary jobSummary)
+        //{
             
-        }
+        //}
 
         private static void DisplaySummary(JobSummary jobSummary)
         {
@@ -55,20 +59,20 @@ namespace CdmsLogFileParser
             Console.WriteLine("FileCount: {0}", jobSummary.FileCount);
         }
 
-        private static JobSummary SummarizeFolderContents(string logFileFolder)
-        {
-            var jobSummary = new JobSummary();
-            jobSummary.Folder = logFileFolder;
-            jobSummary.FileExtension = Configurations.FileExtension;
+        //private static JobSummary SummarizeFolderContents(string logFileFolder)
+        //{
+        //    var jobSummary = new JobSummary();
+        //    jobSummary.Folder = logFileFolder;
+        //    jobSummary.FileExtension = Configurations.FileExtension;
 
-            DirectoryInfo di = new DirectoryInfo(logFileFolder);
+        //    DirectoryInfo di = new DirectoryInfo(logFileFolder);
 
-            jobSummary.FileInfos = di.GetFiles(jobSummary.FileExtension).ToList();
-            jobSummary.FileCount = jobSummary.FileInfos.Count.ToString();
-            jobSummary.FileNames = jobSummary.FileInfos.Select(fi => fi.FullName).ToList();
+        //    jobSummary.FileInfos = di.GetFiles(jobSummary.FileExtension).ToList();
+        //    jobSummary.FileCount = jobSummary.FileInfos.Count.ToString();
+        //    jobSummary.FileNames = jobSummary.FileInfos.Select(fi => fi.FullName).ToList();
 
-            return jobSummary;
-        }
+        //    return jobSummary;
+        //}
 
         private static bool HandleArgs(
             string[] args,

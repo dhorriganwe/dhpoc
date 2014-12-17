@@ -48,6 +48,9 @@ namespace CdmsLogFileParser
 
         private void FindCdmsRequestItems(LogFile logFile)
         {
+            const string correlationIdToken = "correlationId: ";
+            const string machineNameToken = "MachineName: ";
+
             string fileCorrelationId = "";
             string fileMachineName = "";
 
@@ -60,10 +63,10 @@ namespace CdmsLogFileParser
                 switch (line.LogFileLineType)
                 {
                     case LogFileLineType.MachineName:
-                        fileMachineName = line.Text;
+                        fileMachineName = line.Text.Substring(machineNameToken.Length);
                         break;
                     case LogFileLineType.CorrelationId:
-                        fileCorrelationId = line.Text;
+                        fileCorrelationId = line.Text.Substring(correlationIdToken.Length);
                         break;
                     case LogFileLineType.TimeStamp:
                         requestTimeStamp = line.Text;
