@@ -26,5 +26,6 @@ src/services/packages/*
 src/TestResults/*
 !src/applications/web/packages/repositories.config
 !src/services/packages/repositories.config
+!src/CdmsLogFileParser.Tests/SampleData/*.log
 src/packages/*
 *.transformed

@@ -63,10 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="SampleData\cf9d80b1-f7ab-4a8f-887a-2331412d845c.log">
+    <None Include="SampleData\93e213af-81f4-4a44-95d4-eac7c9534149.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="SampleData\eaa55364-2d05-4361-962c-c6c34096b03b.log">
+    <None Include="SampleData\e11c6cbd-93c7-471c-869b-1e54de39d7d3.log">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
