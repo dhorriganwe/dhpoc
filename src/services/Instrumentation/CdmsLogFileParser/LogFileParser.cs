@@ -6,7 +6,7 @@ namespace CdmsLogFileParser
 {
     public class LogFileParser
     {
-        private List<string> _cdmsRequestTypeIdentifiers = new List<string>();
+        private readonly List<string> _cdmsRequestTypeIdentifiers = new List<string>();
         public LogFileParser()
         {
             _cdmsRequestTypeIdentifiers.Add("ProductListRequest");
@@ -21,7 +21,6 @@ namespace CdmsLogFileParser
             _cdmsRequestTypeIdentifiers.Add("Answer request");
             _cdmsRequestTypeIdentifiers.Add("Answer Job_Response");
             _cdmsRequestTypeIdentifiers.Add("AnswerQuestion complete");
-            //_cdmsRequestTypeIdentifiers.Add("cdms:");
         }
 
         public LogFileLineType SetLogFileLineType(LogFileLine logFileLine)

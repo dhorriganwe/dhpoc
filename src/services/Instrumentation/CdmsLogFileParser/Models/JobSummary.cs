@@ -16,5 +16,6 @@ namespace CdmsLogFileParser.Models
         public StringBuilder OutputCsvText;
         public string OutputFileName;
         public string SummaryFileName;
+        public Dictionary<string, int> Averages = new Dictionary<string, int>();
     }
 }

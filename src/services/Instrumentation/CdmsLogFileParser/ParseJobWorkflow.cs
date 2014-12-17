@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CdmsLogFileParser.Helpers;
 using CdmsLogFileParser.Models;
 
@@ -12,6 +10,7 @@ namespace CdmsLogFileParser
     public class ParseJobWorkflow
     {
         private readonly LogFileWorkflow _logFileWorkflow = new LogFileWorkflow();
+        private readonly JobResultsAnalyzer _jobResultsAnalyzer = new JobResultsAnalyzer();
 
         public JobSummary ProcessLogFiles(string logFileFolder)
         {
@@ -25,7 +24,32 @@ namespace CdmsLogFileParser
 
             SummarizeResults(jobSummary);
 
+            WriteSummaryFile(jobSummary);
+
             return jobSummary;
+        }
+
+        private void WriteSummaryFile(JobSummary jobSummary)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat("{0}/***********************************************/{0}", Environment.NewLine);
+
+
+            sb.AppendFormat("{0}{1}", DateTime.Now.ToString(), Environment.NewLine);
+            sb.AppendFormat("Folder: {0}{1}", jobSummary.Folder, Environment.NewLine);
+            sb.AppendFormat("FileExtension: {0}{1}", jobSummary.FileExtension, Environment.NewLine);
+            sb.AppendFormat("FileCount: {0}{1}", jobSummary.FileCount, Environment.NewLine);
+            sb.AppendFormat("OutputFileName: {0}{1}", jobSummary.OutputFileName, Environment.NewLine);
+
+            sb.AppendFormat("Cdms Response time averages:{0}", Environment.NewLine);
+            foreach (var average in jobSummary.Averages)
+            {
+                sb.AppendFormat("{0}:  {1}{2}", average.Key, average.Value, Environment.NewLine);
+            }
+
+            var fileName = BuildSummaryFilename(jobSummary.Folder);
+            File.AppendAllText(fileName, sb.ToString());
         }
 
         public void ProcessLogFiles(JobSummary jobSummary)
@@ -62,8 +86,7 @@ namespace CdmsLogFileParser
 
         private void SummarizeResults(JobSummary jobSummary)
         {
-            
-
+            _jobResultsAnalyzer.GenerateAverages(jobSummary);
         }
 
         private void WriteOutputCsvFile(JobSummary jobSummary)
@@ -105,7 +128,7 @@ namespace CdmsLogFileParser
         public string BuildOutputFilename(string directory)
         {
             var now = DateTime.Now;
-            string filename = string.Format("ProductDetails{0}{1,2:D2}{2,2:D2}{3,2:D2}{4,2:D2}{5,2:D2}",
+            string filename = string.Format("CdmsPerformanceData{0}{1,2:D2}{2,2:D2}{3,2:D2}{4,2:D2}{5,2:D2}",
                 now.Year,
                 now.Month,
                 now.Day,
@@ -117,6 +140,25 @@ namespace CdmsLogFileParser
                 directory,
                 filename +
                 ".csv");
+
+            return filename;
+        }
+
+        public string BuildSummaryFilename(string directory)
+        {
+            var now = DateTime.Now;
+            string filename = string.Format("Summary{0}{1,2:D2}{2,2:D2}{3,2:D2}{4,2:D2}{5,2:D2}",
+                now.Year,
+                now.Month,
+                now.Day,
+                now.Hour,
+                now.Minute,
+                now.Second);
+
+            filename = Path.Combine(
+                directory,
+                filename +
+                ".sum");
 
             return filename;
         }

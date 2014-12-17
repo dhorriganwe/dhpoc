@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CdmsLogFileParser.Models;
 
 namespace CdmsLogFileParser
@@ -11,18 +8,17 @@ namespace CdmsLogFileParser
     {
         public void GenerateAverages(JobSummary jobSummary)
         {
-            var durations = new List<int>();
+            var allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "ProductListResponse").Select(GetCdmsRequestDuration).ToList();
+            var average = (int)allDurations.Average();
+            jobSummary.Averages.Add("ProductListResponse", average);
 
-            foreach (
-                var item in
-                    jobSummary.AllRequestItems.Where(i => i.RequestType == CdmsRequestType.AnswerJob_Response.ToString())
-                )
-            {
-                durations.Add(GetCdmsRequestDuration(item));
-            }
+            allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "Check Job_Response").Select(GetCdmsRequestDuration).ToList();
+            average = (int)allDurations.Average();
+            jobSummary.Averages.Add("Check Job_Response", average);
 
-            jobSummary.AllRequestItems.Where(i => i.RequestType == CdmsRequestType.AnswerJob_Response.ToString())
-                .ToList().ForEach(i => durations.Add(GetCdmsRequestDuration(i)));
+            allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "Answer Job_Response").Select(GetCdmsRequestDuration).ToList();
+            average = (int)allDurations.Average();
+            jobSummary.Averages.Add("Answer Job_Response", average);
         }
 
         private int GetCdmsRequestDuration(CdmsRequestItem item)

@@ -52,6 +52,13 @@ namespace CdmsLogFileParser
             Console.WriteLine("FileExtension: {0}", jobSummary.FileExtension);
             Console.WriteLine("FileCount: {0}", jobSummary.FileCount);
             Console.WriteLine("OutputFileName: {0}", jobSummary.OutputFileName);
+
+            Console.WriteLine("Cdms Response time averages:");
+            foreach (var average in jobSummary.Averages)
+            {
+                Console.WriteLine("{0}:  {1}ms", average.Key, average.Value);
+            }
+
         }
 
         private static bool HandleArgs(
