@@ -29,6 +29,10 @@
     width: 90px;
 }
 
+.TextLabelLeft {
+    text-align: left;
+}
+
 .PreserveFormat {
     white-space: pre;
 }

@@ -149,6 +149,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\InstrumentationMapper.cs" />
     <Compile Include="Models\AuditLog.cs" />
+    <Compile Include="Models\ViewQueryHeader.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFeatureName.cs" />
     <Compile Include="Models\ViewQueryAuditLogByCategory.cs" />

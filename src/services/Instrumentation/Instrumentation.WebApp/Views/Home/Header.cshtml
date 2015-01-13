@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+﻿@model Instrumentation.WebApp.Models.ViewQueryHeader
 @{
     Layout = null;
 }
@@ -60,10 +60,10 @@
         @Html.Raw(((char) 124).ToString())
         @Html.Raw(((char) 124).ToString())
         @Html.Raw(((char) 160).ToString())
-    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
+        @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 160).ToString())
-    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
+        @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 160).ToString())
         @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)

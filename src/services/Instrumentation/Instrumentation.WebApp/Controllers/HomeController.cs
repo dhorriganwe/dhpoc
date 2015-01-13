@@ -11,7 +11,7 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult Index()
         {
             ViewQueryHome query = new ViewQueryHome();
-            query.ViewName = "Home";
+            query.Header.ViewName = "Home";
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.Now.ToString();
 
@@ -20,17 +20,18 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult Header(ViewQueryBase query = null)
+        public ActionResult Header(ViewQueryHeader query = null)
         {
-            query = query ?? new ViewQueryBase();
+            query = query ?? new ViewQueryHeader();
 
             return View(query);
         }
 
         private void InitDbOptionSelectList(ViewQueryBase query)
         {
-            query.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
+            query.Header.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
         }
+
         private List<LookupItem> GetDbOptionsFromConfig()
         {
             var keys = Configurations.DbKeys;

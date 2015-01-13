@@ -14,7 +14,7 @@
             <tr>
                 @if (string.IsNullOrEmpty(appName.Name)) { <td></td> }
                 else {
-                    <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name, dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name, dbkey = Model.Header.DbKey }, null)</td>
                 }
                 <td>
                     @appName.Count

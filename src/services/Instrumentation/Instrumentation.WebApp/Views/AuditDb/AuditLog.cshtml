@@ -1,15 +1,15 @@
 ﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
-    Model.ViewTitle = "Instrumentation Viewer";
+    Model.Header.ViewTitle = "Instrumentation Viewer";
 }
 
 <div class="PageRoot">
     
-    @Html.Action("Header", "Home", Model)
+    @Html.Action("Header", "Home", Model.Header)
 
     @using (@Html.BeginForm())
     {
-        @Html.Action("DbSelect", "AuditDb", Model)
+        @Html.Action("DbSelect", "AuditDb", Model.Header)
 
         <div>
             <table>
@@ -24,8 +24,6 @@
             </table>
         </div>
         
-        
         @Html.Action("AuditLogGrid", Model)
-
     }
 </div>
