@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	 <head>
+		 <meta charset="utf-8">
+		 <title>API Index</title>
+	 </head>
+	 <body>
+		<header>
+			<h2>Rising Tide - REST enabled Instrumentation Service</h2>
+		</header>
+		 <section>
+		 <h3>Available Methods</h3>
+		 <p>
+			 
+			 /logs/:logEntry
+		 </p>
+		 
+		 <p>
+			<h3>Sample usage :</h3>
+			
+			Open up console and paste the following : <br/>
+			
+			GET request : <br />
+			<code>
+				$.ajax({ 
+						url : 'http://localhost:9000/api/logs', type : 'GET',
+						contentType : 'application/json',
+						data : { 
+									EventId: "Random", 
+									ApplicationName: "RisingTide", 
+									FeatureName: "FieldMapping", 
+									Category: "Audit", 
+									Messages: ["John[PCA] logged in from tool.", "Log in time : 10:30"], 
+									TraceLevel: "error" 
+								}, 
+						success : function(data) {
+									console.log(d); 
+								  },
+						error: function(e) {
+								console.log(e.message);
+						}
+				});
+			</code>
+			
+			<br />
+			<br />
+			POST request : <br />
+			<code>
+				$.ajax({ 
+						url : 'http://localhost:9000/api/logs', 
+						type : 'POST',
+						contentType : 'application/json',
+						data : { 
+									EventId: "Random", 
+									ApplicationName: "RisingTide", 
+									FeatureName: "FieldMapping", 
+									Category: "Audit", 
+									Messages: ["John[PCA] logged in from tool.", "Log in time : 10:30"], 
+									TraceLevel: "error" }, 
+						success : function(data) 
+								 {
+									console.log(data);
+								 },
+						error: function(e) {
+								console.log(e.message);
+						}
+				});
+			</code>
+			
+			<br />
+			<br />
+			JSONP request : <br />
+			<code>
+				$.ajax({ 
+						url : 'http://localhost:9000/api/logs', 
+						type : 'GET', 
+						contentType : 'application/json', 
+						dataType : 'jsonp',
+						data : 
+							{ 
+								EventId: "Random", 
+								ApplicationName: "RisingTide",
+								FeatureName: "FieldMapping", 
+								Category: "Audit", 
+								Messages: ["John[PCA] logged in from tool.", "Log in time : 10:30"], 
+								TraceLevel: "error" 
+							} , 
+						success: function(data) {
+									console.dir(data);
+						},
+						error: function(e) {
+								console.log(e.message);
+						}, 
+						jsonpCallback : 'jsonCallback'
+				});
+			</code>
+		 </p>
+		 </section>
+		 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	 </body>
+ </html>
+
+
+	

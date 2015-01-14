@@ -1,0 +1,20 @@
+﻿-- Database: audit
+
+-- DROP DATABASE audit;
+
+CREATE DATABASE audit
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'English_United States.1252'
+       LC_CTYPE = 'English_United States.1252'
+       CONNECTION LIMIT = -1;
+
+ALTER DEFAULT PRIVILEGES 
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON TABLES
+    TO public;
+
+ALTER DEFAULT PRIVILEGES 
+    GRANT INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON TABLES
+    TO postgres;
+
