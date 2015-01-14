@@ -12,16 +12,6 @@
         @Html.Action("DbSelect", "AuditDb", Model.Header)
 
         <div>
-            <table>
-                <tr>
-                    <th class="TextLabelLeft">AuditLog</th><th></th>
-                </tr>
-                <tr>
-                    <td style="border: none">
-                        <input type="submit" name="Command" value="Refresh"/>
-                    </td>
-                </tr>
-            </table>
         </div>
         
         @Html.Action("AuditLogGrid", Model)
