@@ -16,6 +16,7 @@
             <th>TraceLevel</th>
             <th>AuditedOn</th>
             <th>AdditionalInfo</th>
+            <th>LoginName</th>
         </tr>
         @foreach (var auditLog in Model.AuditLogs)
         {
@@ -48,6 +49,7 @@
                 <td class="messagePreview">
                     <span title="@auditLog.AdditionalInfo">@auditLog.AdditionalInfo</span>
                 </td>
+                <td>@auditLog.LoginName</td>
             </tr>
         }
     </table>

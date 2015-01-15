@@ -6,8 +6,8 @@
         Host: "localhost",
         Port: "5432",
         Queries: {
-            InsertLog: "INSERT INTO rt.auditlog" +
-                "(eventid, applicationname, featurename,category,messages,tracelevel,additionalinfo,auditedon) values($1, $2, $3, $4, $5, $6, $7,$8)"
+            InsertLog: "INSERT INTO rt.auditlog " +
+                "(eventid, applicationname, featurename,category,messages,tracelevel,additionalinfo,auditedon,messagecode,loginname) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)"
         }
     },
     Queue:
@@ -47,8 +47,8 @@
             Messages: { type: [], required: true },
             TraceLevel: { type: String, enum: ['off', 'error', 'warning', 'info', 'verbose','Warning','Error','Exception','exception','Debug', 'Information', 'information'] },
             AdditionalInfo: { type: [], required: true },
-            MessageCode: { type: String, required: true },
-            LoginName:  { type: String, required: true }
+            MessageCode: { type: String, required: false },
+            LoginName:  { type: String, required: false }
         }
     }
 };

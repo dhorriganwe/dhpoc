@@ -62,7 +62,7 @@ table.alternate_color td.eventId{
     border: 0 none;
 }
 table.alternate_color td.messagePreview{
-    max-width: 300px;
+    max-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -20,7 +20,7 @@ function DB(config) {
 
     this.insert = function (message) {
 
-	var query = pgClient.query(config.Queries.InsertLog, [message.EventId, message.ApplicationName, message.FeatureName, message.Category, message.Messages, message.TraceLevel,message.AdditionalInfo, message.AuditedOn], function (err, result) {
+	var query = pgClient.query(config.Queries.InsertLog, [message.EventId, message.ApplicationName, message.FeatureName, message.Category, message.Messages, message.TraceLevel,message.AdditionalInfo, message.AuditedOn, message.MessageCode, message.LoginName], function (err, result) {
 		try {
 			err && console.log(AppConfig.Messages.DBQueryExecutionError + '\n' + config.Queries.InsertLog  + '\n' + err);
 			if(result.command)
