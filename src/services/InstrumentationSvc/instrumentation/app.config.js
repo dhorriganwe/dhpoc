@@ -48,7 +48,7 @@
             TraceLevel: { type: String, enum: ['off', 'error', 'warning', 'info', 'verbose','Warning','Error','Exception','exception','Debug', 'Information', 'information'] },
             AdditionalInfo: { type: [], required: true },
             MessageCode: { type: String, required: true },
-			LoginName:  { type: String, required: true }
+            LoginName:  { type: String, required: true }
         }
     }
 };
