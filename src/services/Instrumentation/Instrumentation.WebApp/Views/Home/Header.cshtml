@@ -84,5 +84,15 @@
     }
 
 <hr />
-
+    @if(!string.IsNullOrEmpty(Model.ErrorMessage))
+    { 
+        <table>
+            <tr>
+                <td class="ErrorTitle">ErrorMessage</td>
+            </tr>
+            <tr>
+                <td>@Model.ErrorMessage</td>
+            </tr>
+        </table>
+    }
 </div>

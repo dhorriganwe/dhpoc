@@ -14,6 +14,8 @@ namespace Instrumentation.WebApp.Models
         public string ViewTitle { get; set; }
         public int MaxRowCount { get; set; }
 
+        public string ErrorMessage { get; set; }
+
         public SelectList DbOptionSelectList { get; set; }
     }
 }

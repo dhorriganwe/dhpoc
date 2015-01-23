@@ -37,6 +37,12 @@
     white-space: pre;
 }
 
+.ErrorTitle {
+    font-weight: bolder;
+    font-size:15px;
+    color: red;
+}
+
 table.alternate_color {
     /*border-collapse: collapse;*/
 }

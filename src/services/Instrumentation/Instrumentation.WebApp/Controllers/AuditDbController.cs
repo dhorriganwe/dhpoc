@@ -7,6 +7,7 @@ using Instrumentation.DomainDA.DataServices;
 using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
 using AuditLog = Instrumentation.WebApp.Models.AuditLog;
+using System;
 
 namespace Instrumentation.WebApp.Controllers
 {
@@ -34,16 +35,23 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult Summary(ViewQueryAuditLogSummary query, string command)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
-
-            if (command == "Refresh")
+            try
             {
-                var summary = auditLogDataService.GetAuditLogSummary();
-                query.TotalRecordCount = summary.TotalRowCount;
+                IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
 
-                query.ApplicationNames = auditLogDataService.GetApplicationNames();
-                query.FeatureNames = auditLogDataService.GetFeatureNames();
-                query.Categories = auditLogDataService.GetCategories();
+                if (command == "Refresh")
+                {
+                    var summary = auditLogDataService.GetAuditLogSummary();
+                    query.TotalRecordCount = summary.TotalRowCount;
+
+                    query.ApplicationNames = auditLogDataService.GetApplicationNames();
+                    query.FeatureNames = auditLogDataService.GetFeatureNames();
+                    query.Categories = auditLogDataService.GetCategories();
+                }
+            }
+            catch (Exception ex)
+            {
+                query.Header.ErrorMessage = ex.ToString();
             }
 
             InitDbOptionSelectList(query);
