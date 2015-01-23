@@ -10,6 +10,8 @@ namespace CdmsLogFileParser
     {
         static void Main(string[] args)
         {
+            Console.WriteLine();
+            Console.WriteLine(DateTime.Now.ToString());
             try
             {
                 string logFileFolder = "";
@@ -33,6 +35,8 @@ namespace CdmsLogFileParser
                 System.Console.WriteLine(e);
             }
 
+            Console.WriteLine();
+            Console.WriteLine(DateTime.Now.ToString());
             Console.WriteLine();
             Console.WriteLine("any key to exit...");
             Console.ReadKey();

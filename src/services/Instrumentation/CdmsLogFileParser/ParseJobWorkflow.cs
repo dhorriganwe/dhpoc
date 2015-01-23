@@ -16,6 +16,8 @@ namespace CdmsLogFileParser
         {
             var jobSummary = SummarizeFolderContents(logFileFolder);
 
+            Console.WriteLine("FileCount: {0}", jobSummary.FileCount);
+
             ProcessLogFiles(jobSummary);
 
             BuildOutputCsvString(jobSummary);
@@ -54,13 +56,22 @@ namespace CdmsLogFileParser
 
         public void ProcessLogFiles(JobSummary jobSummary)
         {
+            int processedFileCount = 0;
             foreach (var fileInfo in jobSummary.FileInfos)
             {
                 var logFile = new LogFile(fileInfo.FullName);
 
-                _logFileWorkflow.ProcessFile(logFile);
+                try
+                {
+                    _logFileWorkflow.ProcessFile(logFile);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception(string.Format("processedFileCount:{0}   fileInfo.FullName: {1}", processedFileCount, fileInfo.FullName), e);
+                }
 
                 jobSummary.LogFiles.Add(logFile);
+                processedFileCount++;
             }
 
             foreach (var logFile in jobSummary.LogFiles)
