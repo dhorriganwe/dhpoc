@@ -9,7 +9,20 @@
 
     @using (@Html.BeginForm())
     {
-        @Html.Action("DbSelect", "AuditDb", Model.Header)
+        <div>
+            <table>
+                <tr>
+                    <td>DbKey @Html.DropDownListFor(q => q.Header.DbKey, Model.Header.DbOptionSelectList)</td>
+                    <td>
+                        <input type="submit" name="Command" value="Refresh" />
+                    </td>
+                    <td>MaxRowCount</td>
+                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.Header.MaxRowCount, null, null)</td>
+                </tr>
+            </table>
+        </div>
+
+        @*@Html.Action("DbSelect", "AuditDb", Model.Header)*@
 
         <div>
         </div>
