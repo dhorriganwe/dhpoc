@@ -24,21 +24,20 @@
 
         @*@Html.Action("DbSelect", "AuditDb", Model.Header)*@
 
-        <div class="PageSectionWithBorder">
-            <table>
+        <div class="PageSection">
+            <table class="TableSection">
                 <tr>
                     <td>
+                        <table class="alternate_color">
+                            <tr>
+                                <td>ApplicationName</td>
+                                <td>@Html.TextBoxFor(q => q.ApplicationName, null, null)</td>
+                                <td><input type="submit" name="Command" value="Search" /></td>
+                            </tr>
+                        </table>
 
-                            <table class="alternate_color">
-                                <tr>
-                                    <td>ApplicationName</td>
-                                    <td>@Html.TextBoxFor(q => q.ApplicationName, null, null)</td>
-                                    <td><input type="submit" name="Command" value="Search"/></td>
-                                </tr>
-                            </table>
-            
                         @Html.Action("SummaryFeatureNames", "AuditDb", Model)
-            
+
                         @Html.Action("SummaryCategoryNames", "AuditDb", Model)
 
                     </td>

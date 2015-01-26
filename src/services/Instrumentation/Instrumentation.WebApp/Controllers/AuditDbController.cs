@@ -72,12 +72,20 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AuditLog(ViewQueryBase query, string command)
         {
-            query.Header.ViewName = "AuditLog";
+            try
+            {
+                query.Header.ViewName = "AuditLog";
 
-            query.AuditLogs = command == "Refresh" ? GetAuditLogAll(query) : new List<AuditLog>();
+                query.AuditLogs = command == "Refresh" ? GetAuditLogAll(query) : new List<AuditLog>();
+
+            }
+            catch (Exception ex)
+            {
+                query.Header.ErrorMessage = ex.ToString();
+            }
 
             InitDbOptionSelectList(query);
-
+            
             ModelState.Clear();
 
             return View(query);
@@ -98,7 +106,7 @@ namespace Instrumentation.WebApp.Controllers
             query.Header.ViewName = "AuditLogById";
 
 
-            if (command == "Search")
+            if (command == "Search" || command == "Refresh")
             {
                 query.AuditLog = GetAuditLogById(query);
 
@@ -156,7 +164,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             query.Header.ViewName = "AuditLogByApplicationName";
 
-            if (command == "Search")
+            if (command == "Search" || command == "Refresh")
             {
                 query = GetAuditLogByApplicationName(query);
             }
@@ -186,7 +194,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             query.Header.ViewName = "AuditLogByCategory";
 
-            if (command == "Search")
+            if (command == "Search" || command == "Refresh")
             {
                 query = GetAuditLogByCategory(query);
             }
@@ -216,7 +224,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             query.Header.ViewName = "AuditLogByFeatureName";
 
-            if (command == "Search")
+            if (command == "Search" || command == "Refresh")
             {
                 query.FeatureName = HttpUtility.UrlDecode(query.FeatureName);
 

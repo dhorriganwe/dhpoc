@@ -24,8 +24,8 @@
 
         @*@Html.Action("DbSelect", "AuditDb", Model.Header)*@
 
-        <div class="PageSectionWithBorder">
-            <table>
+        <div class="PageSection">
+            <table class="TableSection">
                 <tr>
                     <td>
                         <div class="PageSection">
@@ -33,13 +33,13 @@
                                 <tr>
                                     <td>Category</td>
                                     <td>@Html.TextBoxFor(q => q.Category, null, null)</td>
-                                    <td><input type="submit" name="Command" value="Search"/></td>
+                                    <td><input type="submit" name="Command" value="Search" /></td>
                                 </tr>
                             </table>
                         </div>
 
                         @Html.Action("SummaryApplicationNames", "AuditDb", Model)
-            
+
                         @Html.Action("SummaryFeatureNames", "AuditDb", Model)
 
                     </td>

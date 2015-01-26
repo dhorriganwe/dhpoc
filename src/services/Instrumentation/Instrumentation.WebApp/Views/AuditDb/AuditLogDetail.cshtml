@@ -4,21 +4,22 @@
 }
 
 <div>
-    <table>
+    <table class="TableSection">
         <tr>
             <td>
                 @Html.Action("AuditLogGrid", Model)
             </td>
         </tr>
+    </table>
+    <table class="TableSection">
         <tr>
             <td>
                 <div>
-                    @foreach(var auditLog in Model.AuditLogs)
-                    { 
-
+                    @foreach (var auditLog in Model.AuditLogs)
+                    {
                         <div>
                             <table class="alternate_color">
-        
+
                                 @if (!string.IsNullOrEmpty(auditLog.Id))
                                 {
                                     <tr><td>Id</td><td>@auditLog.Id</td></tr>

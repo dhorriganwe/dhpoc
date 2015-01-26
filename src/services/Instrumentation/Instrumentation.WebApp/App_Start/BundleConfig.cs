@@ -24,8 +24,10 @@ namespace Instrumentation.WebApp
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                        //"~/Content/reset.css",
                         "~/Content/site.css",
-                        "~/Content/style.css"));
+                        "~/Content/style.css"
+                        ));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
