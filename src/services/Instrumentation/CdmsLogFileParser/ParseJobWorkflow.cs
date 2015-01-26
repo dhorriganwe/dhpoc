@@ -45,9 +45,9 @@ namespace CdmsLogFileParser
             sb.AppendFormat("OutputFileName: {0}{1}", jobSummary.OutputFileName, Environment.NewLine);
 
             sb.AppendFormat("Cdms Response time averages:{0}", Environment.NewLine);
-            foreach (var average in jobSummary.Averages)
+            foreach (var requestTypeSummary in jobSummary.RequestTypeSummaries)
             {
-                sb.AppendFormat("{0}:  {1}{2}", average.Key, average.Value, Environment.NewLine);
+                sb.AppendFormat("{0}:  {1}ms  ({2} requests){3}", requestTypeSummary.Key, requestTypeSummary.Value.AverageDuration, requestTypeSummary.Value.Count, Environment.NewLine);
             }
 
             var fileName = BuildSummaryFilename(jobSummary.Folder);

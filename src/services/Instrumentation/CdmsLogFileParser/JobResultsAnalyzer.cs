@@ -8,17 +8,24 @@ namespace CdmsLogFileParser
     {
         public void GenerateAverages(JobSummary jobSummary)
         {
-            var allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "ProductListResponse").Select(GetCdmsRequestDuration).ToList();
-            var average = (int)allDurations.Average();
-            jobSummary.Averages.Add("ProductListResponse", average);
+            var productListSummary = new RequestTypeSummary();
+            var checkSummary = new RequestTypeSummary();
+            var answerSummary = new RequestTypeSummary();
 
-            allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "Check Job_Response").Select(GetCdmsRequestDuration).ToList();
-            average = (int)allDurations.Average();
-            jobSummary.Averages.Add("Check Job_Response", average);
+            var productListRequests = jobSummary.AllRequestItems.Where(i => i.RequestType == "ProductListResponse").Select(GetCdmsRequestDuration).ToList();
+            productListSummary.AverageDuration = (int)productListRequests.Average();
+            productListSummary.Count = productListRequests.Count;
+            jobSummary.RequestTypeSummaries.Add("ProductListResponse", productListSummary);
 
-            allDurations = jobSummary.AllRequestItems.Where(i => i.RequestType == "Answer Job_Response").Select(GetCdmsRequestDuration).ToList();
-            average = (int)allDurations.Average();
-            jobSummary.Averages.Add("Answer Job_Response", average);
+            var checkRequests = jobSummary.AllRequestItems.Where(i => i.RequestType == "Check Job_Response").Select(GetCdmsRequestDuration).ToList();
+            checkSummary.AverageDuration = (int)checkRequests.Average();
+            checkSummary.Count = checkRequests.Count;
+            jobSummary.RequestTypeSummaries.Add("Check Job_Response", checkSummary);
+
+            var answerRequests = jobSummary.AllRequestItems.Where(i => i.RequestType == "Answer Job_Response").Select(GetCdmsRequestDuration).ToList();
+            answerSummary.AverageDuration = (int)answerRequests.Average();
+            answerSummary.Count = answerRequests.Count;
+            jobSummary.RequestTypeSummaries.Add("Answer Job_Response", answerSummary);
         }
 
         private int GetCdmsRequestDuration(CdmsRequestItem item)

@@ -38,31 +38,22 @@ namespace CdmsLogFileParser
             Console.WriteLine();
             Console.WriteLine(DateTime.Now.ToString());
             Console.WriteLine();
-            Console.WriteLine("any key to exit...");
-            Console.ReadKey();
+            //Console.WriteLine("any key to exit...");
+            //Console.ReadKey();
         }
 
         private static void DisplaySummary(JobSummary jobSummary)
         {
-            var sb = new StringBuilder();
-            foreach (var fileName in jobSummary.FileNames)
-            {
-                sb.AppendFormat("{0}{1}", fileName, System.Environment.NewLine);
-            }
-            Console.WriteLine(sb);
-
-
             Console.WriteLine("Folder: {0}", jobSummary.Folder);
             Console.WriteLine("FileExtension: {0}", jobSummary.FileExtension);
             Console.WriteLine("FileCount: {0}", jobSummary.FileCount);
             Console.WriteLine("OutputFileName: {0}", jobSummary.OutputFileName);
 
             Console.WriteLine("Cdms Response time averages:");
-            foreach (var average in jobSummary.Averages)
+            foreach (var requestTypeSummary in jobSummary.RequestTypeSummaries)
             {
-                Console.WriteLine("{0}:  {1}ms", average.Key, average.Value);
+                Console.WriteLine("{0}:  {1}ms  ({2} requests)", requestTypeSummary.Key, requestTypeSummary.Value.AverageDuration, requestTypeSummary.Value.Count);
             }
-
         }
 
         private static bool HandleArgs(
@@ -86,20 +77,20 @@ namespace CdmsLogFileParser
 
         private static void DisplayUsage(string[] args)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             args.ToList().ForEach(a => sb.AppendFormat("{0} ", a));
 
-            System.Console.WriteLine("******************************************************************************");
+            Console.WriteLine("******************************************************************************");
 
-            System.Console.WriteLine("USAGE");
-            System.Console.WriteLine("");
-            System.Console.WriteLine(" CdmsLogFileParser.exe [logFileFolder]");
-            System.Console.WriteLine("");
+            Console.WriteLine("USAGE");
+            Console.WriteLine("");
+            Console.WriteLine(" CdmsLogFileParser.exe [logFileFolder]");
+            Console.WriteLine("");
 
-            System.Console.WriteLine("ARGUMENTS");
-            System.Console.WriteLine("");
-            System.Console.WriteLine(" logFileFolder  Folder of CDMS log files");
-            System.Console.WriteLine(" ");
+            Console.WriteLine("ARGUMENTS");
+            Console.WriteLine("");
+            Console.WriteLine(" logFileFolder  Folder of CDMS log files");
+            Console.WriteLine(" ");
 
             System.Console.WriteLine("Invalid arguments: " + sb);
             System.Console.WriteLine("");
