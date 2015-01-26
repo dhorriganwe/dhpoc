@@ -49,6 +49,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\ResourceReader.cs" />
     <Compile Include="Helpers\ResourceXmlReader.cs" />
+    <Compile Include="Models\RequestTypeSummary.cs" />
     <Compile Include="ParseJobWorkflow.cs" />
     <Compile Include="Models\CdmsRequestItem.cs" />
     <Compile Include="Models\CdmsRequestType.cs" />
