@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Instrumentation.DomainDA.Models;
 
 namespace Instrumentation.WebApp.Models
@@ -7,9 +8,6 @@ namespace Instrumentation.WebApp.Models
     {
         public ViewQueryBase()
         {
-            ApplicationNames = new List<SummaryItem>();
-            FeatureNames = new List<SummaryItem>();
-            Categories = new List<SummaryItem>();
             Header = new ViewQueryHeader();
         }
 
@@ -17,7 +15,15 @@ namespace Instrumentation.WebApp.Models
         public string SessionId { get; set; }
         public string ReleaseVersion { get; set; }
 
+        public string ViewName { get; set; }
+        public string ViewTitle { get; set; }
+
         public List<AuditLog> AuditLogs { get; set; }
+
+        public int MaxRowCount { get; set; }
+        public string DbKey { get; set; }
+        public SelectList DbKeyList { get; set; }
+
 
         public List<SummaryItem> ApplicationNames { get; set; }
         public List<SummaryItem> FeatureNames { get; set; }

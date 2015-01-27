@@ -1,7 +1,7 @@
 ﻿@using Instrumentation.WebApp.Models
 @model ViewQueryAuditLogById
 @{
-    Model.Header.ViewTitle = "Instrumentation Viewer";
+    Model.ViewTitle = "Instrumentation Viewer";
 }
 
 <div class="PageRoot">
@@ -13,17 +13,15 @@
         <div>
             <table>
                 <tr>
-                    <td>DbKey @Html.DropDownListFor(q => q.Header.DbKey, Model.Header.DbOptionSelectList)</td>
+                    <td>DbKey @Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
                     <td>
                         <input type="submit" name="Command" value="Refresh" />
                     </td>
                     <td>MaxRowCount</td>
-                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.Header.MaxRowCount, null, null)</td>
+                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
                 </tr>
             </table>
         </div>
-
-        @*@Html.Action("DbSelect", "AuditDb", Model.Header)*@
 
         <div class="PageSectionWithBorder">
             <div>

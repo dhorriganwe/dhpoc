@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryHeader
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
     Layout = null;
 }
@@ -51,6 +51,11 @@
                     @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
                 </td>
             </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
+                </td>
+            </tr>
         </table>
     }
     else
@@ -81,17 +86,20 @@
         @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 160).ToString())
+        @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey }, null)
+        @Html.Raw(((char)160).ToString())
+        @Html.Raw(((char)160).ToString())
     }
 
 <hr />
-    @if(!string.IsNullOrEmpty(Model.ErrorMessage))
+    @if(!string.IsNullOrEmpty(Model.Header.ErrorMessage))
     { 
         <table>
             <tr>
                 <td class="ErrorTitle">ErrorMessage</td>
             </tr>
             <tr>
-                <td>@Model.ErrorMessage</td>
+                <td>@Model.Header.ErrorMessage</td>
             </tr>
         </table>
     }

@@ -149,6 +149,9 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\InstrumentationMapper.cs" />
     <Compile Include="Models\AuditLog.cs" />
+    <Compile Include="Models\ViewQueryAuditLogByFilters.cs" />
+    <Compile Include="Models\ViewQueryBase.cs" />
+    <Compile Include="Models\ViewQueryFilters.cs" />
     <Compile Include="Models\ViewQueryHeader.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFeatureName.cs" />
@@ -160,7 +163,6 @@
     <Compile Include="Models\ViewQueryAuditLogById.cs" />
     <Compile Include="Models\FailDetail.cs" />
     <Compile Include="Models\ViewQueryAuditLog.cs" />
-    <Compile Include="Models\ViewQueryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -248,7 +250,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\AuditDb\Index.cshtml" />
     <Content Include="Views\AuditDb\AuditLog.cshtml" />
     <Content Include="Views\AuditDb\AuditLogById.cshtml" />
@@ -259,11 +260,12 @@
     <Content Include="Views\AuditDb\AuditLogByCategory.cshtml" />
     <Content Include="Views\AuditDb\AuditLogGrid.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByFeatureName.cshtml" />
-    <Content Include="Views\AuditDb\DbSelect.cshtml" />
     <Content Include="Views\AuditDb\SummaryFeatureNames.cshtml" />
     <Content Include="Views\AuditDb\SummaryApplicationNames.cshtml" />
     <Content Include="Views\AuditDb\SummaryCategoryNames.cshtml" />
     <Content Include="Views\AuditDb\AuditLogDetail.cshtml" />
+    <Content Include="Views\AuditDb\AuditLogByFilters.cshtml" />
+    <Content Include="Views\Home\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

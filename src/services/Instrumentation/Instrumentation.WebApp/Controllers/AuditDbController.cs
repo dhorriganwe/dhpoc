@@ -18,7 +18,7 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult Index()
         {
             var query = new ViewQueryBase();
-            query.Header.ViewName = "Home";
+            query.ViewName = "Home";
             query.ReleaseVersion = Configurations.ReleaseVersion;
 
             return View(query);
@@ -27,7 +27,7 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult Summary(string id, string dbkey = null)
         {
             var query = new ViewQueryAuditLogSummary();
-            query.Header.DbKey = dbkey;
+            query.DbKey = dbkey;
 
             return Summary(query, "Refresh");
         }
@@ -37,7 +37,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             try
             {
-                IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+                IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
                 if (command == "Refresh")
                 {
@@ -54,17 +54,26 @@ namespace Instrumentation.WebApp.Controllers
                 query.Header.ErrorMessage = ex.ToString();
             }
 
-            InitDbOptionSelectList(query);
+            InitQueryBase(query);
 
             ModelState.Clear();
 
             return View(query);
         }
 
+        private void InitQueryBase(ViewQueryBase query)
+        {
+            query.DbKeyList = InitDbKeySelectList();
+            query.MaxRowCount = 100;
+            
+        }
         public ActionResult AuditLog(string id, string dbkey = null)
         {
             var query = new ViewQueryBase();
-            query.Header.DbKey = dbkey;
+
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
 
             return AuditLog(query, "Refresh");
         }
@@ -74,7 +83,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             try
             {
-                query.Header.ViewName = "AuditLog";
+                query.ViewName = "AuditLog";
 
                 query.AuditLogs = command == "Refresh" ? GetAuditLogAll(query) : new List<AuditLog>();
 
@@ -84,8 +93,8 @@ namespace Instrumentation.WebApp.Controllers
                 query.Header.ErrorMessage = ex.ToString();
             }
 
-            InitDbOptionSelectList(query);
-            
+            InitQueryBase(query);
+
             ModelState.Clear();
 
             return View(query);
@@ -95,7 +104,9 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new ViewQueryAuditLogById();
             query.AuditLogId = id;
-            query.Header.DbKey = dbkey;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
 
             return AuditLogById(query, "Search");
         }
@@ -103,8 +114,7 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AuditLogById(ViewQueryAuditLogById query, string command)
         {
-            query.Header.ViewName = "AuditLogById";
-
+            query.ViewName = "AuditLogById";
 
             if (command == "Search" || command == "Refresh")
             {
@@ -120,7 +130,7 @@ namespace Instrumentation.WebApp.Controllers
                 query.AuditLog = new AuditLog();
             }
 
-            InitDbOptionSelectList(query);
+            query.DbKeyList = InitDbKeySelectList();
 
             ModelState.Clear();
 
@@ -131,7 +141,9 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new ViewQueryAuditLogByEventId();
             query.EventId = id;
-            query.Header.DbKey = dbkey;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
 
             return AuditLogByEventId(query, "Search");
         }
@@ -139,22 +151,80 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AuditLogByEventId(ViewQueryAuditLogByEventId query, string command)
         {
-            query.Header.ViewName = "AuditLogsByEventId";
+            query.ViewName = "AuditLogsByEventId";
 
             query.AuditLogs = command == "Search" ? GetAuditLogByEventId(query) : new List<AuditLog>();
 
-            InitDbOptionSelectList(query);
+            query.DbKeyList = InitDbKeySelectList();
 
             ModelState.Clear();
 
             return View(query);
         }
 
+        public ActionResult AuditLogByFilters(string id, string dbkey = null)
+        {
+            var query = new ViewQueryAuditLogByFilters();
+            //query.ApplicationName = id;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
+
+            return AuditLogByFilters(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLogByFilters(ViewQueryAuditLogByFilters query, string command)
+        {
+            query.ViewName = "AuditLogByFilters";
+
+            try
+            {
+                if (command == "Search" || command == "Refresh")
+                {
+                    query = GetAuditLogByFilters(query);
+                }
+                else
+                {
+                    query.AuditLogs = new List<AuditLog>();
+                }
+            }
+            catch (Exception ex)
+            {
+                query.Header.ErrorMessage = ex.ToString();
+            }
+
+            InitializeQuery(query);
+            InitializeSelectLists(query);
+
+            ModelState.Clear();
+
+            return View(query);
+        }
+
+        private ViewQueryAuditLogByFilters GetAuditLogByFilters(ViewQueryAuditLogByFilters query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogAll(
+                query.MaxRowCount);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            //query.ApplicationNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
+            //query.FeatureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
+            //query.Categories = auditLogDataService.GetSummaryItemsByApplicationName("Category", query.ApplicationName);
+
+            return query;
+        }
+
         public ActionResult AuditLogByApplicationName(string id, string dbkey = null)
         {
             var query = new ViewQueryAuditLogByApplicationName();
             query.ApplicationName = id;
-            query.Header.DbKey = dbkey;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
 
             return AuditLogByApplicationName(query, "Search");
         }
@@ -162,7 +232,7 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AuditLogByApplicationName(ViewQueryAuditLogByApplicationName query, string command)
         {
-            query.Header.ViewName = "AuditLogByApplicationName";
+            query.ViewName = "AuditLogByApplicationName";
 
             if (command == "Search" || command == "Refresh")
             {
@@ -173,37 +243,10 @@ namespace Instrumentation.WebApp.Controllers
                 query.AuditLogs = new List<AuditLog>();
             }
 
-            InitDbOptionSelectList(query);
 
-            ModelState.Clear();
-
-            return View(query);
-        }
-
-        public ActionResult AuditLogByCategory(string id, string dbkey = null)
-        {
-            var query = new ViewQueryAuditLogByCategory();
-            query.Category = id;
-            query.Header.DbKey = dbkey;
-
-            return AuditLogByCategory(query, "Search");
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByCategory(ViewQueryAuditLogByCategory query, string command)
-        {
-            query.Header.ViewName = "AuditLogByCategory";
-
-            if (command == "Search" || command == "Refresh")
-            {
-                query = GetAuditLogByCategory(query);
-            }
-            else
-            {
-                query.AuditLogs = new List<AuditLog>();
-            }
-
-            InitDbOptionSelectList(query);
+            //InitDbOptionSelectList(query)
+            //InitDbOptionSelectList(query);
+            query.DbKeyList = InitDbKeySelectList();
 
             ModelState.Clear();
 
@@ -214,7 +257,9 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new ViewQueryAuditLogByFeatureName();
             query.FeatureName = name;
-            query.Header.DbKey = dbkey;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
 
             return AuditLogByFeatureName(query, "Search");
         }
@@ -222,7 +267,7 @@ namespace Instrumentation.WebApp.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult AuditLogByFeatureName(ViewQueryAuditLogByFeatureName query, string command)
         {
-            query.Header.ViewName = "AuditLogByFeatureName";
+            query.ViewName = "AuditLogByFeatureName";
 
             if (command == "Search" || command == "Refresh")
             {
@@ -235,7 +280,39 @@ namespace Instrumentation.WebApp.Controllers
                 query.AuditLogs = new List<AuditLog>();
             }
 
-            InitDbOptionSelectList(query);
+            InitDbKeySelectList();
+
+            ModelState.Clear();
+
+            return View(query);
+        }
+
+        public ActionResult AuditLogByCategory(string id, string dbkey = null)
+        {
+            var query = new ViewQueryAuditLogByCategory();
+            query.Category = id;
+            query.DbKey = dbkey;
+
+            InitQueryBase(query);
+
+            return AuditLogByCategory(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult AuditLogByCategory(ViewQueryAuditLogByCategory query, string command)
+        {
+            query.ViewName = "AuditLogByCategory";
+
+            if (command == "Search" || command == "Refresh")
+            {
+                query = GetAuditLogByCategory(query);
+            }
+            else
+            {
+                query.AuditLogs = new List<AuditLog>();
+            }
+
+            query.DbKeyList = InitDbKeySelectList();
 
             ModelState.Clear();
 
@@ -257,11 +334,6 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult DbSelect(ViewQueryHeader query)
-        {
-            return View(query);
-        }
-
         public ActionResult SummaryFeatureNames(ViewQueryBase query)
         {
             return View(query);
@@ -277,9 +349,85 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
         
-        private void InitDbOptionSelectList(ViewQueryBase query)
+        //private void InitDbOptionSelectList(ViewQueryBase query)
+        //{
+        //    query.Header.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
+        //}
+
+        private void InitializeQuery(ViewQueryAuditLogByFilters query)
         {
-            query.Header.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
+            if (query == null)
+                query = new ViewQueryAuditLogByFilters();
+
+            query.MaxRowCount = 100;
+            query.StartDate = DateTime.Now.AddDays(-1).ToString();
+            query.EndDate = DateTime.Now.ToString();
+        }
+
+        private void InitializeSelectLists(ViewQueryAuditLogByFilters query)
+        {
+            if (query == null)
+                query = new ViewQueryAuditLogByFilters();
+
+            query.ApplicationNameList = InitApplicationNameSelectList();
+            query.FeatureNameList = InitFeatureNameSelectList();
+            query.CategoryList = InitCategorySelectList();
+            query.TraceLevelList = InitTraceLevelSelectList();
+            query.DbKeyList = InitDbKeySelectList();
+        }
+
+        private SelectList InitApplicationNameSelectList()
+        {
+            List<LookupItem> applications = new List<LookupItem>();
+            applications.Add(new LookupItem { Value = "0", Description = "all" });
+            applications.Add(new LookupItem { Value = "1", Description = "application1" });
+            applications.Add(new LookupItem { Value = "2", Description = "application2" });
+            applications.Add(new LookupItem { Value = "3", Description = "application3" });
+            SelectList applicationSelectList = new SelectList(applications, "Value", "Description");
+
+            return applicationSelectList;
+        }
+
+        private SelectList InitFeatureNameSelectList()
+        {
+            List<LookupItem> features = new List<LookupItem>();
+            features.Add(new LookupItem { Value = "0", Description = "all" });
+            features.Add(new LookupItem { Value = "1", Description = "feature1" });
+            features.Add(new LookupItem { Value = "2", Description = "feature2" });
+            features.Add(new LookupItem { Value = "3", Description = "feature3" });
+            SelectList featureSelectList = new SelectList(features, "Value", "Description");
+
+            return featureSelectList;
+        }
+
+        private SelectList InitCategorySelectList()
+        {
+            List<LookupItem> categories = new List<LookupItem>();
+            categories.Add(new LookupItem { Value = "0", Description = "all" });
+            categories.Add(new LookupItem { Value = "1", Description = "category1" });
+            categories.Add(new LookupItem { Value = "2", Description = "category2" });
+            categories.Add(new LookupItem { Value = "3", Description = "category3" });
+            SelectList categorySelectList = new SelectList(categories, "Value", "Description");
+
+            return categorySelectList;
+        }
+
+        private SelectList InitTraceLevelSelectList()
+        {
+            List<LookupItem> traceLevels = new List<LookupItem>();
+            traceLevels.Add(new LookupItem { Value = "0", Description = "all" });
+            traceLevels.Add(new LookupItem { Value = "1", Description = "error" });
+            traceLevels.Add(new LookupItem { Value = "2", Description = "warning" });
+            traceLevels.Add(new LookupItem { Value = "3", Description = "info" });
+            SelectList categorySelectList = new SelectList(traceLevels, "Value", "Description");
+
+            return categorySelectList;
+        }
+
+        private SelectList InitDbKeySelectList()
+        {
+            var dbKeys = GetDbOptionsFromConfig();
+            return new SelectList(dbKeys, "Value", "Description");
         }
 
         private List<LookupItem> GetDbOptionsFromConfig()
@@ -300,16 +448,16 @@ namespace Instrumentation.WebApp.Controllers
 
         private List<AuditLog> GetAuditLogAll(ViewQueryBase query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogAll(query.Header.MaxRowCount).ToList());
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogAll(query.MaxRowCount).ToList());
 
             return auditLogs;
         }
 
         private AuditLog GetAuditLogById(ViewQueryAuditLogById query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
             AuditLog auditLog = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogById(query.AuditLogId));
 
@@ -318,12 +466,12 @@ namespace Instrumentation.WebApp.Controllers
 
         private List<AuditLog> GetAuditLogByEventId(ViewQueryAuditLogByEventId query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
             List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(
                                             auditLogDataService.GetAuditLogByEventId(
                                                 query.EventId,
-                                                query.Header.MaxRowCount)
+                                                query.MaxRowCount)
                                             .ToList());
 
             return auditLogs;
@@ -331,11 +479,11 @@ namespace Instrumentation.WebApp.Controllers
 
         private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
             IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByApplicationName(
                 query.ApplicationName,
-                query.Header.MaxRowCount);
+                query.MaxRowCount);
 
             query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 
@@ -347,11 +495,11 @@ namespace Instrumentation.WebApp.Controllers
 
         private ViewQueryAuditLogByCategory GetAuditLogByCategory(ViewQueryAuditLogByCategory query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
             IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByCategory(
                 query.Category,
-                query.Header.MaxRowCount);
+                query.MaxRowCount);
 
             query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 
@@ -363,11 +511,11 @@ namespace Instrumentation.WebApp.Controllers
 
         private ViewQueryAuditLogByFeatureName GetAuditLogByFeatureName(ViewQueryAuditLogByFeatureName query)
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.Header.DbKey);
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
             IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByFeatureName(
                 query.FeatureName,
-                query.Header.MaxRowCount);
+                query.MaxRowCount);
 
             query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 

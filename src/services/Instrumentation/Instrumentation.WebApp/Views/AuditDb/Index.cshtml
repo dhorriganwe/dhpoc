@@ -1,13 +1,11 @@
 ﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
-    Model.Header.ViewTitle = "Instrumentation Viewer";
+    Model.ViewTitle = "Instrumentation Viewer";
 }
 
 <div class="PageRoot">
     
     @Html.Action("Header", "Home", Model.Header)
-
-    @Html.Action("DbSelect", "AuditDb", Model.Header)
 
     <div>
         <table>

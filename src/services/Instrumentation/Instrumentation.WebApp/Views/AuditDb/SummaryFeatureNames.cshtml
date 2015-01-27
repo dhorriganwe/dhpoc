@@ -14,7 +14,7 @@
             <tr>
                 @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
                 else {
-                    <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.Header.DbKey }, null)</td>
+                    <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.DbKey }, null)</td>
                 }
                 <td>
                     @featureName.Count

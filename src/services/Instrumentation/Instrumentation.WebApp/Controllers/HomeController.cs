@@ -11,25 +11,26 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult Index()
         {
             ViewQueryHome query = new ViewQueryHome();
-            query.Header.ViewName = "Home";
+            query.ViewName = "Home";
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.Now.ToString();
 
-            InitDbOptionSelectList(query);
+            query.DbKeyList = InitDbKeySelectList();
 
             return View(query);
         }
 
-        public ActionResult Header(ViewQueryHeader query = null)
+        public ActionResult Header(ViewQueryBase query = null)
         {
-            query = query ?? new ViewQueryHeader();
+            query = query ?? new ViewQueryBase();
 
             return View(query);
         }
 
-        private void InitDbOptionSelectList(ViewQueryBase query)
+        private SelectList InitDbKeySelectList()
         {
-            query.Header.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
+            var dbKeys = GetDbOptionsFromConfig();
+            return new SelectList(dbKeys, "Value", "Description");
         }
 
         private List<LookupItem> GetDbOptionsFromConfig()

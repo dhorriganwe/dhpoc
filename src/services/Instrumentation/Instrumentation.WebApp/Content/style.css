@@ -45,6 +45,12 @@
     width: 90px;
 }
 
+.TextInputDate input {
+    text-align:left;
+    float: left;
+    width: 150px;
+}
+
 .TextLabelLeft {
     text-align: left;
 }
