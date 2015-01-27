@@ -165,10 +165,10 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult AuditLogByFilters(string id, string dbkey = null)
         {
             var query = new ViewQueryAuditLogByFilters();
-            //query.ApplicationName = id;
+
             query.DbKey = dbkey;
 
-            InitQueryBase(query);
+            InitializeQuery(query);
 
             return AuditLogByFilters(query, "Search");
         }
@@ -180,7 +180,12 @@ namespace Instrumentation.WebApp.Controllers
 
             try
             {
-                if (command == "Search" || command == "Refresh")
+                if (command == "Reset")
+                {
+                    InitializeQuery(query);
+                    query = GetAuditLogByFilters(query);
+                }
+                else if (command == "Search")
                 {
                     query = GetAuditLogByFilters(query);
                 }
@@ -194,7 +199,6 @@ namespace Instrumentation.WebApp.Controllers
                 query.Header.ErrorMessage = ex.ToString();
             }
 
-            InitializeQuery(query);
             InitializeSelectLists(query);
 
             ModelState.Clear();
@@ -206,14 +210,13 @@ namespace Instrumentation.WebApp.Controllers
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogAll(
-                query.MaxRowCount);
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByFilters(
+                query.MaxRowCount,
+                query.StartDate,
+                query.EndDate,
+                query.TraceLevel);
 
             query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
-
-            //query.ApplicationNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
-            //query.FeatureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.ApplicationName);
-            //query.Categories = auditLogDataService.GetSummaryItemsByApplicationName("Category", query.ApplicationName);
 
             return query;
         }
@@ -349,18 +352,12 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
         
-        //private void InitDbOptionSelectList(ViewQueryBase query)
-        //{
-        //    query.Header.DbOptionSelectList = new SelectList(GetDbOptionsFromConfig(), "Value", "Description");
-        //}
-
         private void InitializeQuery(ViewQueryAuditLogByFilters query)
         {
-            if (query == null)
-                query = new ViewQueryAuditLogByFilters();
+            query = query ?? new ViewQueryAuditLogByFilters();
 
             query.MaxRowCount = 100;
-            query.StartDate = DateTime.Now.AddDays(-1).ToString();
+            query.StartDate = DateTime.Now.AddDays(-7).ToString();
             query.EndDate = DateTime.Now.ToString();
         }
 
@@ -415,10 +412,10 @@ namespace Instrumentation.WebApp.Controllers
         private SelectList InitTraceLevelSelectList()
         {
             List<LookupItem> traceLevels = new List<LookupItem>();
-            traceLevels.Add(new LookupItem { Value = "0", Description = "all" });
-            traceLevels.Add(new LookupItem { Value = "1", Description = "error" });
-            traceLevels.Add(new LookupItem { Value = "2", Description = "warning" });
-            traceLevels.Add(new LookupItem { Value = "3", Description = "info" });
+            traceLevels.Add(new LookupItem { Value = "all", Description = "all" });
+            traceLevels.Add(new LookupItem { Value = "error", Description = "error" });
+            traceLevels.Add(new LookupItem { Value = "warning", Description = "warning" });
+            traceLevels.Add(new LookupItem { Value = "info", Description = "info" });
             SelectList categorySelectList = new SelectList(traceLevels, "Value", "Description");
 
             return categorySelectList;

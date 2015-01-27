@@ -442,5 +442,30 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
 
             return auditLog.Id;
         }
+
+        [TestMethod]
+        public void GetAuditLogByFilters()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var traceLevel = "error";
+            var maxRowCount = 10;
+            var startDate = "1/1/2015";
+            var endDate = "2/1/2015";
+
+            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel);
+
+            Assert.IsTrue(auditLogs.Count > 0);
+
+            foreach (var auditLog in auditLogs)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2} {3}",
+                    auditLog.Id,
+                    auditLog.TraceLevel,
+                    auditLog.AuditedOn,
+                    auditLog.ApplicationName));
+            }
+        }
+
     }
 }

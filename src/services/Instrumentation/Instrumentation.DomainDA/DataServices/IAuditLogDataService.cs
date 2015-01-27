@@ -11,6 +11,9 @@ namespace Instrumentation.DomainDA.DataServices
         IList<AuditLog> GetAuditLogByFeatureName(string featureName, int maxRowCount = -1);
         IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel, int maxRowCount = -1);
         IList<AuditLog> GetAuditLogAll(int maxRowCount = -1);
+
+        IList<AuditLog> GetAuditLogByFilters(int maxRowCount, string startTime, string endTime, string travelLevel);
+
         AuditLog GetAuditLogById(string id);
         void AddAuditLog(AuditLog auditLog);
         AuditLogSummary GetAuditLogSummary();

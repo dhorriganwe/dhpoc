@@ -12,6 +12,7 @@
 
 \ir ./rt.GetAuditLogByEventId.sql
 \ir ./rt.GetAuditLogByFeatureName.sql
+\ir ./rt.GetAuditLogByFilters.sql
 \ir ./rt.GetAuditLogById.sql
 \ir ./rt.GetAuditLogByTraceLevel.sql
 \ir ./rt.GetAuditLogSummary.sql

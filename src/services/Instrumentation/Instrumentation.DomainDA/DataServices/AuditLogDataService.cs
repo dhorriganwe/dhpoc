@@ -18,6 +18,9 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETAUDITLOGBYFEATURENAME = "GetAuditLogByFeatureName";
         private const string GETAUDITLOGBYCATEGORY = "GetAuditLogByCategory";
         private const string GETAUDITLOGBYTRACELEVEL = "GetAuditLogByTraceLevel";
+        private const string GETAUDITLOGBYFILTERS = "GetAuditLogByFilters";
+
+        
         private const string GETAUDITLOGSUMMARY = "GetAuditLogSummary";
         private const string GETSUMMARYBYAPPLICATIONNAME = "GetSummaryByApplicationName";
         private const string GETSUMMARYBYFEATURENAME = "GetSummaryByFeatureName";
@@ -364,6 +367,21 @@ namespace Instrumentation.DomainDA.DataServices
                 {
                     {"TraceLevel", travelLevel},
                     {"Rowcount", maxRowCount},
+                });
+        }
+
+        public IList<AuditLog> GetAuditLogByFilters(int maxRowCount, string startTime, string endTime, string travelLevel)
+        {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
+            return GetAuditLog(GETAUDITLOGBYFILTERS,
+                new Dictionary<string, object>
+                {
+                    {"Rowcount", maxRowCount},
+                    {"StartTime", startTime},
+                    {"EndTime", endTime},
+                    {"TraceLevel", travelLevel},
                 });
         }
 
