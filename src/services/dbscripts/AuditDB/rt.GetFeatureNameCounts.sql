@@ -1,8 +1,8 @@
-﻿-- Function: rt.getfeaturenames()
+﻿-- Function: rt.getfeaturenamecounts()
 
--- DROP FUNCTION rt.getfeaturenames();
+-- DROP FUNCTION rt.getfeaturenamecounts();
 
-CREATE OR REPLACE FUNCTION rt.getfeaturenames()
+CREATE OR REPLACE FUNCTION rt.getfeaturenamecounts()
   RETURNS TABLE(name character varying, 
 		count bigint) AS
 $BODY$BEGIN
@@ -17,9 +17,9 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getfeaturenames()
+ALTER FUNCTION rt.getfeaturenamecounts()
   OWNER TO postgres;
 
 /*  
-select rt.getfeaturenames()
+select rt.getfeaturenamecounts()
 */

@@ -17,7 +17,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            AuditLogSummary auditLogSummary = auditLogDataService.GetAuditLogSummary();
+            AuditLogSummary auditLogSummary = auditLogDataService.GetAuditLogRowCount();
             
             Console.WriteLine(string.Format("{0} {1} ",
                 NL,
@@ -27,28 +27,45 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetApplicationNames()
+        public void GetApplicationNameCounts()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
+            List<SummaryItem> applicationNameCounts = auditLogDataService.GetApplicationNameCounts();
 
-            Assert.IsTrue(applicationNames.Count > 0);
+            Assert.IsTrue(applicationNameCounts.Count > 0);
 
-            foreach (var applicationName in applicationNames)
+            foreach (var applicationNameCount in applicationNameCounts)
             {
                 Console.WriteLine(string.Format("{0} {1}",
-                    applicationName.Name,
-                    applicationName.Count));
+                    applicationNameCount.Name,
+                    applicationNameCount.Count));
             }
         }
 
         [TestMethod]
-        public void GetCategories()
+        public void GetFeatureNameCounts()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
-            List<SummaryItem> categories = auditLogDataService.GetCategories();
+            List<SummaryItem> featureNameCounts = auditLogDataService.GetFeatureNameCounts();
+
+            Assert.IsTrue(featureNameCounts.Count > 0);
+
+            foreach (var featureNameCount in featureNameCounts)
+            {
+                Console.WriteLine(string.Format("{0} {1}",
+                    featureNameCount.Name,
+                    featureNameCount.Count));
+            }
+        }
+
+        [TestMethod]
+        public void GetCategoryCounts()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<SummaryItem> categories = auditLogDataService.GetCategoryCounts();
 
             Assert.IsTrue(categories.Count > 0);
 
@@ -57,23 +74,6 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
                 Console.WriteLine(string.Format("{0} {1}",
                     category.Name,
                     category.Count));
-            }
-        }
-
-        [TestMethod]
-        public void GetFeatureNames()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNames();
-
-            Assert.IsTrue(featureNames.Count > 0);
-
-            foreach (var featureName in featureNames)
-            {
-                Console.WriteLine(string.Format("{0} {1}",
-                    featureName.Name,
-                    featureName.Count));
             }
         }
 
@@ -95,7 +95,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNames();
+            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNameCounts();
 
             foreach (var featureName in featureNames)
             {
@@ -128,7 +128,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> categories = auditLogDataService.GetCategories();
+            List<SummaryItem> categories = auditLogDataService.GetCategoryCounts();
 
             foreach (var category in categories)
             {
@@ -173,7 +173,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
+            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNameCounts();
 
             foreach (var applicationName in applicationNames)
             {
@@ -206,7 +206,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNames();
+            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNameCounts();
 
             foreach (var applicationName in applicationNames)
             {

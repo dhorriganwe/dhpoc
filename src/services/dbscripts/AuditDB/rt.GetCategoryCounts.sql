@@ -1,8 +1,8 @@
-﻿-- Function: rt.GetCategories()
+﻿-- Function: rt.GetCategoryCounts()
 
--- DROP FUNCTION rt.GetCategories();
+-- DROP FUNCTION rt.GetCategoryCounts();
 
-CREATE OR REPLACE FUNCTION rt.GetCategories()
+CREATE OR REPLACE FUNCTION rt.GetCategoryCounts()
   RETURNS TABLE(name character varying, 
 		count bigint) AS
 $BODY$BEGIN
@@ -17,9 +17,9 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.GetCategories()
+ALTER FUNCTION rt.GetCategoryCounts()
   OWNER TO postgres;
 
 /*  
-select rt.GetCategories()
+select rt.GetCategoryCounts()
 */

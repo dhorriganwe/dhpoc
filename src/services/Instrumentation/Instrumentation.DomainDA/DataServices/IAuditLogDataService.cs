@@ -16,10 +16,10 @@ namespace Instrumentation.DomainDA.DataServices
 
         AuditLog GetAuditLogById(string id);
         void AddAuditLog(AuditLog auditLog);
-        AuditLogSummary GetAuditLogSummary();
-        List<SummaryItem> GetApplicationNames();
-        List<SummaryItem> GetFeatureNames();
-        List<SummaryItem> GetCategories();
+        AuditLogSummary GetAuditLogRowCount();
+        List<SummaryItem> GetApplicationNameCounts();
+        List<SummaryItem> GetFeatureNameCounts();
+        List<SummaryItem> GetCategoryCounts();
 
         List<SummaryItem> GetSummaryItemsByApplicationName(string summaryType, string applicationName);
         List<SummaryItem> GetSummaryItemsByFeatureName(string summaryType, string featureName);

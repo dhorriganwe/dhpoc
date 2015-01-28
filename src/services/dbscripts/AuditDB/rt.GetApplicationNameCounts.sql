@@ -1,8 +1,8 @@
-﻿-- Function: rt.getapplicationnames()
+﻿-- Function: rt.getapplicationnamecounts()
 
--- DROP FUNCTION rt.getapplicationnames();
+-- DROP FUNCTION rt.getapplicationnamecounts();
 
-CREATE OR REPLACE FUNCTION rt.getapplicationnames()
+CREATE OR REPLACE FUNCTION rt.getapplicationnamecounts()
   RETURNS TABLE(name character varying, 
 		count bigint) AS
 $BODY$BEGIN
@@ -17,9 +17,9 @@ END
 $BODY$
   LANGUAGE plpgsql VOLATILE
   COST 100;
-ALTER FUNCTION rt.getapplicationnames()
+ALTER FUNCTION rt.getapplicationnamecounts()
   OWNER TO postgres;
 
 /*  
-select rt.getapplicationnames()
+select rt.getapplicationnamecounts()
 */

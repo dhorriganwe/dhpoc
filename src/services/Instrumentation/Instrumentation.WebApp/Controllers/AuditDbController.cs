@@ -41,12 +41,12 @@ namespace Instrumentation.WebApp.Controllers
 
                 if (command == "Refresh")
                 {
-                    var summary = auditLogDataService.GetAuditLogSummary();
+                    var summary = auditLogDataService.GetAuditLogRowCount();
                     query.TotalRecordCount = summary.TotalRowCount;
 
-                    query.ApplicationNames = auditLogDataService.GetApplicationNames();
-                    query.FeatureNames = auditLogDataService.GetFeatureNames();
-                    query.Categories = auditLogDataService.GetCategories();
+                    query.ApplicationNames = auditLogDataService.GetApplicationNameCounts();
+                    query.FeatureNames = auditLogDataService.GetFeatureNameCounts();
+                    query.Categories = auditLogDataService.GetCategoryCounts();
                 }
             }
             catch (Exception ex)
