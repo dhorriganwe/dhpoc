@@ -21,6 +21,11 @@ namespace Instrumentation.DomainDA.DataServices
         List<SummaryItem> GetFeatureNameCounts();
         List<SummaryItem> GetCategoryCounts();
 
+        List<string> GetApplicationNames();
+        List<string> GetFeatureNames();
+        List<string> GetCategories();
+        List<string> GetTraceLevels();
+
         List<SummaryItem> GetSummaryItemsByApplicationName(string summaryType, string applicationName);
         List<SummaryItem> GetSummaryItemsByFeatureName(string summaryType, string featureName);
         List<SummaryItem> GetSummaryItemsByCategory(string summaryType, string category);

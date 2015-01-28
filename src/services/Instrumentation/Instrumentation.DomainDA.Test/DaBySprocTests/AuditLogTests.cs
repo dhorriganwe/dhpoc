@@ -27,6 +27,66 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
+        public void GetApplicationNames()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<string> applicationNames = auditLogDataService.GetApplicationNames();
+
+            Assert.IsTrue(applicationNames.Count > 0);
+
+            foreach (var applicationName in applicationNames)
+            {
+                Console.WriteLine(string.Format("{0}", applicationName));
+            }
+        }
+
+        [TestMethod]
+        public void GetFeatureNames()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<string> featureNames = auditLogDataService.GetFeatureNames();
+
+            Assert.IsTrue(featureNames.Count > 0);
+
+            foreach (var featureName in featureNames)
+            {
+                Console.WriteLine(string.Format("{0}", featureName));
+            }
+        }
+
+        [TestMethod]
+        public void GetCategories()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<string> categories = auditLogDataService.GetCategories();
+
+            Assert.IsTrue(categories.Count > 0);
+
+            foreach (var category in categories)
+            {
+                Console.WriteLine(string.Format("{0}", category));
+            }
+        }
+
+        [TestMethod]
+        public void GetTraceLevels()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            List<string> traceLevels = auditLogDataService.GetTraceLevels();
+
+            Assert.IsTrue(traceLevels.Count > 0);
+
+            foreach (var traceLevel in traceLevels)
+            {
+                Console.WriteLine(string.Format("{0}", traceLevel));
+            }
+        }
+
+        [TestMethod]
         public void GetApplicationNameCounts()
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();

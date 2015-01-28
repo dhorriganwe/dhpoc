@@ -27,8 +27,12 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETSUMMARYBYCATEGORY = "GetSummaryByCategory";
         
         private const string GETAPPLICATIONNAMECOUNTS = "GetApplicationNameCounts";
+        private const string GETAPPLICATIONNAMES = "GetApplicationNames";
         private const string GETFEATURENAMECOUNTS = "GetFeatureNameCounts";
+        private const string GETFEATURENAMES = "GetFeatureNames";
         private const string GETCATEGORYCOUNTS = "GetCategoryCounts";
+        private const string GETCATEGORIES = "GetCategories";
+        private const string GETTRACELEVELS = "GetTraceLevels";
         private const string ADDAUDITLOG = "addauditlog";
         private const string DBSCHEMA = "rt";
         private readonly string DEFAULTDBKEY = "rtAudit";
@@ -68,7 +72,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            return GetAuditLog(GETAUDITLOGAll,
+            return GetAuditLogList(GETAUDITLOGAll,
                                 new Dictionary<string, object>
                                 {
                                     {"Rowcount", maxRowCount}
@@ -199,6 +203,115 @@ namespace Instrumentation.DomainDA.DataServices
             return summaryItems;
         }
 
+        public List<string> GetApplicationNames()
+        {
+            var applicationNames = new List<string>();
+            var procName = GETAPPLICATIONNAMES;
+
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            var item = ToStringItemByIndex(reader);
+                            applicationNames.Add(item);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return applicationNames;
+        }
+
+        public List<string> GetFeatureNames()
+        {
+            var featureNames = new List<string>();
+            var procName = GETFEATURENAMES;
+
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            var item = ToStringItemByIndex(reader);
+                            featureNames.Add(item);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return featureNames;
+        }
+
+        public List<string> GetCategories()
+        {
+            var categories = new List<string>();
+            var procName = GETCATEGORIES;
+
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            var item = ToStringItemByIndex(reader);
+                            categories.Add(item);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return categories;
+        }
+
+        public List<string> GetTraceLevels()
+        {
+            var traceLevels = new List<string>();
+            var procName = GETTRACELEVELS;
+
+            using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
+            {
+                using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
+                {
+                    try
+                    {
+                        while (!reader.IsClosed && reader.Read())
+                        {
+                            var item = ToStringItemByIndex(reader);
+                            traceLevels.Add(item);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(string.Format("{0}storedProcedureName:{1}{0}reader.Depth:{2}", NL, procName, reader.Depth), e);
+                    }
+                }
+            }
+
+            return traceLevels;
+        }
+
+        
         public List<SummaryItem> GetApplicationNameCounts()
         {
             var applicationNameCounts = new List<SummaryItem>();
@@ -285,7 +398,7 @@ namespace Instrumentation.DomainDA.DataServices
 
         public AuditLog GetAuditLogById(string id)
         {
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYID, 
+            IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYID, 
                 new Dictionary<string, object>
                 {
                     {"Id", id},
@@ -302,7 +415,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYAPPLICATIONNAME,
+            IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYAPPLICATIONNAME,
                 new Dictionary<string, object>
                 {
                     {"ApplicationName", applicationName},
@@ -317,7 +430,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYCATEGORY,
+            IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYCATEGORY,
                 new Dictionary<string, object>
                 {
                     {"Category", category},
@@ -332,7 +445,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYEVENTID,
+            IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYEVENTID,
                 new Dictionary<string, object>
                 {
                     {"EventId", eventId},
@@ -347,7 +460,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            IList<AuditLog> auditLogs = GetAuditLog(GETAUDITLOGBYFEATURENAME,
+            IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYFEATURENAME,
                 new Dictionary<string, object>
                 {
                     {"FeatureName", featureName},
@@ -362,7 +475,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            return GetAuditLog(GETAUDITLOGBYTRACELEVEL,
+            return GetAuditLogList(GETAUDITLOGBYTRACELEVEL,
                 new Dictionary<string, object>
                 {
                     {"TraceLevel", travelLevel},
@@ -375,7 +488,7 @@ namespace Instrumentation.DomainDA.DataServices
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
 
-            return GetAuditLog(GETAUDITLOGBYFILTERS,
+            return GetAuditLogList(GETAUDITLOGBYFILTERS,
                 new Dictionary<string, object>
                 {
                     {"Rowcount", maxRowCount},
@@ -401,7 +514,7 @@ namespace Instrumentation.DomainDA.DataServices
             return id;
         }
 
-        private IList<AuditLog> GetAuditLog(string storedProcedureName, IDictionary<string, object> parameters)
+        private IList<AuditLog> GetAuditLogList(string storedProcedureName, IDictionary<string, object> parameters)
         {
             var auditLogs = new List<AuditLog>();
 
@@ -452,6 +565,26 @@ namespace Instrumentation.DomainDA.DataServices
             };
         }
 
+        private string ToStringItem(IDataReader reader)
+        {
+            string item = StringField(reader, "name");
+
+            if (!string.IsNullOrEmpty(item))
+                item = item.Trim();
+
+            return item;
+        }
+
+        private string ToStringItemByIndex(IDataReader reader)
+        {
+            string item = StringField(reader, 0);
+
+            if (!string.IsNullOrEmpty(item))
+                item = item.Trim();
+
+            return item;
+        }
+
         private SummaryItem ToSummaryItem(IDataReader reader)
         {
             var summaryItem = new SummaryItem()
@@ -476,6 +609,20 @@ namespace Instrumentation.DomainDA.DataServices
             catch (Exception e)
             {
                 throw new Exception(string.Format("fieldName: {0}", fieldName), e);
+            }
+            return val;
+        }
+
+        private string StringField(IDataReader reader, int index)
+        {
+            string val = null;
+            try
+            {
+                val = reader[index].ReturnDefaultOrValue<string>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(string.Format("index: {0}", index), e);
             }
             return val;
         }

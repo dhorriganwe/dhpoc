@@ -366,59 +366,67 @@ namespace Instrumentation.WebApp.Controllers
             if (query == null)
                 query = new ViewQueryAuditLogByFilters();
 
-            query.ApplicationNameList = InitApplicationNameSelectList();
-            query.FeatureNameList = InitFeatureNameSelectList();
-            query.CategoryList = InitCategorySelectList();
-            query.TraceLevelList = InitTraceLevelSelectList();
+            query.ApplicationNameList = InitApplicationNameSelectList(query);
+            query.FeatureNameList = InitFeatureNameSelectList(query);
+            query.CategoryList = InitCategorySelectList(query);
+            query.TraceLevelList = InitTraceLevelSelectList(query);
             query.DbKeyList = InitDbKeySelectList();
         }
 
-        private SelectList InitApplicationNameSelectList()
+        private SelectList InitApplicationNameSelectList(ViewQueryBase query)
         {
-            List<LookupItem> applications = new List<LookupItem>();
-            applications.Add(new LookupItem { Value = "0", Description = "all" });
-            applications.Add(new LookupItem { Value = "1", Description = "application1" });
-            applications.Add(new LookupItem { Value = "2", Description = "application2" });
-            applications.Add(new LookupItem { Value = "3", Description = "application3" });
-            SelectList applicationSelectList = new SelectList(applications, "Value", "Description");
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            List<string> appNames = auditLogDataService.GetApplicationNames();
+
+            var applications = new List<LookupItem>();
+
+            appNames.ForEach(an => applications.Add(new LookupItem { Value = an, Description = an }));
+
+            var applicationSelectList = new SelectList(applications, "Value", "Description");
 
             return applicationSelectList;
         }
 
-        private SelectList InitFeatureNameSelectList()
+        private SelectList InitFeatureNameSelectList(ViewQueryBase query)
         {
-            List<LookupItem> features = new List<LookupItem>();
-            features.Add(new LookupItem { Value = "0", Description = "all" });
-            features.Add(new LookupItem { Value = "1", Description = "feature1" });
-            features.Add(new LookupItem { Value = "2", Description = "feature2" });
-            features.Add(new LookupItem { Value = "3", Description = "feature3" });
-            SelectList featureSelectList = new SelectList(features, "Value", "Description");
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            List<string> featureNames = auditLogDataService.GetFeatureNames();
+
+            var features = new List<LookupItem>();
+
+            featureNames.ForEach(fn => features.Add(new LookupItem { Value = fn, Description = fn }));
+            
+            var featureSelectList = new SelectList(features, "Value", "Description");
 
             return featureSelectList;
         }
 
-        private SelectList InitCategorySelectList()
+        private SelectList InitCategorySelectList(ViewQueryBase query)
         {
-            List<LookupItem> categories = new List<LookupItem>();
-            categories.Add(new LookupItem { Value = "0", Description = "all" });
-            categories.Add(new LookupItem { Value = "1", Description = "category1" });
-            categories.Add(new LookupItem { Value = "2", Description = "category2" });
-            categories.Add(new LookupItem { Value = "3", Description = "category3" });
-            SelectList categorySelectList = new SelectList(categories, "Value", "Description");
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            List<string> categoryNames = auditLogDataService.GetCategories();
+
+            var categories = new List<LookupItem>();
+
+            categoryNames.ForEach(cn => categories.Add(new LookupItem { Value = cn, Description = cn }));
+
+            var categorySelectList = new SelectList(categories, "Value", "Description");
 
             return categorySelectList;
         }
 
-        private SelectList InitTraceLevelSelectList()
+        private SelectList InitTraceLevelSelectList(ViewQueryBase query)
         {
-            List<LookupItem> traceLevels = new List<LookupItem>();
-            traceLevels.Add(new LookupItem { Value = "all", Description = "all" });
-            traceLevels.Add(new LookupItem { Value = "error", Description = "error" });
-            traceLevels.Add(new LookupItem { Value = "warning", Description = "warning" });
-            traceLevels.Add(new LookupItem { Value = "info", Description = "info" });
-            SelectList categorySelectList = new SelectList(traceLevels, "Value", "Description");
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            List<string> levelNames = auditLogDataService.GetTraceLevels();
 
-            return categorySelectList;
+            var traceLevels = new List<LookupItem>();
+
+            levelNames.ForEach(ln => traceLevels.Add(new LookupItem { Value = ln, Description = ln }));
+            
+            var traceLevelSelectList = new SelectList(traceLevels, "Value", "Description");
+
+            return traceLevelSelectList;
         }
 
         private SelectList InitDbKeySelectList()
