@@ -55,6 +55,7 @@ namespace Instrumentation.WebApp.Controllers
             }
 
             InitQueryBase(query);
+            query.DbKeyList = InitDbKeySelectList();
 
             ModelState.Clear();
 
@@ -169,6 +170,7 @@ namespace Instrumentation.WebApp.Controllers
             query.DbKey = dbkey;
 
             InitializeQuery(query);
+            InitializeSelectLists(query);
 
             return AuditLogByFilters(query, "Search");
         }
@@ -193,13 +195,13 @@ namespace Instrumentation.WebApp.Controllers
                 {
                     query.AuditLogs = new List<AuditLog>();
                 }
+
+                InitializeSelectLists(query);
             }
             catch (Exception ex)
             {
                 query.Header.ErrorMessage = ex.ToString();
             }
-
-            InitializeSelectLists(query);
 
             ModelState.Clear();
 
@@ -272,19 +274,25 @@ namespace Instrumentation.WebApp.Controllers
         {
             query.ViewName = "AuditLogByFeatureName";
 
-            if (command == "Search" || command == "Refresh")
+            try
             {
-                query.FeatureName = HttpUtility.UrlDecode(query.FeatureName);
+                if (command == "Search" || command == "Refresh")
+                {
+                    query.FeatureName = HttpUtility.UrlDecode(query.FeatureName);
 
-                query = GetAuditLogByFeatureName(query);
+                    query = GetAuditLogByFeatureName(query);
+                }
+                else
+                {
+                    query.AuditLogs = new List<AuditLog>();
+                }
+
+                InitDbKeySelectList();
             }
-            else
+            catch (Exception ex)
             {
-                query.AuditLogs = new List<AuditLog>();
+                query.Header.ErrorMessage = ex.ToString();
             }
-
-            InitDbKeySelectList();
-
             ModelState.Clear();
 
             return View(query);

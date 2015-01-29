@@ -1,66 +1,68 @@
 ﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogByFilters
 @{
-    Model.ViewTitle = "Instrumentation Viewer";
+    Model.ViewTitle = "AuditLogByFilters";
 }
 
 <div class="PageRoot">
 
-    @Html.Action("Header", "Home", Model.Header)
+    @Html.Action("Header", "Home", Model)
 
     @using (@Html.BeginForm())
     {
-        <div>
-            <table class="alternate_color">
-                <tr>
-                    <td>ApplicationName</td>
-                    <td>@Html.DropDownListFor(q => q.ApplicationName, Model.ApplicationNameList)</td>
-                    <td></td>
-                    <td>MaxRowCount</td>
-                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
-                    <td></td>
-                    <td>CorrelationIdSearchStr</td>
-                    <td>@Html.TextBoxFor(q => q.CorrelationIdSearchStr, null, null)</td>
-                    <td></td>
-                    <td><input type="submit" name="Command" value="Search"/></td>
-                </tr>
-                <tr>
-                    <td>FeatureName</td>
-                    <td>@Html.DropDownListFor(q => q.FeatureName, Model.FeatureNameList)</td>
-                    <td></td>
-                    <td>StartDate</td>
-                    <td class="TextInputDate">@Html.TextBoxFor(q => q.StartDate, null, null)</td>
-                    <td></td>
-                    <td>MessageSearchStr</td>
-                    <td>@Html.TextBoxFor(q => q.MessageSearchStr, null, null)</td>
-                    <td></td>
-                    <td><input type="submit" name="Command" value="Reset"/></td>
-                </tr>
-                <tr>
-                    <td>Category</td>
-                    <td>@Html.DropDownListFor(q => q.Category, Model.CategoryList)</td>
-                    <td></td>
-                    <td>EndDate</td>
-                    <td class="TextInputDate">@Html.TextBoxFor(q => q.EndDate, null, null)</td>
-                    <td></td>
-                    <td>AdditionalInfoSearchStr</td>
-                    <td>@Html.TextBoxFor(q => q.AdditionalInfoSearchStr, null, null)</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>TraceLevel</td>
-                    <td>@Html.DropDownListFor(q => q.TraceLevel, Model.TraceLevelList)</td>
-                    <td></td>
-                    <td>Db</td>
-                    <td>@Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
+        if (string.IsNullOrEmpty(Model.Header.ErrorMessage))
+         {
+             <div>
+                 <table class="alternate_color">
+                     <tr>
+                         <td>ApplicationName</td>
+                         <td>@Html.DropDownListFor(q => q.ApplicationName, Model.ApplicationNameList)</td>
+                         <td></td>
+                         <td>MaxRowCount</td>
+                         <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
+                         <td></td>
+                         <td>CorrelationIdSearchStr</td>
+                         <td>@Html.TextBoxFor(q => q.CorrelationIdSearchStr, null, null)</td>
+                         <td></td>
+                         <td><input type="submit" name="Command" value="Search"/></td>
+                     </tr>
+                     <tr>
+                         <td>FeatureName</td>
+                         <td>@Html.DropDownListFor(q => q.FeatureName, Model.FeatureNameList)</td>
+                         <td></td>
+                         <td>StartDate</td>
+                         <td class="TextInputDate">@Html.TextBoxFor(q => q.StartDate, null, null)</td>
+                         <td></td>
+                         <td>MessageSearchStr</td>
+                         <td>@Html.TextBoxFor(q => q.MessageSearchStr, null, null)</td>
+                         <td></td>
+                         <td><input type="submit" name="Command" value="Reset"/></td>
+                     </tr>
+                     <tr>
+                         <td>Category</td>
+                         <td>@Html.DropDownListFor(q => q.Category, Model.CategoryList)</td>
+                         <td></td>
+                         <td>EndDate</td>
+                         <td class="TextInputDate">@Html.TextBoxFor(q => q.EndDate, null, null)</td>
+                         <td></td>
+                         <td>AdditionalInfoSearchStr</td>
+                         <td>@Html.TextBoxFor(q => q.AdditionalInfoSearchStr, null, null)</td>
+                         <td></td>
+                         <td></td>
+                     </tr>
+                     <tr>
+                         <td>TraceLevel</td>
+                         <td>@Html.DropDownListFor(q => q.TraceLevel, Model.TraceLevelList)</td>
+                         <td></td>
+                         <td>Db</td>
+                         <td>@Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                         <td></td>
+                     </tr>
+                 </table>
+             </div>
 
         @*<div class="PageSection">
             <table class="TableSection">
@@ -76,16 +78,16 @@
             </table>
         </div>*@
 
-        <div class="PageSection">
-            <table class="TableSection">
-                <tr>
-                    <td>
-                        @Html.Action("AuditLogDetail", "AuditDb", Model)
-                    </td>
-                </tr>
-            </table>
-        </div>
-
+             <div class="PageSection">
+                 <table class="TableSection">
+                     <tr>
+                         <td>
+                             @Html.Action("AuditLogDetail", "AuditDb", Model)
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+         }
     }
 </div>
         

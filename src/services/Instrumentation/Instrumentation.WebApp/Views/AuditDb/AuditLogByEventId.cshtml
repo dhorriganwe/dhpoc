@@ -1,11 +1,11 @@
 ﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogByEventId
 @{
-    Model.ViewTitle = "Instrumentation Viewer";
+    Model.ViewTitle = "AuditLogByEventId";
 }
 
 <div class="PageRoot">
     
-    @Html.Action("Header", "Home", Model.Header)
+    @Html.Action("Header", "Home", Model)
 
     @using (@Html.BeginForm())
     {

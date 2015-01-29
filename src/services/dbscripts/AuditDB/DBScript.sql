@@ -1,5 +1,5 @@
 \encoding UTF8
-\connect rtaudit_20150114
+\connect Audit
 \encoding UTF8
 
 \ir SchemaChanges.sql
@@ -15,7 +15,7 @@
 \ir ./rt.GetAuditLogByFilters.sql
 \ir ./rt.GetAuditLogById.sql
 \ir ./rt.GetAuditLogByTraceLevel.sql
-\ir ./rt.GetAuditLogSummary.sql
+\ir ./rt.GetAuditLogRowCount.sql
 
 \ir ./rt.GetCategories.sql
 \ir ./rt.GetFeatureNames.sql
