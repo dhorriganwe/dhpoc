@@ -12,6 +12,9 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
     {
         private static string NL = Environment.NewLine;
 
+        /// <summary>
+        /// edited
+        /// </summary>
         [TestMethod]
         public void GetAuditLogSummary()
         {
