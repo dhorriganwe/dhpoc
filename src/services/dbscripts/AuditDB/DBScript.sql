@@ -22,3 +22,5 @@
 \ir ./rt.GetSummaryByApplicationName.sql
 \ir ./rt.GetSummaryByCategory.sql
 \ir ./rt.GetSummaryByFeatureName.sql
+
+\ir ./rt.GetTraceLevels.sql
