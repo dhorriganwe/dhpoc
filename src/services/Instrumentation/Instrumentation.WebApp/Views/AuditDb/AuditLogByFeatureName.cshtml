@@ -9,19 +9,6 @@
 
     @using (@Html.BeginForm())
     {
-        <div>
-            <table>
-                <tr>
-                    <td>DbKey @Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
-                    <td>
-                        <input type="submit" name="Command" value="Refresh" />
-                    </td>
-                    <td>MaxRowCount</td>
-                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
-                </tr>
-            </table>
-        </div>
-
         <div class="PageSection">
             <table class="TableSection">
                 <tr>
@@ -31,6 +18,10 @@
                                 <tr>
                                     <td>FeatureName</td>
                                     <td>@Html.TextBoxFor(q => q.FeatureName, null, null)</td>
+                                    <td></td>
+                                    <td>MaxRowCount</td>
+                                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
+                                    <td></td>
                                     <td><input type="submit" name="Command" value="Search"/></td>
                                 </tr>
                             </table>

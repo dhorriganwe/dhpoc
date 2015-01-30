@@ -9,7 +9,7 @@
 
     @using (@Html.BeginForm())
     {
-        <div>
+        @*<div>
             <table>
                 <tr>
                     <td>DbKey @Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
@@ -20,16 +20,34 @@
                     <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
                 </tr>
             </table>
-        </div>
+        </div>*@
 
-        <div class="PageSection">
+    @*<div class="PageSection">
+        <table class="alternate_color">
+            <tr>
+                <td>MaxRowCount</td>
+                <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
+                <td></td>
+                <td><input type="submit" name="Command" value="Search" /></td>
+            </tr>
+        </table>
+    </div>*@
+
+    <table class="alternate_color">
+        <tr>
+            <td>TotalRecordCount</td>
+            <td>@Model.TotalRecordCount</td>
+        </tr>
+    </table>
+
+        @*<div class="PageSection">
             <table class="alternate_color">
                 <tr>
                     <td>TotalRecordCount</td>
                     <td class="TextInputSmall">@Html.TextBoxFor(q => q.TotalRecordCount, null, null)</td>
                 </tr>
             </table>
-        </div>
+        </div>*@
 
         @Html.Action("SummaryApplicationNames", "AuditDb", Model)
 
