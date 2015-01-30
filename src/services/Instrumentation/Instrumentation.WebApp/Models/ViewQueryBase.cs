@@ -9,13 +9,15 @@ namespace Instrumentation.WebApp.Models
         public ViewQueryBase()
         {
             Header = new ViewQueryHeader();
+
+            // provide default values for SelectList members so that UI can display errors
+            DbKeyList = new SelectList(new List<LookupItem> { new LookupItem { Value = "*", Description = "*" } }, "Value", "Description");
         }
 
         public ViewQueryHeader Header { get; set; }
         public string SessionId { get; set; }
         public string ReleaseVersion { get; set; }
 
-        public string ViewName { get; set; }
         public string ViewTitle { get; set; }
 
         public List<AuditLog> AuditLogs { get; set; }

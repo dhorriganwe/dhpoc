@@ -151,7 +151,6 @@
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFilters.cs" />
     <Compile Include="Models\ViewQueryBase.cs" />
-    <Compile Include="Models\ViewQueryFilters.cs" />
     <Compile Include="Models\ViewQueryHeader.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFeatureName.cs" />

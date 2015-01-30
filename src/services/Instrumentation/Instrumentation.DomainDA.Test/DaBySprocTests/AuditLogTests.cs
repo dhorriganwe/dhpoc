@@ -511,12 +511,13 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService();
 
+            var applicationName = "AgVerdict-WebApp";
             var traceLevel = "error";
             var maxRowCount = 10;
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel);
+            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             Assert.IsTrue(auditLogs.Count > 0);
 
@@ -528,6 +529,106 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
                     auditLog.AuditedOn,
                     auditLog.ApplicationName));
             }
+        }
+
+        [TestMethod]
+        public void GetAuditLogByFilters_TraceLevel()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var applicationName = "AgVerdict-WebApp";
+            var traceLevel = "error";
+            var maxRowCount = 10;
+            var startDate = "1/1/2015";
+            var endDate = "2/1/2015";
+
+            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+
+            var count1 = auditLogs.Count;
+            Assert.IsTrue(auditLogs.Count > 0);
+
+            foreach (var auditLog in auditLogs)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2} {3}",
+                    auditLog.Id,
+                    auditLog.TraceLevel,
+                    auditLog.AuditedOn,
+                    auditLog.ApplicationName));
+            }
+
+            traceLevel = "info";
+            auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+
+            var count12 = auditLogs.Count;
+
+            foreach (var auditLog in auditLogs)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2} {3}",
+                    auditLog.Id,
+                    auditLog.TraceLevel,
+                    auditLog.AuditedOn,
+                    auditLog.ApplicationName));
+            }
+
+            Assert.AreNotEqual(count1, count12);
+        }
+
+        [TestMethod]
+        public void GetAuditLogByFilters_ApplicationName()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var applicationName = "AgVerdict-WebApp";
+            var traceLevel = "error";
+            var maxRowCount = 100;
+            var startDate = "1/1/2015";
+            var endDate = "2/1/2015";
+
+            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+
+            var count1 = auditLogs.Count;
+            Assert.IsTrue(auditLogs.Count > 0);
+
+            foreach (var auditLog in auditLogs)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2} {3}",
+                    auditLog.Id,
+                    auditLog.TraceLevel,
+                    auditLog.AuditedOn,
+                    auditLog.ApplicationName));
+            }
+
+            applicationName = "AgVerdict-Geo";
+            auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+
+            var count12 = auditLogs.Count;
+
+            foreach (var auditLog in auditLogs)
+            {
+                Console.WriteLine(string.Format("{0} {1} {2} {3}",
+                    auditLog.Id,
+                    auditLog.TraceLevel,
+                    auditLog.AuditedOn,
+                    auditLog.ApplicationName));
+            }
+
+            Assert.AreNotEqual(count1, count12);
+        }
+
+        [TestMethod]
+        public void GetAuditLogByFilters_0rows()
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService();
+
+            var applicationName = "xx";
+            var traceLevel = "error";
+            var maxRowCount = 10;
+            var startDate = "1/1/2015";
+            var endDate = "2/1/2015";
+
+            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+
+            Assert.AreEqual(0, auditLogs.Count);
         }
 
     }

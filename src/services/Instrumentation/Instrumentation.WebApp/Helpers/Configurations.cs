@@ -2,6 +2,8 @@
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using Instrumentation.WebApp.Models;
+using WebGrease.Css.Extensions;
 
 namespace Instrumentation.WebApp.Helpers
 {
@@ -29,6 +31,19 @@ namespace Instrumentation.WebApp.Helpers
             return configurationItems;
         }
 
+        public static List<LookupItem> GetDbKeysFromConfig()
+        {
+            var dbOptions = new List<LookupItem>();
+
+            var keys = DbKeys;
+            var splits = keys.Split(';');
+            if (splits == null || splits.Length == 0)
+                throw new ConfigurationErrorsException("DBKeys configuration should have 1 or more dbkeys.");
+
+            splits.ForEach(split => dbOptions.Add(new LookupItem { Value = split, Description = split }));
+
+            return dbOptions;
+        }
 
         #region Helpers
 

@@ -10,8 +10,8 @@ namespace Instrumentation.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            ViewQueryHome query = new ViewQueryHome();
-            query.ViewName = "Home";
+            var query = new ViewQueryHome();
+
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.Now.ToString();
 
@@ -29,24 +29,9 @@ namespace Instrumentation.WebApp.Controllers
 
         private SelectList InitDbKeySelectList()
         {
-            var dbKeys = GetDbOptionsFromConfig();
+            var dbKeys = Configurations.GetDbKeysFromConfig();
             return new SelectList(dbKeys, "Value", "Description");
         }
 
-        private List<LookupItem> GetDbOptionsFromConfig()
-        {
-            var keys = Configurations.DbKeys;
-            var splits = keys.Split(';');
-            if (splits == null || splits.Length == 0)
-                throw new ConfigurationErrorsException("DBKeys configuration should have 1 or more dbkeys.");
-
-            List<LookupItem> dbOptions = new List<LookupItem>();
-            foreach (var split in splits)
-            {
-                dbOptions.Add(new LookupItem { Value = split, Description = split });
-            }
-
-            return dbOptions;
-        }
     }
 }

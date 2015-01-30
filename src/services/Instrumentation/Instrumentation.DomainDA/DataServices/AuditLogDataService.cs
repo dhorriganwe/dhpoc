@@ -483,7 +483,12 @@ namespace Instrumentation.DomainDA.DataServices
                 });
         }
 
-        public IList<AuditLog> GetAuditLogByFilters(int maxRowCount, string startTime, string endTime, string travelLevel)
+        public IList<AuditLog> GetAuditLogByFilters(
+            int maxRowCount, 
+            string startTime, 
+            string endTime, 
+            string travelLevel,
+            string applicationName)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -495,6 +500,7 @@ namespace Instrumentation.DomainDA.DataServices
                     {"StartTime", startTime},
                     {"EndTime", endTime},
                     {"TraceLevel", travelLevel},
+                    {"ApplicationName", applicationName},
                 });
         }
 

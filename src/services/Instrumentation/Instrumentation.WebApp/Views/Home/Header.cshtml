@@ -3,11 +3,10 @@
     Layout = null;
 }
 <div>
-    <h2>@Model.ViewTitle</h2>
 
-    @if (Model.ViewName == "Home")
+    @if (Model.ViewTitle == "Home")
     {
-        <h3>Instrumentation Views</h3>
+        <h2>Instrumentation Dashboard</h2>
         <table class="alternate_color">
             <tr>
                 <td>
@@ -60,6 +59,8 @@
     }
     else
     {
+        <h2>@Model.ViewTitle</h2>
+        <br/>
         @Html.ActionLink("Home", "Index", "Home")
         @Html.Raw(((char) 160).ToString())
         @Html.Raw(((char) 124).ToString())
