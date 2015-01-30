@@ -148,7 +148,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             try
             {
-                query.AuditLogs = command == "Search" ? GetAuditLogByEventId(query) : new List<AuditLog>();
+                query.AuditLogs = GetAuditLogByEventId(query);
 
                 query.DbKeyList = InitDbKeySelectList();
             }
@@ -179,18 +179,25 @@ namespace Instrumentation.WebApp.Controllers
         {
             try
             {
-                if (command == "Reset")
+                switch (command)
                 {
-                    InitQuery(query);
-                    query = GetAuditLogByFilters(query);
-                }
-                else if (command == "Search")
-                {
-                    query = GetAuditLogByFilters(query);
-                }
-                else
-                {
-                    query.AuditLogs = new List<AuditLog>();
+                    case "Search":
+                        query = GetAuditLogByFilters(query);
+                        break;
+                    case "iLikeCorrelationId":
+                        query = GetByILikeEventId(query);
+                        break;
+                    case "iLikeMessage":
+                        query = GetByILikeMessage(query);
+                        break;
+                    case "iLikeAdditionalInfo":
+                        query = GetByILikeAdditionalInfo(query);
+                        break;
+                    case "iLikeLoginName":
+                        query = GetByILikeLoginName(query);
+                        break;
+                    default:
+                        break;
                 }
 
                 InitSelectLists(query);
@@ -492,6 +499,74 @@ namespace Instrumentation.WebApp.Controllers
                                             .ToList());
 
             return auditLogs;
+        }
+
+        private ViewQueryAuditLogByFilters GetByILikeEventId(ViewQueryAuditLogByFilters query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            if (string.IsNullOrEmpty(query.CorrelationIdSearchStr))
+                return query;
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetByILikeEventId(
+                query.MaxRowCount,
+                query.StartDate,
+                query.EndDate,
+                query.CorrelationIdSearchStr);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            return query;
+        }
+
+        private ViewQueryAuditLogByFilters GetByILikeMessage(ViewQueryAuditLogByFilters query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            if (string.IsNullOrEmpty(query.MessageSearchStr))
+                return query;
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetByILikeMessage(
+                query.MaxRowCount,
+                query.StartDate,
+                query.EndDate,
+                query.MessageSearchStr);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            return query;
+        }
+
+        private ViewQueryAuditLogByFilters GetByILikeAdditionalInfo(ViewQueryAuditLogByFilters query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            if (string.IsNullOrEmpty(query.AdditionalInfoSearchStr))
+                return query;
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetByILikeAdditionalInfo(
+                query.MaxRowCount,
+                query.StartDate,
+                query.EndDate,
+                query.AdditionalInfoSearchStr);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            return query;
+        }
+
+        private ViewQueryAuditLogByFilters GetByILikeLoginName(ViewQueryAuditLogByFilters query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            if (string.IsNullOrEmpty(query.LoginNameSearchStr))
+                return query;
+
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetByILikeLoginName(
+                query.MaxRowCount,
+                query.StartDate,
+                query.EndDate,
+                query.LoginNameSearchStr);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            return query;
         }
 
         private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)

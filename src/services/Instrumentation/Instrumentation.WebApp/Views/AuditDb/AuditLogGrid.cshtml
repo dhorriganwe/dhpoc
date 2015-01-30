@@ -4,6 +4,13 @@
 }
 
 <div class="PageSection">
+
+    <table class="alternate_color">
+        <tr>
+            <td>rowcount</td>
+            <td>@Model.AuditLogs.Count</td>
+        </tr>
+    </table>
     <table class="alternate_color">
         <tr>
             <th>Id</th>
@@ -23,20 +30,32 @@
             <tr>
                 <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new { id = auditLog.Id, dbkey = Model.DbKey }, null)</td>
 
-                @if (string.IsNullOrEmpty(auditLog.EventId)){ <td></td> }
-                else {
+                @if (string.IsNullOrEmpty(auditLog.EventId))
+                {
+                    <td></td> }
+                else
+                {
                     <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey }, null)</td>
                 }
-                @if (string.IsNullOrEmpty(auditLog.ApplicationName)){ <td></td> }
-                else {
+                @if (string.IsNullOrEmpty(auditLog.ApplicationName))
+                {
+                    <td></td> }
+                else
+                {
                     <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey }, null)</td>
                 }
-                @if (string.IsNullOrEmpty(auditLog.FeatureName)){ <td></td> }
-                else {
+                @if (string.IsNullOrEmpty(auditLog.FeatureName))
+                {
+                    <td></td> }
+                else
+                {
                     <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey }, null)</td>
                 }
-                @if (string.IsNullOrEmpty(auditLog.Category)){ <td></td> }
-                else {
+                @if (string.IsNullOrEmpty(auditLog.Category))
+                {
+                    <td></td> }
+                else
+                {
                     <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey }, null)</td>
                 }
 

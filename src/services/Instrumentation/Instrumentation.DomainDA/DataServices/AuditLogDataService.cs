@@ -19,7 +19,10 @@ namespace Instrumentation.DomainDA.DataServices
         private const string GETAUDITLOGBYCATEGORY = "GetAuditLogByCategory";
         private const string GETAUDITLOGBYTRACELEVEL = "GetAuditLogByTraceLevel";
         private const string GETAUDITLOGBYFILTERS = "GetAuditLogByFilters";
-
+        private const string GETBYILIKEEVENTID = "GetByILikeEventId";
+        private const string GETBYILIKEMESSAGE = "GetByILikeMessage";
+        private const string GETBYILIKEADDITIONALINFO = "GetByILikeAdditionalInfo";
+        private const string GETBYILIKELOGINNAME = "GetByILikeLoginName";
         
         private const string GETAUDITLOGROWCOUNT = "GetAuditLogRowCount";
         private const string GETSUMMARYBYAPPLICATIONNAME = "GetSummaryByApplicationName";
@@ -501,6 +504,82 @@ namespace Instrumentation.DomainDA.DataServices
                     {"EndTime", endTime},
                     {"TraceLevel", travelLevel},
                     {"ApplicationName", applicationName},
+                });
+        }
+
+        public IList<AuditLog> GetByILikeEventId(
+            int maxRowCount,
+            string startTime,
+            string endTime,
+            string eventIdSearchStr)
+        {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
+            return GetAuditLogList(GETBYILIKEEVENTID,
+                new Dictionary<string, object>
+                {
+                    {"Rowcount", maxRowCount},
+                    {"StartTime", startTime},
+                    {"EndTime", endTime},
+                    {"EventIdSearchStr", eventIdSearchStr},
+                });
+        }
+
+        public IList<AuditLog> GetByILikeMessage(
+            int maxRowCount,
+            string startTime,
+            string endTime,
+            string messageSearchStr)
+        {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
+            return GetAuditLogList(GETBYILIKEMESSAGE,
+                new Dictionary<string, object>
+                {
+                    {"Rowcount", maxRowCount},
+                    {"StartTime", startTime},
+                    {"EndTime", endTime},
+                    {"MessageSearchStr", messageSearchStr},
+                });
+        }
+
+        public IList<AuditLog> GetByILikeAdditionalInfo(
+            int maxRowCount,
+            string startTime,
+            string endTime,
+            string additionalInfoSearchStr)
+        {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
+            return GetAuditLogList(GETBYILIKEADDITIONALINFO,
+                new Dictionary<string, object>
+                {
+                    {"Rowcount", maxRowCount},
+                    {"StartTime", startTime},
+                    {"EndTime", endTime},
+                    {"AdditionalInfoSearchStr", additionalInfoSearchStr},
+                });
+        }
+
+        public IList<AuditLog> GetByILikeLoginName(
+            int maxRowCount,
+            string startTime,
+            string endTime,
+            string loginNameSearchStr)
+        {
+            if (maxRowCount < 0)
+                maxRowCount = Configurations.MaxRowCountDefault;
+
+            return GetAuditLogList(GETBYILIKELOGINNAME,
+                new Dictionary<string, object>
+                {
+                    {"Rowcount", maxRowCount},
+                    {"StartTime", startTime},
+                    {"EndTime", endTime},
+                    {"LoginNameSearchStr", loginNameSearchStr},
                 });
         }
 
