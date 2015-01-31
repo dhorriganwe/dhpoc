@@ -166,7 +166,7 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult AuditLogByFilters(string id, string dbkey = null, int? maxrowcount = null)
+        public ActionResult     AuditLogByFilters(string id, string dbkey = null, int? maxrowcount = null)
         {
             var query = new ViewQueryAuditLogByFilters();
 
@@ -459,7 +459,9 @@ namespace Instrumentation.WebApp.Controllers
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             var traceLevel = "";
-            if (query.TraceLevel != "*")
+            if (string.IsNullOrEmpty(query.TraceLevel))
+                traceLevel = "";
+            else if (query.TraceLevel != "*")
                 traceLevel = query.TraceLevel;
 
             var applicationName = "";
