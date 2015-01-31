@@ -9,10 +9,10 @@
 
     @using (@Html.BeginForm())
     {
-        <div class="PageSection">
-            <table class="TableSection">
+        <div>
+            <table>
                 <tr>
-                    <td>
+                    <td class="TdSection">
                         <div class="PageSection">
                             <table class="alternate_color">
                                 <tr>
@@ -34,7 +34,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="TdSection">
                         @Html.Action("AuditLogDetail", "AuditDb", Model)
                     </td>
                 </tr>

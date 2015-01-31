@@ -11,6 +11,12 @@
     padding: 0;
 }
 
+.PageSectionWithBorder {
+    float: left;
+    padding: 5px;
+    border: solid thin black;
+}
+
 .PageSection {
     float: left;
     padding: 5px;
@@ -20,20 +26,14 @@
     border:hidden;
 }
 
-.TrSection {
-    border:hidden;
-}
-
 .TdSection {
     border:hidden;
 }
 
-.PageSectionWithBorder {
-    float: left;
-    padding: 5px;
-    border: solid thin black;
+table th, td.TdSection{
+    border: 0 none;
+    padding: 0.15em 0.5em 0.25em 0.4em;
 }
-
 
 .PageRoot {
     padding: 5px;
