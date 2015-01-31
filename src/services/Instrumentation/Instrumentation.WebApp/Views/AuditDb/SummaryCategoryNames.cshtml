@@ -14,7 +14,7 @@
             <tr>
                 @if (string.IsNullOrEmpty(category.Name)) { <td></td> }
                 else {
-                    <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name, dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(category.Name, "AuditLogByCategory", "AuditDb", new { id = category.Name, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
                 }
                 <td>
                     @category.Count

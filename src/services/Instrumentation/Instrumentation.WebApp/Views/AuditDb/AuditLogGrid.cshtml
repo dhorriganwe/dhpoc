@@ -28,35 +28,35 @@
         @foreach (var auditLog in Model.AuditLogs)
         {
             <tr>
-                <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new { id = auditLog.Id, dbkey = Model.DbKey }, null)</td>
+                <td>@Html.ActionLink(auditLog.Id, "AuditLogById", "AuditDb", new { id = auditLog.Id, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
 
                 @if (string.IsNullOrEmpty(auditLog.EventId))
                 {
                     <td></td> }
                 else
                 {
-                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey }, null)</td>
+                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.ApplicationName))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey, maxrowcount=Model.MaxRowCount }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.FeatureName))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.Category))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey }, null)</td>
+                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
                 }
 
                 <td>@auditLog.MessageCode</td>
