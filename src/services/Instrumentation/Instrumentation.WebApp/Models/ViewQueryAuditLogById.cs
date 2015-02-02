@@ -5,6 +5,5 @@ namespace Instrumentation.WebApp.Models
     {
         public string AuditLogId { get; set; }
         public AuditLog AuditLog { get; set; }
-        public string Json { get; set; }
     }
 }

@@ -18,7 +18,6 @@
                         <td>@Html.TextBoxFor(q => q.AuditLogId, null, null)</td>
                         <td></td>
                         <td><input type="submit" name="Command" value="Search"/></td>
-                        @*<td><input type="button" onclick="copyToClipboard();" value="Copy" /></td>*@
                     </tr>
                 </table>
             </div>
@@ -56,21 +55,6 @@
         
 @section scripts {
     <script>
-
-        function copyToClipboard() {
-
-            if (window.clipboardData && clipboardData.setData) {
-                clipboardData.setData("Text", BuildJsonDetail());
-            }
-            else {
-                alert("works only in IE4+");
-            }
-        }
-
-        function BuildJsonDetail()
-        {
-            return '@Model.Json';
-        }
 
    </script>
 }

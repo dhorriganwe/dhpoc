@@ -112,11 +112,6 @@ namespace Instrumentation.WebApp.Controllers
                 if (command == "Search" || command == "Refresh")
                 {
                     query.AuditLog = GetAuditLogById(query);
-
-                    var jsSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-                    string json = jsSerializer.Serialize(query.AuditLog);
-
-                    query.Json = json;
                 }
                 else
                 {
