@@ -16,7 +16,6 @@ namespace Instrumentation.WebApp.Models
         }
 
         public ViewQueryHeader Header { get; set; }
-        public string SessionId { get; set; }
         public string ReleaseVersion { get; set; }
         public string ViewTitle { get; set; }
 

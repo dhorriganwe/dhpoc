@@ -27,8 +27,10 @@
                          <td>TraceLevel</td>
                          <td>@Html.DropDownListFor(q => q.TraceLevel, Model.TraceLevelList)</td>
                          <td></td>
-                         <td>Db</td>
-                         <td>@Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
+                         <td></td>
+                         <td><input type="submit" name="Command" value="Search" /></td>
+                         @*<td>Db</td>
+                         <td>@Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>*@
                          <td></td>
                          <td>MessageSearchStr</td>
                          <td>@Html.TextBoxFor(q => q.MessageSearchStr, null, null)</td>
@@ -40,7 +42,7 @@
                          <td class="TextInputDate">@Html.TextBoxFor(q => q.StartDate, null, null)</td>
                          <td></td>
                          <td></td>
-                         <td><input type="submit" name="Command" value="Search" /></td>
+                         <td></td>
                          <td></td>
                          <td>AdditionalInfoSearchStr</td>
                          <td>@Html.TextBoxFor(q => q.AdditionalInfoSearchStr, null, null)</td>
@@ -62,15 +64,19 @@
                  </table>
              </div>
 
-             <div class="PageSection">
-                 <table class="TableSection">
-                     <tr>
-                         <td>
-                             @Html.Action("AuditLogDetail", "AuditDb", Model)
-                         </td>
-                     </tr>
-                 </table>
-             </div>
+        <div class="PageSection">
+            <table class="TableSection">
+                <tr>
+                    <td>
+                        @Html.Action("AuditLogDetail", "AuditDb", Model)
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    <div>
+        @Html.HiddenFor(q => q.DbKey)
+    </div>
     }
 </div>
         

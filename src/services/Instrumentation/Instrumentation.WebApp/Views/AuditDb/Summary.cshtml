@@ -4,50 +4,17 @@
 }
 
 <div class="PageRoot">
-    
+
     @Html.Action("Header", "Home", Model)
 
     @using (@Html.BeginForm())
     {
-        @*<div>
-            <table>
-                <tr>
-                    <td>DbKey @Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>
-                    <td>
-                        <input type="submit" name="Command" value="Refresh" />
-                    </td>
-                    <td>MaxRowCount</td>
-                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
-                </tr>
-            </table>
-        </div>*@
-
-    @*<div class="PageSection">
         <table class="alternate_color">
             <tr>
-                <td>MaxRowCount</td>
-                <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
-                <td></td>
-                <td><input type="submit" name="Command" value="Search" /></td>
+                <td>TotalRecordCount</td>
+                <td>@Model.TotalRecordCount</td>
             </tr>
         </table>
-    </div>*@
-
-    <table class="alternate_color">
-        <tr>
-            <td>TotalRecordCount</td>
-            <td>@Model.TotalRecordCount</td>
-        </tr>
-    </table>
-
-        @*<div class="PageSection">
-            <table class="alternate_color">
-                <tr>
-                    <td>TotalRecordCount</td>
-                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.TotalRecordCount, null, null)</td>
-                </tr>
-            </table>
-        </div>*@
 
         @Html.Action("SummaryApplicationNames", "AuditDb", Model)
 

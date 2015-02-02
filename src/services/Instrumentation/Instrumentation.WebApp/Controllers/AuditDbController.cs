@@ -368,15 +368,6 @@ namespace Instrumentation.WebApp.Controllers
 
             query.StartDate = DateTime.Now.AddDays(-21).ToString();
             query.EndDate = DateTime.Now.ToString();
-
-            InitQuery((ViewQueryBase)query);
-        }
-
-        private void InitQuery(ViewQueryBase query)
-        {
-            query = query ?? new ViewQueryAuditLogByFilters();
-
-            query.MaxRowCount = Configurations.MaxRowCount;
         }
 
         private void InitSelectLists(ViewQueryAuditLogByFilters query)
