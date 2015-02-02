@@ -1,4 +1,5 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryBase
+﻿@using Instrumentation.DomainDA.Helpers
+@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
     Layout = null;
 }
@@ -16,43 +17,43 @@
 
             <tr>
                 <td>
-                    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
                             
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
             <tr>
                 <td>
-                    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+                    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
                 </td>
             </tr>
         </table>
