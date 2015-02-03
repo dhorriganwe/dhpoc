@@ -1,7 +1,7 @@
 ﻿
 namespace Instrumentation.WebApp.Models
 {
-    public class AuditLog
+    public class AuditLogItem
     {
         public string Id { get; set; }
         public string EventId { get; set; }

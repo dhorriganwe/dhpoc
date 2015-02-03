@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Instrumentation.DomainDA.DataServices;
 using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
-using AuditLog = Instrumentation.WebApp.Models.AuditLog;
+using AuditLog = Instrumentation.WebApp.Models.AuditLogItem;
 using System;
 
 namespace Instrumentation.WebApp.Controllers

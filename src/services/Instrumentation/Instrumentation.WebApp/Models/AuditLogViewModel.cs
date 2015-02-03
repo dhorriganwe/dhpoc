@@ -12,7 +12,7 @@ namespace Instrumentation.WebApp.Models
             ApplicationNameList = new SelectList(new List<LookupItem> { new LookupItem { Value = "*", Description = "*" } }, "Value", "Description");
             TraceLevelList = new SelectList(new List<LookupItem> { new LookupItem { Value = "*", Description = "*" } }, "Value", "Description");
             DbKeyList = new SelectList(new List<LookupItem> { new LookupItem { Value = "*", Description = "*" } }, "Value", "Description");
-            AuditLogs = new List<AuditLog>();
+            AuditLogs = new List<AuditLogItem>();
         }
 
         // meta info
@@ -26,11 +26,11 @@ namespace Instrumentation.WebApp.Models
         public int MaxRowCount { get; set; }
         public string DbKey { get; set; }
         public SelectList DbKeyList { get; set; }
-        public List<AuditLog> AuditLogs { get; set; }
+        public List<AuditLogItem> AuditLogs { get; set; }
 
         // browse info
         public string AuditLogId { get; set; }
-        public AuditLog AuditLog { get; set; }
+        public AuditLogItem AuditLog { get; set; }
         public string ApplicationName { get; set; }
         public string Category { get; set; }
         public string EventId { get; set; }

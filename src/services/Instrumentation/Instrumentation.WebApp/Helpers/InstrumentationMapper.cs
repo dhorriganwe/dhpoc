@@ -5,9 +5,9 @@ namespace Instrumentation.WebApp.Helpers
 {
     public class InstrumentationMapper
     {
-        public AuditLog MapDaToUiAuditLog(Instrumentation.DomainDA.Models.AuditLog auditLogDa)
+        public AuditLogItem MapDaToUiAuditLog(Instrumentation.DomainDA.Models.AuditLog auditLogDa)
         {
-            var auditLogUi = new AuditLog();
+            var auditLogUi = new AuditLogItem();
             auditLogUi.Id = auditLogDa.Id;
             auditLogUi.EventId = auditLogDa.EventId;
             auditLogUi.ApplicationName = auditLogDa.ApplicationName;
@@ -41,9 +41,9 @@ namespace Instrumentation.WebApp.Helpers
             return auditLogUi;
         }
 
-        public List<AuditLog> MapDaToUiAuditLog(List<Instrumentation.DomainDA.Models.AuditLog> auditLogDas)
+        public List<AuditLogItem> MapDaToUiAuditLog(List<Instrumentation.DomainDA.Models.AuditLog> auditLogDas)
         {
-            List<AuditLog> auditLogUis = new List<AuditLog>();
+            List<AuditLogItem> auditLogUis = new List<AuditLogItem>();
 
             foreach(var alDa in auditLogDas)
             {
