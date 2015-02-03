@@ -4,9 +4,9 @@ using Instrumentation.DomainDA.Models;
 
 namespace Instrumentation.WebApp.Models
 {
-    public class ViewQueryBase
+    public class AuditLogViewModel
     {
-        public ViewQueryBase()
+        public AuditLogViewModel()
         {
             // provide default values for SelectList members so that UI can display errors
             ApplicationNameList = new SelectList(new List<LookupItem> { new LookupItem { Value = "*", Description = "*" } }, "Value", "Description");
@@ -15,17 +15,20 @@ namespace Instrumentation.WebApp.Models
             AuditLogs = new List<AuditLog>();
         }
 
+        // meta info
         public string CurrentServerTime { get; set; }
         public string ReleaseVersion { get; set; }
         public string ViewTitle { get; set; }
         public string ErrorMessage { get; set; }
 
+        // db data info
         public long TotalRecordCount { get; set; }
         public int MaxRowCount { get; set; }
         public string DbKey { get; set; }
         public SelectList DbKeyList { get; set; }
         public List<AuditLog> AuditLogs { get; set; }
 
+        // browse info
         public string AuditLogId { get; set; }
         public AuditLog AuditLog { get; set; }
         public string ApplicationName { get; set; }
@@ -38,6 +41,7 @@ namespace Instrumentation.WebApp.Models
         public List<SummaryItem> FeatureNames { get; set; }
         public List<SummaryItem> Categories { get; set; }
 
+        // search info
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string CorrelationIdSearchStr { get; set; }

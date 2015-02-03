@@ -10,7 +10,7 @@ namespace Instrumentation.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var query = new ViewQueryBase();
+            var query = new AuditLogViewModel();
 
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.Now.ToString();
@@ -20,9 +20,9 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult Header(ViewQueryBase query = null)
+        public ActionResult Header(AuditLogViewModel query = null)
         {
-            query = query ?? new ViewQueryBase();
+            query = query ?? new AuditLogViewModel();
 
             return View(query);
         }

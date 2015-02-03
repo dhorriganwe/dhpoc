@@ -149,7 +149,7 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Helpers\InstrumentationMapper.cs" />
     <Compile Include="Models\AuditLog.cs" />
-    <Compile Include="Models\ViewQueryBase.cs" />
+    <Compile Include="Models\AuditLogViewModel.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Models\FailDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
