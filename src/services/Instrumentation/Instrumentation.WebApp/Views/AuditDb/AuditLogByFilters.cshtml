@@ -1,4 +1,4 @@
-﻿@model Instrumentation.WebApp.Models.ViewQueryAuditLogByFilters
+﻿@model Instrumentation.WebApp.Models.ViewQueryBase
 @{
     Model.ViewTitle = "AuditLogByFilters";
 }
@@ -29,8 +29,6 @@
                          <td></td>
                          <td></td>
                          <td><input type="submit" name="Command" value="Search" /></td>
-                         @*<td>Db</td>
-                         <td>@Html.DropDownListFor(q => q.DbKey, Model.DbKeyList)</td>*@
                          <td></td>
                          <td>MessageSearchStr</td>
                          <td>@Html.TextBoxFor(q => q.MessageSearchStr, null, null)</td>

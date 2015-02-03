@@ -163,7 +163,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult     AuditLogByFilters(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogByFilters();
+            var query = new ViewQueryBase();
 
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -175,7 +175,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByFilters(ViewQueryAuditLogByFilters query, string command)
+        public ActionResult AuditLogByFilters(ViewQueryBase query, string command)
         {
             try
             {
@@ -356,19 +356,19 @@ namespace Instrumentation.WebApp.Controllers
         {
             return View(query);
         }
-        
-        private void InitQuery(ViewQueryAuditLogByFilters query)
+
+        private void InitQuery(ViewQueryBase query)
         {
-            query = query ?? new ViewQueryAuditLogByFilters();
+            query = query ?? new ViewQueryBase();
 
             query.StartDate = DateTime.Now.AddDays(-21).ToString();
             query.EndDate = DateTime.Now.ToString();
         }
 
-        private void InitSelectLists(ViewQueryAuditLogByFilters query)
+        private void InitSelectLists(ViewQueryBase query)
         {
             if (query == null)
-                query = new ViewQueryAuditLogByFilters();
+                query = new ViewQueryBase();
 
             query.ApplicationNameList = InitApplicationNameSelectList(query.DbKey);
             query.TraceLevelList = InitTraceLevelSelectList(query.DbKey);
@@ -441,7 +441,7 @@ namespace Instrumentation.WebApp.Controllers
             return new SelectList(dbKeys, "Value", "Description");
         }
 
-        private ViewQueryAuditLogByFilters GetAuditLogByFilters(ViewQueryAuditLogByFilters query)
+        private ViewQueryBase GetAuditLogByFilters(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             var traceLevel = "";
@@ -497,7 +497,7 @@ namespace Instrumentation.WebApp.Controllers
             return auditLogs;
         }
 
-        private ViewQueryAuditLogByFilters GetByILikeEventId(ViewQueryAuditLogByFilters query)
+        private ViewQueryBase GetByILikeEventId(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             if (string.IsNullOrEmpty(query.CorrelationIdSearchStr))
@@ -514,7 +514,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByFilters GetByILikeMessage(ViewQueryAuditLogByFilters query)
+        private ViewQueryBase GetByILikeMessage(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             if (string.IsNullOrEmpty(query.MessageSearchStr))
@@ -531,7 +531,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByFilters GetByILikeAdditionalInfo(ViewQueryAuditLogByFilters query)
+        private ViewQueryBase GetByILikeAdditionalInfo(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             if (string.IsNullOrEmpty(query.AdditionalInfoSearchStr))
@@ -548,7 +548,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByFilters GetByILikeLoginName(ViewQueryAuditLogByFilters query)
+        private ViewQueryBase GetByILikeLoginName(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             if (string.IsNullOrEmpty(query.LoginNameSearchStr))
