@@ -151,17 +151,8 @@
     <Compile Include="Models\AuditLog.cs" />
     <Compile Include="Models\ViewQueryAuditLogByFilters.cs" />
     <Compile Include="Models\ViewQueryBase.cs" />
-    <Compile Include="Models\ViewQueryHeader.cs" />
     <Compile Include="Models\LookupItem.cs" />
-    <Compile Include="Models\ViewQueryAuditLogByFeatureName.cs" />
-    <Compile Include="Models\ViewQueryAuditLogByCategory.cs" />
-    <Compile Include="Models\ViewQueryAuditLogByApplicationName.cs" />
-    <Compile Include="Models\ViewQueryAuditLogByEventId.cs" />
-    <Compile Include="Models\ViewQueryHome.cs" />
-    <Compile Include="Models\ViewQueryAuditLogSummary.cs" />
-    <Compile Include="Models\ViewQueryAuditLogById.cs" />
     <Compile Include="Models\FailDetail.cs" />
-    <Compile Include="Models\ViewQueryAuditLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

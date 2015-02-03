@@ -10,7 +10,7 @@ namespace Instrumentation.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            var query = new ViewQueryHome();
+            var query = new ViewQueryBase();
 
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.Now.ToString();

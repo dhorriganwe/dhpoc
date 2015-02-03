@@ -25,7 +25,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult Summary(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogSummary();
+            var query = new ViewQueryBase();
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
 
@@ -33,7 +33,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult Summary(ViewQueryAuditLogSummary query, string command)
+        public ActionResult Summary(ViewQueryBase query, string command)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             query.DbKeyList = InitDbKeySelectList();
@@ -82,7 +82,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             query.DbKeyList = InitDbKeySelectList();
@@ -94,7 +94,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult AuditLogById(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogById();
+            var query = new ViewQueryBase();
             query.AuditLogId = id;
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -105,7 +105,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogById(ViewQueryAuditLogById query, string command)
+        public ActionResult AuditLogById(ViewQueryBase query, string command)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -132,7 +132,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult AuditLogByEventId(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogByEventId();
+            var query = new ViewQueryBase();
             query.EventId = id;
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -143,7 +143,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByEventId(ViewQueryAuditLogByEventId query, string command)
+        public ActionResult AuditLogByEventId(ViewQueryBase query, string command)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -204,7 +204,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -214,7 +214,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult AuditLogByApplicationName(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogByApplicationName();
+            var query = new ViewQueryBase();
             query.ApplicationName = id;
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -225,7 +225,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByApplicationName(ViewQueryAuditLogByApplicationName query, string command)
+        public ActionResult AuditLogByApplicationName(ViewQueryBase query, string command)
         {
             try
             {
@@ -242,7 +242,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -252,7 +252,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult AuditLogByFeatureName(string id, string name = null, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogByFeatureName();
+            var query = new ViewQueryBase();
             query.FeatureName = name;
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -263,7 +263,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByFeatureName(ViewQueryAuditLogByFeatureName query, string command)
+        public ActionResult AuditLogByFeatureName(ViewQueryBase query, string command)
         {
             try
             {
@@ -282,7 +282,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
             ModelState.Clear();
 
@@ -291,7 +291,7 @@ namespace Instrumentation.WebApp.Controllers
 
         public ActionResult AuditLogByCategory(string id, string dbkey = null, int? maxrowcount = null)
         {
-            var query = new ViewQueryAuditLogByCategory();
+            var query = new ViewQueryBase();
             query.Category = id;
             query.DbKey = dbkey;
             query.MaxRowCount = maxrowcount.GetValueOrDefault();
@@ -302,7 +302,7 @@ namespace Instrumentation.WebApp.Controllers
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByCategory(ViewQueryAuditLogByCategory query, string command)
+        public ActionResult AuditLogByCategory(ViewQueryBase query, string command)
         {
             try
             {
@@ -319,7 +319,7 @@ namespace Instrumentation.WebApp.Controllers
             }
             catch (Exception ex)
             {
-                query.Header.ErrorMessage = ex.ToString();
+                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -475,7 +475,7 @@ namespace Instrumentation.WebApp.Controllers
             return auditLogs;
         }
 
-        private AuditLog GetAuditLogById(ViewQueryAuditLogById query)
+        private AuditLog GetAuditLogById(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
@@ -484,7 +484,7 @@ namespace Instrumentation.WebApp.Controllers
             return auditLog;
         }
 
-        private List<AuditLog> GetAuditLogByEventId(ViewQueryAuditLogByEventId query)
+        private List<AuditLog> GetAuditLogByEventId(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
@@ -565,7 +565,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByApplicationName GetAuditLogByApplicationName(ViewQueryAuditLogByApplicationName query)
+        private ViewQueryBase GetAuditLogByApplicationName(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
@@ -581,7 +581,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByCategory GetAuditLogByCategory(ViewQueryAuditLogByCategory query)
+        private ViewQueryBase GetAuditLogByCategory(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
@@ -597,7 +597,7 @@ namespace Instrumentation.WebApp.Controllers
             return query;
         }
 
-        private ViewQueryAuditLogByFeatureName GetAuditLogByFeatureName(ViewQueryAuditLogByFeatureName query)
+        private ViewQueryBase GetAuditLogByFeatureName(ViewQueryBase query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 

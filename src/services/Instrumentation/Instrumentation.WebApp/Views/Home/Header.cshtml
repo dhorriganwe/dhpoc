@@ -94,14 +94,14 @@
     }
 
 <hr />
-    @if(!string.IsNullOrEmpty(Model.Header.ErrorMessage))
+    @if(!string.IsNullOrEmpty(Model.ErrorMessage))
     { 
         <table>
             <tr>
                 <td class="ErrorTitle">ErrorMessage</td>
             </tr>
             <tr>
-                <td>@Model.Header.ErrorMessage</td>
+                <td>@Model.ErrorMessage</td>
             </tr>
         </table>
     }
