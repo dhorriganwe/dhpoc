@@ -82,6 +82,7 @@ BEGIN
 			FROM rt.AuditLog al 
 			WHERE al.AuditedOn > i_starttime
 			and al.AuditedOn < i_endtime
+			and al.ApplicationName = i_appName
 			ORDER BY al.id DESC
 			LIMIT i_rowcount;
 
@@ -103,6 +104,7 @@ BEGIN
 			WHERE al.TraceLevel = i_traceLevel
 			and al.AuditedOn > i_starttime
 			and al.AuditedOn < i_endtime
+			and al.ApplicationName = i_appName
 			ORDER BY al.id DESC
 			LIMIT i_rowcount;
 
@@ -119,7 +121,8 @@ ALTER FUNCTION rt.getauditlogbyfilters(int, timestamp without time zone, timesta
 
 /*  
 select rt.getauditlogbyfilters(10, '1/1/2015', '2/1/2015', 'error', '')
-select id, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2015', '2/20/2015', '', '')
-select id, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2015', '2/20/2015', 'error', '')
-select id, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2015', '2/20/2015', 'info', '')
+select id, ApplicationName, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2014', '2/20/2015', '', '')
+select id, ApplicationName, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2014', '2/20/2015', '', 'RisingTide')
+select id, ApplicationName, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2014', '2/20/2015', 'error', 'RisingTide')
+select id, ApplicationName, AuditedOn, TraceLevel, Messages  from rt.getauditlogbyfilters(1000, '1/1/2014', '2/20/2015', 'info', '')
 */

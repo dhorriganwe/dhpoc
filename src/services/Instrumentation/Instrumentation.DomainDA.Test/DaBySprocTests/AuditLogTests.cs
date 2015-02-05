@@ -481,16 +481,19 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
                 al.AuditedOn)));
         }
 
-        [TestMethod]
-        public void AddAuditLog()
-        {
-            AddAuditLogRow();
-        }
-
         public string AddAuditLogRow()
         {
             var auditLogDataService = new AuditLogDataService();
 
+            AuditLog auditLog = DefaultAuditLog();
+
+            auditLogDataService.AddAuditLog(auditLog);
+
+            return auditLog.Id;
+        }
+
+        private AuditLog DefaultAuditLog()
+        {
             AuditLog auditLog = new AuditLog();
             auditLog.EventId = "eventid";
             auditLog.ApplicationName = "appname";
@@ -501,205 +504,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             auditLog.TraceLevel = "traceLevel";
             auditLog.LoginName = "login1";
 
-            auditLogDataService.AddAuditLog(auditLog);
-
-            return auditLog.Id;
+            return auditLog;
         }
-
-        [TestMethod]
-        public void GetAuditLogByFilters()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var applicationName = "AgVerdict-WebApp";
-            var traceLevel = "error";
-            var maxRowCount = 10;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            Assert.IsTrue(auditLogs.Count > 0);
-
-            foreach (var auditLog in auditLogs)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2} {3}",
-                    auditLog.Id,
-                    auditLog.TraceLevel,
-                    auditLog.AuditedOn,
-                    auditLog.ApplicationName));
-            }
-        }
-
-        [TestMethod]
-        public void GetAuditLogByFilters_TraceLevel()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var applicationName = "AgVerdict-WebApp";
-            var traceLevel = "error";
-            var maxRowCount = 10;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            var count1 = auditLogs.Count;
-            Assert.IsTrue(auditLogs.Count > 0);
-
-            foreach (var auditLog in auditLogs)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2} {3}",
-                    auditLog.Id,
-                    auditLog.TraceLevel,
-                    auditLog.AuditedOn,
-                    auditLog.ApplicationName));
-            }
-
-            traceLevel = "info";
-            auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            var count12 = auditLogs.Count;
-
-            foreach (var auditLog in auditLogs)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2} {3}",
-                    auditLog.Id,
-                    auditLog.TraceLevel,
-                    auditLog.AuditedOn,
-                    auditLog.ApplicationName));
-            }
-
-            Assert.AreNotEqual(count1, count12);
-        }
-
-        [TestMethod]
-        public void GetAuditLogByFilters_ApplicationName()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var applicationName = "AgVerdict-WebApp";
-            var traceLevel = "error";
-            var maxRowCount = 100;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            var count1 = auditLogs.Count;
-            Assert.IsTrue(auditLogs.Count > 0);
-
-            foreach (var auditLog in auditLogs)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2} {3}",
-                    auditLog.Id,
-                    auditLog.TraceLevel,
-                    auditLog.AuditedOn,
-                    auditLog.ApplicationName));
-            }
-
-            applicationName = "AgVerdict-Geo";
-            auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            var count12 = auditLogs.Count;
-
-            foreach (var auditLog in auditLogs)
-            {
-                Console.WriteLine(string.Format("{0} {1} {2} {3}",
-                    auditLog.Id,
-                    auditLog.TraceLevel,
-                    auditLog.AuditedOn,
-                    auditLog.ApplicationName));
-            }
-
-            Assert.AreNotEqual(count1, count12);
-        }
-
-        [TestMethod]
-        public void GetAuditLogByFilters_0rows()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var applicationName = "xx";
-            var traceLevel = "error";
-            var maxRowCount = 10;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
-
-            Assert.AreEqual(0, auditLogs.Count);
-        }
-
-        [TestMethod]
-        public void GetByILikeEventId()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var eventIdSearchStr = "73a9";
-            var maxRowCount = 100;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeEventId(maxRowCount, startDate, endDate, eventIdSearchStr);
-
-            Assert.IsTrue(auditLogs.Count > 0);
-
-            Assert.IsTrue(auditLogs[0].EventId.Contains(eventIdSearchStr));
-
-            Assert.IsTrue(auditLogs[0].EventId.IndexOf(eventIdSearchStr) > 0);
-        }
-
-        [TestMethod]
-        public void GetByILikeMessage()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var messageSearchStr = "xx";
-            var maxRowCount = 100;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeMessage(maxRowCount, startDate, endDate, messageSearchStr);
-
-            Assert.IsTrue(auditLogs.Count > 0);
-            Assert.IsTrue(auditLogs[0].Messages.ToLower().Contains(messageSearchStr.ToLower()));
-            Assert.IsTrue(auditLogs[0].Messages.ToLower().IndexOf(messageSearchStr.ToLower()) > 0);
-        }
-
-        [TestMethod]
-        public void GetByILikeAdditionalInfo()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var additionalInfoSearchStr = "Lannate";
-            var maxRowCount = 100;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeAdditionalInfo(maxRowCount, startDate, endDate, additionalInfoSearchStr);
-
-            Assert.IsTrue(auditLogs.Count > 0);
-            Assert.IsTrue(auditLogs[0].AdditionalInfo.ToLower().Contains(additionalInfoSearchStr.ToLower()));
-            Assert.IsTrue(auditLogs[0].AdditionalInfo.ToLower().IndexOf(additionalInfoSearchStr.ToLower()) > 0);
-        }
-
-        [TestMethod]
-        public void GetByILikeLoginName()
-        {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            var loginNameSearchStr = "276";
-            var maxRowCount = 100;
-            var startDate = "1/1/2015";
-            var endDate = "2/1/2015";
-
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeLoginName(maxRowCount, startDate, endDate, loginNameSearchStr);
-
-            Assert.IsTrue(auditLogs.Count > 0);
-            Assert.IsTrue(auditLogs[0].LoginName.ToLower().Contains(loginNameSearchStr.ToLower()));
-            Assert.IsTrue(auditLogs[0].LoginName.ToLower().IndexOf(loginNameSearchStr.ToLower()) > 0);
-        }
-
     }
 }

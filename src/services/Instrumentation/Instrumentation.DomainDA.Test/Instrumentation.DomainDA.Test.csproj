@@ -60,6 +60,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DaBySprocTests\AuditLogByFiltersTests.cs" />
+    <Compile Include="DaBySprocTests\AuditLogByILikeTests.cs" />
     <Compile Include="DaBySprocTests\AuditLogTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

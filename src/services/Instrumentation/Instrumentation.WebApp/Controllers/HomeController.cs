@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
 
@@ -13,7 +11,7 @@ namespace Instrumentation.WebApp.Controllers
             var query = new AuditLogViewModel();
 
             query.ReleaseVersion = Configurations.ReleaseVersion;
-            query.CurrentServerTime = System.DateTime.Now.ToString();
+            query.CurrentServerTime = System.DateTime.UtcNow.ToString();
 
             query.DbKeyList = InitDbKeySelectList();
 
