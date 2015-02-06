@@ -5,104 +5,84 @@
 }
 <div>
 
-    @if (Model.ViewTitle == "Home")
-    {
-        <h2>Instrumentation Dashboard</h2>
-        <table class="alternate_color">
-            <tr>
-                <td>
-                    @Html.ActionLink("Home", "Index", "Home")
-                </td>
-            </tr>
+@if (Model.ViewTitle == "Home")
+{
+    <h2>Instrumentation Dashboards</h2>
 
-            <tr>
-                <td>
-                    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-                            
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Configurations.MaxRowCountDefault }, null)
-                </td>
-            </tr>
-        </table>
-    }
-    else
-    {
-        <h2>@Model.ViewTitle</h2>
-        <br/>
-        @Html.ActionLink("Home", "Index", "Home")
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 124).ToString())
-        @Html.Raw(((char) 124).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
-        @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char) 160).ToString())
-        @Html.Raw(((char) 160).ToString())
-        @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-        @Html.Raw(((char)160).ToString())
-        @Html.Raw(((char)160).ToString())
-    }
+    <br />
+    @Html.ActionLink("Home", "Index", "Home")
+    <br/>
+    <h3>AuditLog Dashboards</h3>
+    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+}
+else
+{
+    <h3>@Model.ViewTitle</h3>
+    <br/>
+    @Html.ActionLink("Home", "Index", "Home")
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 124).ToString())
+    @Html.Raw(((char) 124).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLogByEventId", "AuditLogByEventId", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLogByApplicationName", "AuditLogByApplicationName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLogByFeatureName", "AuditLogByFeatureName", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.ActionLink("AuditLogByCategory", "AuditLogByCategory", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char) 160).ToString())
+    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
+}
 
 <hr />
-    @if(!string.IsNullOrEmpty(Model.ErrorMessage))
-    { 
-        <table>
-            <tr>
-                <td class="ErrorTitle">ErrorMessage</td>
-            </tr>
-            <tr>
-                <td>@Model.ErrorMessage</td>
-            </tr>
-        </table>
-    }
+@if(!string.IsNullOrEmpty(Model.ErrorMessage))
+{ 
+    <table>
+        <tr>
+            <td class="ErrorTitle">ErrorMessage</td>
+        </tr>
+        <tr>
+            <td>@Model.ErrorMessage</td>
+        </tr>
+    </table>
+}
 </div>
