@@ -68,7 +68,6 @@
     <Compile Include="Models\AuditLogSummary.cs" />
     <Compile Include="Models\SummaryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DbFramework\EfDatabaseContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

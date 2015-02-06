@@ -362,7 +362,7 @@ namespace Instrumentation.WebApp.Controllers
             query = query ?? new AuditLogViewModel();
 
             query.StartDate = DateTime.Now.AddDays(-21).ToString();
-            query.EndDate = DateTime.Now.ToString();
+            query.EndDate = DateTime.Now.AddDays(1).ToString();
         }
 
         private void InitSelectLists(AuditLogViewModel query)

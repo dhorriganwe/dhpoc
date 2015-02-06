@@ -10,19 +10,17 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
     [TestClass]
     public class AuditLogByILikeTests
     {
-        private static string NL = Environment.NewLine;
+        IAuditLogDataService _auditLogDataService = new AuditLogDataService();
 
         [TestMethod]
         public void GetByILikeEventId()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var eventIdSearchStr = "73a9";
             var maxRowCount = 100;
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeEventId(maxRowCount, startDate, endDate, eventIdSearchStr);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByILikeEventId(maxRowCount, startDate, endDate, eventIdSearchStr);
 
             Assert.IsTrue(auditLogs.Count > 0);
 
@@ -34,14 +32,12 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetByILikeMessage()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var messageSearchStr = "xx";
             var maxRowCount = 100;
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeMessage(maxRowCount, startDate, endDate, messageSearchStr);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByILikeMessage(maxRowCount, startDate, endDate, messageSearchStr);
 
             Assert.IsTrue(auditLogs.Count > 0);
             Assert.IsTrue(auditLogs[0].Messages.ToLower().Contains(messageSearchStr.ToLower()));
@@ -51,14 +47,12 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetByILikeAdditionalInfo()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var additionalInfoSearchStr = "Lannate";
             var maxRowCount = 100;
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeAdditionalInfo(maxRowCount, startDate, endDate, additionalInfoSearchStr);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByILikeAdditionalInfo(maxRowCount, startDate, endDate, additionalInfoSearchStr);
 
             Assert.IsTrue(auditLogs.Count > 0);
             Assert.IsTrue(auditLogs[0].AdditionalInfo.ToLower().Contains(additionalInfoSearchStr.ToLower()));
@@ -68,14 +62,12 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetByILikeLoginName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var loginNameSearchStr = "276";
             var maxRowCount = 100;
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = auditLogDataService.GetByILikeLoginName(maxRowCount, startDate, endDate, loginNameSearchStr);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByILikeLoginName(maxRowCount, startDate, endDate, loginNameSearchStr);
 
             Assert.IsTrue(auditLogs.Count > 0);
             Assert.IsTrue(auditLogs[0].LoginName.ToLower().Contains(loginNameSearchStr.ToLower()));

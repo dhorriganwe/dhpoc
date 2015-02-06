@@ -12,25 +12,37 @@ namespace Instrumentation.DomainDA.DbFramework
     /// </summary>
     public class SqlCommand : ISqlCommand
     {
-        private readonly EfDatabaseContext _dbContext = EfDatabaseContext.CreateContext();
-        private NpgsqlConnection _npgsqlConnection = new NpgsqlConnection(Configurations.GetConnectionString("rtAudit"));
+        private NpgsqlConnection _npgsqlConnection = new NpgsqlConnection();
         private string _schema = null;
-        //private readonly NpgsqlConnection _npgsqlConnection = new NpgsqlConnection(Constants.PostgresConnectionString);
+        private Dictionary<string, string> _connectionStrings = new Dictionary<string, string>();
+
+        private string GetConnectionString(string dbKey)
+        {
+            var cs = "";
+
+            if (_connectionStrings.ContainsKey(dbKey))
+                return _connectionStrings[dbKey];
+
+            cs = Configurations.GetConnectionString(dbKey);
+            _connectionStrings.Add(dbKey, cs);
+
+            return cs;
+        }
+
 
         #region ctors
+
         public SqlCommand()
-        { }
+        {
+            _npgsqlConnection = new NpgsqlConnection(GetConnectionString(Configurations.DbKeyDefault));
+        }
 
         public SqlCommand(string dbKey, string schema)
         {
             _schema = schema;
-            _npgsqlConnection = new NpgsqlConnection(Configurations.GetConnectionString(dbKey));
+            _npgsqlConnection = new NpgsqlConnection(GetConnectionString(dbKey));
         }
 
-        public SqlCommand(EfDatabaseContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
         #endregion ctors
         
         #region Create NpgsqlCommand
@@ -252,7 +264,6 @@ namespace Instrumentation.DomainDA.DbFramework
         {
             if (!isDisposable) return;
 
-            _dbContext.Dispose();
             _npgsqlConnection.Close();
         }
         #endregion

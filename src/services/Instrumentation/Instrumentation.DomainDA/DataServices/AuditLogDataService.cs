@@ -42,7 +42,7 @@ namespace Instrumentation.DomainDA.DataServices
         private static string NL = Environment.NewLine;
         private string _dbkey = null;
 
-        public AuditLogDataService(string dbKey = "rtAudit")
+        public AuditLogDataService(string dbKey)
         {
             DEFAULTDBKEY = Configurations.DbKeyDefault;
 
@@ -50,6 +50,13 @@ namespace Instrumentation.DomainDA.DataServices
                 _dbkey = DEFAULTDBKEY;
             else
                 _dbkey = dbKey;
+        }
+
+        public AuditLogDataService()
+        {
+            DEFAULTDBKEY = Configurations.DbKeyDefault;
+
+            _dbkey = DEFAULTDBKEY;
         }
 
         public void AddAuditLog(AuditLog auditLog)

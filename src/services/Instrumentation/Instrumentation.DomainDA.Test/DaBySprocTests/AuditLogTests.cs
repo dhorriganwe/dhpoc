@@ -11,16 +11,12 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
     public class AuditLogTests
     {
         private static string NL = Environment.NewLine;
+        IAuditLogDataService _auditLogDataService = new AuditLogDataService();
 
-        /// <summary>
-        /// xxx - edited
-        /// </summary>
         [TestMethod]
         public void GetAuditLogSummary()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            AuditLogSummary auditLogSummary = auditLogDataService.GetAuditLogRowCount();
+            AuditLogSummary auditLogSummary = _auditLogDataService.GetAuditLogRowCount();
             
             Console.WriteLine(string.Format("{0} {1} ",
                 NL,
@@ -32,9 +28,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetApplicationNames()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<string> applicationNames = auditLogDataService.GetApplicationNames();
+            List<string> applicationNames = _auditLogDataService.GetApplicationNames();
 
             Assert.IsTrue(applicationNames.Count > 0);
 
@@ -47,9 +41,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetFeatureNames()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<string> featureNames = auditLogDataService.GetFeatureNames();
+            List<string> featureNames = _auditLogDataService.GetFeatureNames();
 
             Assert.IsTrue(featureNames.Count > 0);
 
@@ -62,9 +54,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetCategories()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<string> categories = auditLogDataService.GetCategories();
+            List<string> categories = _auditLogDataService.GetCategories();
 
             Assert.IsTrue(categories.Count > 0);
 
@@ -77,9 +67,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetTraceLevels()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<string> traceLevels = auditLogDataService.GetTraceLevels();
+            List<string> traceLevels = _auditLogDataService.GetTraceLevels();
 
             Assert.IsTrue(traceLevels.Count > 0);
 
@@ -92,9 +80,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetApplicationNameCounts()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<SummaryItem> applicationNameCounts = auditLogDataService.GetApplicationNameCounts();
+            List<SummaryItem> applicationNameCounts = _auditLogDataService.GetApplicationNameCounts();
 
             Assert.IsTrue(applicationNameCounts.Count > 0);
 
@@ -109,9 +95,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetFeatureNameCounts()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<SummaryItem> featureNameCounts = auditLogDataService.GetFeatureNameCounts();
+            List<SummaryItem> featureNameCounts = _auditLogDataService.GetFeatureNameCounts();
 
             Assert.IsTrue(featureNameCounts.Count > 0);
 
@@ -126,9 +110,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetCategoryCounts()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<SummaryItem> categories = auditLogDataService.GetCategoryCounts();
+            List<SummaryItem> categories = _auditLogDataService.GetCategoryCounts();
 
             Assert.IsTrue(categories.Count > 0);
 
@@ -143,10 +125,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetFeatureNamesByApplicationName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-            
             var applicationName = "RisingTide";
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", applicationName);
+            List<SummaryItem> summaryItems = _auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", applicationName);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
@@ -158,7 +138,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> featureNames = auditLogDataService.GetFeatureNameCounts();
+            List<SummaryItem> featureNames = _auditLogDataService.GetFeatureNameCounts();
 
             foreach (var featureName in featureNames)
             {
@@ -176,10 +156,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetCategoriesByApplicationName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var applicationName = "RisingTide";
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByApplicationName("Category", applicationName);
+            List<SummaryItem> summaryItems = _auditLogDataService.GetSummaryItemsByApplicationName("Category", applicationName);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
@@ -191,7 +169,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> categories = auditLogDataService.GetCategoryCounts();
+            List<SummaryItem> categories = _auditLogDataService.GetCategoryCounts();
 
             foreach (var category in categories)
             {
@@ -209,10 +187,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void ShouldDetectErrorRaisedInSproc()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var featureName = "AccessPermission";
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByFeatureName("xyz", featureName);
+            List<SummaryItem> summaryItems = _auditLogDataService.GetSummaryItemsByFeatureName("xyz", featureName);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
@@ -221,10 +197,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetApplicationNamesByFeatureName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var featureName = "AccessPermission";
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", featureName);
+            List<SummaryItem> summaryItems = _auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", featureName);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
@@ -236,7 +210,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNameCounts();
+            List<SummaryItem> applicationNames = _auditLogDataService.GetApplicationNameCounts();
 
             foreach (var applicationName in applicationNames)
             {
@@ -254,10 +228,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetApplicationNamesByCategoryName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var category = "Security";
-            List<SummaryItem> summaryItems = auditLogDataService.GetSummaryItemsByCategory("ApplicationName", category);
+            List<SummaryItem> summaryItems = _auditLogDataService.GetSummaryItemsByCategory("ApplicationName", category);
 
             Assert.IsTrue(summaryItems.Count > 0);
 
@@ -269,7 +241,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             Console.WriteLine();
-            List<SummaryItem> applicationNames = auditLogDataService.GetApplicationNameCounts();
+            List<SummaryItem> applicationNames = _auditLogDataService.GetApplicationNameCounts();
 
             foreach (var applicationName in applicationNames)
             {
@@ -287,10 +259,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogById()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var id = AddAuditLogRow();
-            AuditLog auditLog = auditLogDataService.GetAuditLogById(id);
+            AuditLog auditLog = _auditLogDataService.GetAuditLogById(id);
 
             Assert.AreEqual(auditLog.Id, id);
 
@@ -312,10 +282,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogByEventId()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var eventId = "eventid";
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByEventId(eventId).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByEventId(eventId).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
             auditLogs.ForEach(al => Assert.AreEqual(al.EventId, eventId));
@@ -337,10 +305,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogByApplicationName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var applicationName = "appname";
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByApplicationName(applicationName).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByApplicationName(applicationName).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
             auditLogs.ForEach(al => Assert.AreEqual(al.ApplicationName, applicationName));
@@ -362,10 +328,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogByCategory()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var category = "Web unhandled exception";
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByCategory(category).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByCategory(category).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
             auditLogs.ForEach(al => Assert.AreEqual(al.Category, category));
@@ -387,10 +351,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogByFeatureName()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var featureName = "feature";
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByFeatureName(featureName).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByFeatureName(featureName).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
             auditLogs.ForEach(al => Assert.AreEqual(al.FeatureName, featureName));
@@ -412,11 +374,9 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogsByTraceLevel()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
             var traceLevel = "traceLevel";
 
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogByTraceLevel(traceLevel).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByTraceLevel(traceLevel).ToList();
 
             Assert.IsTrue(auditLogs.Count > 0);
             auditLogs.ForEach(al => Assert.AreEqual(al.TraceLevel, traceLevel));
@@ -437,9 +397,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogsAll()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
-
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogAll().ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogAll().ToList();
 
             Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
 
@@ -460,9 +418,8 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         [TestMethod]
         public void GetAuditLogsAll_LimitRowcount()
         {
-            IAuditLogDataService auditLogDataService = new AuditLogDataService();
             int rowcount = 10;
-            List<AuditLog> auditLogs = auditLogDataService.GetAuditLogAll(rowcount).ToList();
+            List<AuditLog> auditLogs = _auditLogDataService.GetAuditLogAll(rowcount).ToList();
 
             Assert.IsTrue(auditLogs.Count > 5, "auditLogs.Count: " + auditLogs.Count);
             Assert.AreEqual(rowcount, auditLogs.Count);
@@ -483,11 +440,9 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
 
         public string AddAuditLogRow()
         {
-            var auditLogDataService = new AuditLogDataService();
-
             AuditLog auditLog = DefaultAuditLog();
 
-            auditLogDataService.AddAuditLog(auditLog);
+            _auditLogDataService.AddAuditLog(auditLog);
 
             return auditLog.Id;
         }
