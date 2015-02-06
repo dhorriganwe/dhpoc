@@ -1,13 +1,20 @@
 @echo off
+IF EXIST DBScriptError.log (
 del DBScriptError.log
+)
 
 if "%1" == "" (
 set /p DBServer= Enter database server:
 ) else (set DBServer=%1)
 @echo\%DBServer%
 
+if "%2" == "" (
+set /p DBName= Enter database name:
+) else (set DBName=%2)
+@echo\%DBName%
 
-"C:\Program Files\PostgreSQL\9.3\bin\psql.exe" -h %DBServer% -U postgres -f DBScript.sql 2>DBScriptError.log
+
+"C:\Program Files\PostgreSQL\9.3\bin\psql.exe" -h %DBServer%  -d %DBName% -U postgres -f DBScript.sql 2>DBScriptError.log
 
    GOTO Err%ERRORLEVEL%
    :err0
