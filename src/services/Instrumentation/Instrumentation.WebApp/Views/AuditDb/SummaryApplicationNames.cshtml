@@ -1,4 +1,6 @@
-﻿@model Instrumentation.WebApp.Models.AuditLogViewModel
+﻿@using Instrumentation.DomainDA.Helpers
+@using Instrumentation.WebApp.Models
+@model Instrumentation.WebApp.Models.AuditLogViewModel
 @{
     Layout = null;
 }
@@ -14,7 +16,7 @@
             <tr>
                 @if (string.IsNullOrEmpty(appName.Name)) { <td></td> }
                 else {
-                    <td>@Html.ActionLink(appName.Name, "AuditLogByApplicationName", "AuditDb", new { id = appName.Name, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
+                    <td>@Html.ActionLink(appName.Name, "Browse", "AuditDb", new { id = appName.Name, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browsemode = BrowseMode.ApplicationName }, null)</td>
                 }
                 <td>
                     @appName.Count

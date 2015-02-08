@@ -150,6 +150,7 @@
     <Compile Include="Helpers\InstrumentationMapper.cs" />
     <Compile Include="Models\AuditLogItem.cs" />
     <Compile Include="Models\AuditLogViewModel.cs" />
+    <Compile Include="Models\BrowseMode.cs" />
     <Compile Include="Models\LookupItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -242,7 +243,6 @@
     <Content Include="Views\AuditDb\AuditLog.cshtml" />
     <Content Include="Views\AuditDb\AuditLogById.cshtml" />
     <Content Include="Views\AuditDb\Summary.cshtml" />
-    <Content Include="Views\AuditDb\AuditLogRecord.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByEventId.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByApplicationName.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByCategory.cshtml" />
@@ -254,6 +254,7 @@
     <Content Include="Views\AuditDb\AuditLogDetail.cshtml" />
     <Content Include="Views\AuditDb\AuditLogByFilters.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
+    <Content Include="Views\AuditDb\Browse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

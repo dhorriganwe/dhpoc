@@ -11,5 +11,6 @@ namespace Instrumentation.WebApp.Helpers
         public const string ConfigKey_DbKeys = "DbKeys";
 
         public const int DefaultMaxRowCount = 100;
+        public const string BrowseModeDefault = "ApplicationName";
     }
 }

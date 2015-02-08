@@ -29,6 +29,8 @@ namespace Instrumentation.WebApp.Models
         public List<AuditLogItem> AuditLogs { get; set; }
 
         // browse info
+        public string BrowseMode { get; set; }
+        public string BrowseId { get; set; }
         public string AuditLogId { get; set; }
         public AuditLogItem AuditLog { get; set; }
         public string ApplicationName { get; set; }

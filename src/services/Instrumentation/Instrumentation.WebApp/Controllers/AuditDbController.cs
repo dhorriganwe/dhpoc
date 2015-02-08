@@ -8,6 +8,7 @@ using Instrumentation.WebApp.Helpers;
 using Instrumentation.WebApp.Models;
 using AuditLog = Instrumentation.WebApp.Models.AuditLogItem;
 using System;
+using Microsoft.Win32;
 
 namespace Instrumentation.WebApp.Controllers
 {
@@ -148,7 +149,7 @@ namespace Instrumentation.WebApp.Controllers
         {
             try
             {
-                query.AuditLogs = GetAuditLogByEventId(query);
+                query = GetAuditLogByEventId(query);
 
                 query.DbKeyList = InitDbKeySelectList();
             }
@@ -297,6 +298,48 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
+        public ActionResult Browse(string id, string name = null, string dbkey = null, int? maxrowcount = null, string browsemode = null)
+        {
+            var query = new AuditLogViewModel();
+
+            // Browse by FeatureName most be UrlEncoded and Decoded so it uses name param
+            query.BrowseId = id ?? HttpUtility.UrlDecode(name);
+
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
+            query.BrowseMode = browsemode ?? Constants.BrowseModeDefault;
+
+            query.DbKeyList = InitDbKeySelectList();
+
+            return Browse(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Browse(AuditLogViewModel query, string command)
+        {
+            try
+            {
+                if (command == "Search" || command == "Refresh")
+                {
+                    query = GetAuditLogByBrowseId(query);
+                }
+                else
+                {
+                    query.AuditLogs = new List<AuditLog>();
+                }
+
+                query.DbKeyList = InitDbKeySelectList();
+            }
+            catch (Exception ex)
+            {
+                query.ErrorMessage = ex.ToString();
+            }
+
+            ModelState.Clear();
+
+            return View(query);
+        }
+
         public ActionResult AuditLogByCategory(string id, string dbkey = null, int? maxrowcount = null)
         {
             var query = new AuditLogViewModel();
@@ -338,11 +381,6 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult AuditLogDetail(AuditLogViewModel query)
         {
             return View(query);
-        }
-
-        public ActionResult AuditLogRecord(AuditLog auditLog)
-        {
-            return View(auditLog);
         }
 
         public ActionResult AuditLogGrid(AuditLogViewModel query)
@@ -492,17 +530,17 @@ namespace Instrumentation.WebApp.Controllers
             return auditLog;
         }
 
-        private List<AuditLog> GetAuditLogByEventId(AuditLogViewModel query)
+        private AuditLogViewModel GetAuditLogByEventId(AuditLogViewModel query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(
                                             auditLogDataService.GetAuditLogByEventId(
                                                 query.EventId,
                                                 query.MaxRowCount)
                                             .ToList());
 
-            return auditLogs;
+            return query;
         }
 
         private AuditLogViewModel GetByILikeEventId(AuditLogViewModel query)
@@ -567,6 +605,45 @@ namespace Instrumentation.WebApp.Controllers
                 query.StartDate,
                 query.EndDate,
                 query.LoginNameSearchStr);
+
+            query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
+
+            return query;
+        }
+
+        private AuditLogViewModel GetAuditLogByBrowseId(AuditLogViewModel query)
+        {
+            IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
+            IList<DomainDA.Models.AuditLog> auditLogsDa = null;
+            switch (query.BrowseMode)
+            {
+                case BrowseMode.ApplicationName:
+                    auditLogsDa = auditLogDataService.GetAuditLogByApplicationName(
+                        query.BrowseId,
+                        query.MaxRowCount);
+                    query.FeatureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.BrowseId);
+                    query.Categories = auditLogDataService.GetSummaryItemsByApplicationName("Category", query.BrowseId);
+                    break;
+                case BrowseMode.FeatureName:
+                    auditLogsDa = auditLogDataService.GetAuditLogByFeatureName(
+                        query.BrowseId,
+                        query.MaxRowCount);
+                    query.ApplicationNames = auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", query.BrowseId);
+                    query.Categories = auditLogDataService.GetSummaryItemsByFeatureName("Category", query.BrowseId);
+                    break;
+                case BrowseMode.Category:
+                    auditLogsDa = auditLogDataService.GetAuditLogByCategory(
+                        query.BrowseId,
+                        query.MaxRowCount);
+                    query.FeatureNames = auditLogDataService.GetSummaryItemsByCategory("FeatureName", query.BrowseId);
+                    query.ApplicationNames = auditLogDataService.GetSummaryItemsByCategory("ApplicationName", query.BrowseId);
+                    break;
+                case BrowseMode.EventId:
+                    auditLogsDa = auditLogDataService.GetAuditLogByEventId(
+                        query.BrowseId,
+                        query.MaxRowCount);
+                    break;
+            }
 
             query.AuditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogsDa.ToList());
 

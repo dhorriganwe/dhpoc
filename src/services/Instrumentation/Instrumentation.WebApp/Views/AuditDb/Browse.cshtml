@@ -1,0 +1,47 @@
+﻿@model Instrumentation.WebApp.Models.AuditLogViewModel
+@{
+    Model.ViewTitle = "AuditLog Browse";
+}
+
+<div class="PageRoot">
+    
+    @Html.Action("Header", "Home", Model)
+
+    @using (@Html.BeginForm())
+    {
+        <div>
+            <table>
+                <tr>
+                    <td class="TdSection">
+                        <div class="PageSection">
+                            <table class="alternate_color">
+                                <tr>
+                                    <td>@Model.BrowseMode</td>
+                                    <td>@Html.TextBoxFor(q => q.BrowseId, null, null)</td>
+                                    <td></td>
+                                    <td>MaxRowCount</td>
+                                    <td class="TextInputSmall">@Html.TextBoxFor(q => q.MaxRowCount, null, null)</td>
+                                    <td></td>
+                                    <td><input type="submit" name="Command" value="Search" /></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        @Html.Action("SummaryApplicationNames", "AuditDb", Model)
+
+                        @Html.Action("SummaryFeatureNames", "AuditDb", Model)
+
+                        @Html.Action("SummaryCategoryNames", "AuditDb", Model)
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="TdSection">
+                        @Html.Action("AuditLogDetail", "AuditDb", Model)
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
+</div>
+        

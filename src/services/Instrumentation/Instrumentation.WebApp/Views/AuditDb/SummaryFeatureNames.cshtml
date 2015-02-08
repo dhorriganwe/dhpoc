@@ -1,4 +1,5 @@
-﻿@model Instrumentation.WebApp.Models.AuditLogViewModel
+﻿@using Instrumentation.WebApp.Models
+@model Instrumentation.WebApp.Models.AuditLogViewModel
 @{
     Layout = null;
 }
@@ -13,8 +14,9 @@
         {
             <tr>
                 @if (string.IsNullOrEmpty(featureName.Name)) { <td></td> }
-                else {
-                    <td>@Html.ActionLink(featureName.Name, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
+                else
+                {
+                    <td>@Html.ActionLink(featureName.Name, "Browse", "AuditDb", new { name = HttpUtility.UrlEncode(featureName.Name), dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browsemode = BrowseMode.FeatureName }, null)</td>
                 }
                 <td>
                     @featureName.Count

@@ -1,4 +1,5 @@
-﻿@model Instrumentation.WebApp.Models.AuditLogViewModel
+﻿@using Instrumentation.WebApp.Models
+@model Instrumentation.WebApp.Models.AuditLogViewModel
 @{
     Layout = null;
 }
@@ -35,28 +36,28 @@
                     <td></td> }
                 else
                 {
-                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "AuditLogByEventId", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
+                    <td class="eventId">@Html.ActionLink(auditLog.EventId, "Browse", "AuditDb", new { id = auditLog.EventId, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browsemode=BrowseMode.EventId }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.ApplicationName))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.ApplicationName, "AuditLogByApplicationName", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey, maxrowcount=Model.MaxRowCount }, null)</td>
+                    <td>@Html.ActionLink(auditLog.ApplicationName, "Browse", "AuditDb", new { id = auditLog.ApplicationName, dbkey = Model.DbKey, maxrowcount=Model.MaxRowCount, browsemode=BrowseMode.ApplicationName }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.FeatureName))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.FeatureName, "AuditLogByFeatureName", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
+                    <td>@Html.ActionLink(auditLog.FeatureName, "Browse", "AuditDb", new { name = HttpUtility.UrlEncode(auditLog.FeatureName), dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browsemode = BrowseMode.FeatureName }, null)</td>
                 }
                 @if (string.IsNullOrEmpty(auditLog.Category))
                 {
                     <td></td> }
                 else
                 {
-                    <td>@Html.ActionLink(auditLog.Category, "AuditLogByCategory", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)</td>
+                    <td>@Html.ActionLink(auditLog.Category, "Browse", "AuditDb", new { id = auditLog.Category, dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browsemode = BrowseMode.Category }, null)</td>
                 }
 
                 <td>@auditLog.MessageCode</td>
