@@ -6,10 +6,12 @@ namespace Instrumentation.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string id, string dbkey = null, int? maxrowcount = null)
         {
             var query = new AuditLogViewModel();
 
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
             query.ReleaseVersion = Configurations.ReleaseVersion;
             query.CurrentServerTime = System.DateTime.UtcNow.ToString();
 

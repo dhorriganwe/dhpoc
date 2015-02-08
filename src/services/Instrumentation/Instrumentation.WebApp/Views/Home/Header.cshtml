@@ -10,7 +10,7 @@
     <h2>Instrumentation Dashboards</h2>
 
     <br />
-    @Html.ActionLink("Home", "Index", "Home")
+    @Html.ActionLink("Home", "Index", "Home", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     <br/>
     <h3>AuditLog Dashboards</h3>
     @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
@@ -42,7 +42,7 @@ else
 {
     <h3>@Model.ViewTitle</h3>
     <br/>
-    @Html.ActionLink("Home", "Index", "Home")
+    @Html.ActionLink("Home", "Index", "Home", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char) 160).ToString())
     @Html.Raw(((char) 124).ToString())
     @Html.Raw(((char) 124).ToString())
@@ -78,7 +78,7 @@ else
 { 
     <table>
         <tr>
-            <td class="ErrorTitle">ErrorMessage</td>
+            <td class="ErrorTitle">Error</td>
         </tr>
         <tr>
             <td>@Model.ErrorMessage</td>

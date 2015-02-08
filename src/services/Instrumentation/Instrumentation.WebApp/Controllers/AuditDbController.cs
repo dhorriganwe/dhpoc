@@ -26,8 +26,8 @@ namespace Instrumentation.WebApp.Controllers
         public ActionResult Summary(string id, string dbkey = null, int? maxrowcount = null)
         {
             var query = new AuditLogViewModel();
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             return Summary(query, "Refresh");
         }
@@ -65,8 +65,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
 
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 
@@ -96,8 +96,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
             query.AuditLogId = id;
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 
@@ -123,6 +123,7 @@ namespace Instrumentation.WebApp.Controllers
             catch (Exception ex)
             {
                 query.ErrorMessage = ex.ToString();
+                query.AuditLog = new AuditLogItem();
             }
 
             ModelState.Clear();
@@ -134,8 +135,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
             query.EventId = id;
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 
@@ -165,11 +166,18 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
 
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
-            InitQuery(query);
-            InitSelectLists(query);
+            try
+            {
+                InitQuery(query);
+                InitSelectLists(query);
+            }
+            catch (Exception ex)
+            {
+                query.ErrorMessage = ex.ToString();
+            }
 
             return AuditLogByFilters(query, "Search");
         }
@@ -216,8 +224,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
             query.ApplicationName = id;
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 
@@ -254,8 +262,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
             query.FeatureName = name;
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 
@@ -293,8 +301,8 @@ namespace Instrumentation.WebApp.Controllers
         {
             var query = new AuditLogViewModel();
             query.Category = id;
-            query.DbKey = dbkey;
-            query.MaxRowCount = maxrowcount.GetValueOrDefault();
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
 
             query.DbKeyList = InitDbKeySelectList();
 

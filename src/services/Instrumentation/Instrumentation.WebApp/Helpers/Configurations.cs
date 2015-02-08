@@ -11,13 +11,15 @@ namespace Instrumentation.WebApp.Helpers
     {
         public static string ReleaseVersion { get; private set; }
         public static string DbKeys { get; private set; }
-        public static int MaxRowCount { get; private set; }
+        public static string DbKeyDefault { get; private set; }
+        public static int MaxRowCountDefault { get; private set; }
 
         static Configurations()
         {
             ReleaseVersion = GetStringConfiguration(Constants.ConfigKey_ReleaseVersion, allowNull: true);
             DbKeys = GetStringConfiguration(Constants.ConfigKey_DbKeys);
-            MaxRowCount = GetIntConfiguration(Constants.ConfigKey_MaxRowCount, Constants.DefaultMaxRowCount);
+            MaxRowCountDefault = GetIntConfiguration(Constants.ConfigKey_MaxRowCount, Constants.DefaultMaxRowCount);
+            DbKeyDefault = GetStringConfiguration(Constants.ConfigKey_DbKeyDefault);
         }
 
         public static Dictionary<string, Dictionary<string, string>> GetConfigurationItems(Dictionary<string, Dictionary<string, string>> configurationItems = null)
