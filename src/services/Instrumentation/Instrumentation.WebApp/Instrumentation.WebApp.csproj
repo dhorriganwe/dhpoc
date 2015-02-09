@@ -243,11 +243,7 @@
     <Content Include="Views\AuditDb\AuditLog.cshtml" />
     <Content Include="Views\AuditDb\AuditLogById.cshtml" />
     <Content Include="Views\AuditDb\Summary.cshtml" />
-    <Content Include="Views\AuditDb\AuditLogByEventId.cshtml" />
-    <Content Include="Views\AuditDb\AuditLogByApplicationName.cshtml" />
-    <Content Include="Views\AuditDb\AuditLogByCategory.cshtml" />
     <Content Include="Views\AuditDb\AuditLogGrid.cshtml" />
-    <Content Include="Views\AuditDb\AuditLogByFeatureName.cshtml" />
     <Content Include="Views\AuditDb\SummaryFeatureNames.cshtml" />
     <Content Include="Views\AuditDb\SummaryApplicationNames.cshtml" />
     <Content Include="Views\AuditDb\SummaryCategoryNames.cshtml" />
