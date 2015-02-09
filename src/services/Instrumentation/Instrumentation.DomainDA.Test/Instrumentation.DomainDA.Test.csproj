@@ -62,7 +62,8 @@
   <ItemGroup>
     <Compile Include="DaBySprocTests\AuditLogByFiltersTests.cs" />
     <Compile Include="DaBySprocTests\AuditLogByILikeTests.cs" />
-    <Compile Include="DaBySprocTests\AuditLogTests.cs" />
+    <Compile Include="DaBySprocTests\AuditLogByIdentifier.cs" />
+    <Compile Include="DaBySprocTests\AuditLogMetaDataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -40,9 +40,7 @@ namespace Instrumentation.WebApp.Controllers
 
                 if (command == "Refresh")
                 {
-                    var summary = auditLogDataService.GetAuditLogRowCount();
-                    query.TotalRecordCount = summary.TotalRowCount;
-
+                    query.TotalRecordCount = auditLogDataService.GetTotalRowCount();
                     query.ApplicationNames = auditLogDataService.GetApplicationNameCounts();
                     query.FeatureNames = auditLogDataService.GetFeatureNameCounts();
                     query.Categories = auditLogDataService.GetCategoryCounts();
@@ -60,7 +58,7 @@ namespace Instrumentation.WebApp.Controllers
             return View(query);
         }
 
-        public ActionResult AuditLog(string id, string dbkey = null, int? maxrowcount = null)
+        public ActionResult Recent(string id, string dbkey = null, int? maxrowcount = null)
         {
             var query = new AuditLogViewModel();
 
@@ -69,11 +67,11 @@ namespace Instrumentation.WebApp.Controllers
 
             query.DbKeyList = InitDbKeySelectList();
 
-            return AuditLog(query, "Refresh");
+            return Recent(query, "Refresh");
         }
 
         [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLog(AuditLogViewModel query, string command)
+        public ActionResult Recent(AuditLogViewModel query, string command)
         {
             try
             {
@@ -85,6 +83,65 @@ namespace Instrumentation.WebApp.Controllers
             }
 
             query.DbKeyList = InitDbKeySelectList();
+
+            ModelState.Clear();
+
+            return View(query);
+        }
+
+        public ActionResult Search(string id, string dbkey = null, int? maxrowcount = null)
+        {
+            var query = new AuditLogViewModel();
+
+            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
+            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
+
+            try
+            {
+                InitQuery(query);
+                InitSelectLists(query);
+            }
+            catch (Exception ex)
+            {
+                query.ErrorMessage = ex.ToString();
+            }
+
+            return Search(query, "Search");
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult Search(AuditLogViewModel query, string command)
+        {
+            try
+            {
+                switch (command)
+                {
+                    case "Search":
+                        query = GetByAppNameAndTraceLevel(query);
+                        break;
+                    case "iLikeCorrelationId":
+                        query = GetByILikeEventId(query);
+                        break;
+                    case "iLikeMessage":
+                        query = GetByILikeMessage(query);
+                        break;
+                    case "iLikeAdditionalInfo":
+                        query = GetByILikeAdditionalInfo(query);
+                        break;
+                    case "iLikeLoginName":
+                        query = GetByILikeLoginName(query);
+                        break;
+                    default:
+                        throw new Exception("Unexpected command: " + command);
+                        break;
+                }
+
+                InitSelectLists(query);
+            }
+            catch (Exception ex)
+            {
+                query.ErrorMessage = ex.ToString();
+            }
 
             ModelState.Clear();
 
@@ -110,7 +167,7 @@ namespace Instrumentation.WebApp.Controllers
             {
                 if (command == "Search" || command == "Refresh")
                 {
-                    query.AuditLog = GetAuditLogById(query);
+                    query.AuditLog = GetById(query);
                 }
                 else
                 {
@@ -123,65 +180,6 @@ namespace Instrumentation.WebApp.Controllers
             {
                 query.ErrorMessage = ex.ToString();
                 query.AuditLog = new AuditLogItem();
-            }
-
-            ModelState.Clear();
-
-            return View(query);
-        }
-
-        public ActionResult AuditLogByFilters(string id, string dbkey = null, int? maxrowcount = null)
-        {
-            var query = new AuditLogViewModel();
-
-            query.DbKey = dbkey ?? Configurations.DbKeyDefault;
-            query.MaxRowCount = maxrowcount ?? Configurations.MaxRowCountDefault;
-
-            try
-            {
-                InitQuery(query);
-                InitSelectLists(query);
-            }
-            catch (Exception ex)
-            {
-                query.ErrorMessage = ex.ToString();
-            }
-
-            return AuditLogByFilters(query, "Search");
-        }
-
-        [HttpPost, ValidateInput(false)]
-        public ActionResult AuditLogByFilters(AuditLogViewModel query, string command)
-        {
-            try
-            {
-                switch (command)
-                {
-                    case "Search":
-                        query = GetAuditLogByFilters(query);
-                        break;
-                    case "iLikeCorrelationId":
-                        query = GetByILikeEventId(query);
-                        break;
-                    case "iLikeMessage":
-                        query = GetByILikeMessage(query);
-                        break;
-                    case "iLikeAdditionalInfo":
-                        query = GetByILikeAdditionalInfo(query);
-                        break;
-                    case "iLikeLoginName":
-                        query = GetByILikeLoginName(query);
-                        break;
-                    default:
-                        throw new Exception("Unexpected command: " + command);
-                        break;
-                }
-
-                InitSelectLists(query);
-            }
-            catch (Exception ex)
-            {
-                query.ErrorMessage = ex.ToString();
             }
 
             ModelState.Clear();
@@ -310,7 +308,7 @@ namespace Instrumentation.WebApp.Controllers
             return new SelectList(dbKeys, "Value", "Description");
         }
 
-        private AuditLogViewModel GetAuditLogByFilters(AuditLogViewModel query)
+        private AuditLogViewModel GetByAppNameAndTraceLevel(AuditLogViewModel query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
             var traceLevel = "";
@@ -323,7 +321,7 @@ namespace Instrumentation.WebApp.Controllers
             if (query.ApplicationName != "*")
                 applicationName = query.ApplicationName;
 
-            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetAuditLogByFilters(
+            IList<DomainDA.Models.AuditLog> auditLogsDa = auditLogDataService.GetByAppNameAndTraceLevel(
                 query.MaxRowCount,
                 query.StartDate,
                 query.EndDate,
@@ -339,16 +337,16 @@ namespace Instrumentation.WebApp.Controllers
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogAll(query.MaxRowCount).ToList());
+            List<AuditLog> auditLogs = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAll(query.MaxRowCount).ToList());
 
             return auditLogs;
         }
 
-        private AuditLog GetAuditLogById(AuditLogViewModel query)
+        private AuditLog GetById(AuditLogViewModel query)
         {
             IAuditLogDataService auditLogDataService = new AuditLogDataService(query.DbKey);
 
-            AuditLog auditLog = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetAuditLogById(query.AuditLogId));
+            AuditLog auditLog = _instrumentationMapper.MapDaToUiAuditLog(auditLogDataService.GetById(query.AuditLogId));
 
             return auditLog;
         }
@@ -428,28 +426,28 @@ namespace Instrumentation.WebApp.Controllers
             switch (query.BrowseMode)
             {
                 case BrowseMode.ApplicationName:
-                    auditLogsDa = auditLogDataService.GetAuditLogByApplicationName(
+                    auditLogsDa = auditLogDataService.GetByApplicationName(
                         query.BrowseId,
                         query.MaxRowCount);
                     query.FeatureNames = auditLogDataService.GetSummaryItemsByApplicationName("FeatureName", query.BrowseId);
                     query.Categories = auditLogDataService.GetSummaryItemsByApplicationName("Category", query.BrowseId);
                     break;
                 case BrowseMode.FeatureName:
-                    auditLogsDa = auditLogDataService.GetAuditLogByFeatureName(
+                    auditLogsDa = auditLogDataService.GetByFeatureName(
                         query.BrowseId,
                         query.MaxRowCount);
                     query.ApplicationNames = auditLogDataService.GetSummaryItemsByFeatureName("ApplicationName", query.BrowseId);
                     query.Categories = auditLogDataService.GetSummaryItemsByFeatureName("Category", query.BrowseId);
                     break;
                 case BrowseMode.Category:
-                    auditLogsDa = auditLogDataService.GetAuditLogByCategory(
+                    auditLogsDa = auditLogDataService.GetByCategory(
                         query.BrowseId,
                         query.MaxRowCount);
                     query.FeatureNames = auditLogDataService.GetSummaryItemsByCategory("FeatureName", query.BrowseId);
                     query.ApplicationNames = auditLogDataService.GetSummaryItemsByCategory("ApplicationName", query.BrowseId);
                     break;
                 case BrowseMode.EventId:
-                    auditLogsDa = auditLogDataService.GetAuditLogByEventId(
+                    auditLogsDa = auditLogDataService.GetByEventId(
                         query.BrowseId,
                         query.MaxRowCount);
                     break;

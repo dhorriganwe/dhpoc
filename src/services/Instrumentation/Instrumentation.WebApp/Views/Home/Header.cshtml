@@ -1,5 +1,4 @@
-﻿@using Instrumentation.DomainDA.Helpers
-@model Instrumentation.WebApp.Models.AuditLogViewModel
+﻿@model Instrumentation.WebApp.Models.AuditLogViewModel
 @{
     Layout = null;
 }
@@ -16,16 +15,10 @@
     @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char)160).ToString())
     @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.ActionLink("Recent", "Recent", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char)160).ToString())
     @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("AuditLogByBrowse", "Browse", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browseMode = Model.BrowseMode }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.ActionLink("Search", "Search", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char)160).ToString())
     @Html.Raw(((char)160).ToString())
 }
@@ -33,7 +26,7 @@ else
 {
     <h3>@Model.ViewTitle</h3>
     <br/>
-    @Html.ActionLink("Home", "Index", "Home", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.ActionLink("Dashboards Home", "Index", "Home", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char) 160).ToString())
     @Html.Raw(((char) 124).ToString())
     @Html.Raw(((char) 124).ToString())
@@ -41,16 +34,10 @@ else
     @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char) 160).ToString())
     @Html.Raw(((char) 160).ToString())
-    @Html.ActionLink("AuditLog", "AuditLog", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.ActionLink("Recent", "Recent", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char) 160).ToString())
     @Html.Raw(((char) 160).ToString())
-    @Html.ActionLink("AuditLogById", "AuditLogById", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char) 160).ToString())
-    @Html.Raw(((char) 160).ToString())
-    @Html.ActionLink("AuditLogByBrowse", "Browse", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount, browseMode = Model.BrowseMode }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("AuditLogByFilters", "AuditLogByFilters", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
+    @Html.ActionLink("Search", "Search", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char)160).ToString())
     @Html.Raw(((char)160).ToString())
 }

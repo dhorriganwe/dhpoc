@@ -29,7 +29,6 @@ namespace Instrumentation.DomainDA.DbFramework
             return cs;
         }
 
-
         #region ctors
 
         public SqlCommand()

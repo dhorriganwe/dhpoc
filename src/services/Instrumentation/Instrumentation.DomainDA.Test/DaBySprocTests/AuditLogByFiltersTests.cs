@@ -12,7 +12,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         IAuditLogDataService _auditLogDataService = new AuditLogDataService();
 
         [TestMethod]
-        public void GetAuditLogByFilters()
+        public void GetByAppNameAndTraceLevel()
         {
 
             var applicationName = "AgVerdict-WebApp";
@@ -21,7 +21,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             Assert.IsTrue(auditLogs.Count > 0);
 
@@ -36,7 +36,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogByFilters_TraceLevel()
+        public void GetByAppNameAndTraceLevel_TraceLevel()
         {
             var applicationName = "AgVerdict-WebApp";
             var traceLevel = "error";
@@ -44,7 +44,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             var count1 = auditLogs.Count;
             Assert.IsTrue(auditLogs.Count > 0);
@@ -59,7 +59,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             traceLevel = "info";
-            auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             var count12 = auditLogs.Count;
 
@@ -76,7 +76,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogByFilters_ApplicationName()
+        public void GetByAppNameAndTraceLevel_ApplicationName()
         {
             var applicationName = "AgVerdict-WebApp";
             var traceLevel = "error";
@@ -84,7 +84,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             var count1 = auditLogs.Count;
             Assert.IsTrue(auditLogs.Count > 0);
@@ -99,7 +99,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             }
 
             applicationName = "AgVerdict-Geo";
-            auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             var count12 = auditLogs.Count;
 
@@ -116,7 +116,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogByFilters_ApplicationName0rows()
+        public void GetByAppNameAndTraceLevel_ApplicationName0rows()
         {
             var applicationName = "xx";
             var traceLevel = "error";
@@ -124,13 +124,13 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2015";
             var endDate = "2/1/2015";
 
-            IList<AuditLog> auditLogs = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogs = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
 
             Assert.AreEqual(0, auditLogs.Count);
         }
 
         [TestMethod]
-        public void GetAuditLogByFilters_TraceLevelAndApplicationNameFilter()
+        public void GetByAppNameAndTraceLevel_TraceLevelAndApplicationName()
         {
             var applicationName = "appName1";
             var maxRowCount = 100;
@@ -138,15 +138,15 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2014";
             var endDate = "2/1/2016";
 
-            IList<AuditLog> auditLogsAppName1All = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsAppName1All = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsAppName1All.Count > 0);
 
             traceLevel = "error";
-            IList<AuditLog> auditLogsAppName1Error = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsAppName1Error = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsAppName1Error.Count > 0);
 
             traceLevel = "info";
-            IList<AuditLog> auditLogsAppName1Info = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsAppName1Info = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsAppName1Info.Count > 0);
 
             Assert.IsTrue(auditLogsAppName1All.Count > auditLogsAppName1Error.Count);
@@ -156,7 +156,7 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
         }
 
         [TestMethod]
-        public void GetAuditLogByFilters_ApplicationNameAndTraceLevelFilter()
+        public void GetByAppNameAndTraceLevel_ApplicationNameAndTraceLevel()
         {
             var applicationName = "";
             var maxRowCount = 100;
@@ -164,15 +164,15 @@ namespace Instrumentation.DomainDA.Test.DaBySprocTests
             var startDate = "1/1/2014";
             var endDate = "2/1/2016";
 
-            IList<AuditLog> auditLogsErrorAll = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsErrorAll = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsErrorAll.Count > 0);
 
             applicationName = "appName1";
-            IList<AuditLog> auditLogsErrorAppName1 = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsErrorAppName1 = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsErrorAppName1.Count > 0);
 
             applicationName = "appName2";
-            IList<AuditLog> auditLogsErrorAppName2 = _auditLogDataService.GetAuditLogByFilters(maxRowCount, startDate, endDate, traceLevel, applicationName);
+            IList<AuditLog> auditLogsErrorAppName2 = _auditLogDataService.GetByAppNameAndTraceLevel(maxRowCount, startDate, endDate, traceLevel, applicationName);
             Assert.IsTrue(auditLogsErrorAppName2.Count > 0);
 
             Assert.IsTrue(auditLogsErrorAll.Count > auditLogsErrorAppName1.Count);

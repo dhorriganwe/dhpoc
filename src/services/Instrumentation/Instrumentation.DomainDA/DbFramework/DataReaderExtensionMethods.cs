@@ -49,12 +49,6 @@ namespace Instrumentation.DomainDA.DbFramework
             }
             catch (InvalidCastException e)
             {
-                //If debug is enabled, log the exception
-                //if (RtConfiguration.EnableDebug)
-                //{
-                //    var logger = new Logger.Logger();
-                //    logger.Log(e.Message, category:"Utility Conversion", featureName:"Unknown");
-                //}
                 return default(T);
             }
         }

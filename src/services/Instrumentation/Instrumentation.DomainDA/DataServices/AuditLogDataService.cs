@@ -77,7 +77,7 @@ namespace Instrumentation.DomainDA.DataServices
             auditLog.Id = id.ToString();
         }
 
-        public IList<AuditLog> GetAuditLogAll(int maxRowCount = -1)
+        public IList<AuditLog> GetAll(int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -89,10 +89,10 @@ namespace Instrumentation.DomainDA.DataServices
                                 });
         }
 
-        public AuditLogSummary GetAuditLogRowCount()
+        public long GetTotalRowCount()
         {
             var procName = GETAUDITLOGROWCOUNT;
-            AuditLogSummary summary = null;
+            long count = -1;
             using (var dbContext = new SqlCommand(_dbkey, DBSCHEMA))
             {
                 using (var reader = dbContext.ExecuteReader(procName, new Dictionary<string, object> { }))
@@ -101,7 +101,8 @@ namespace Instrumentation.DomainDA.DataServices
                     {
                         while (!reader.IsClosed && reader.Read())
                         {
-                            summary = ToAuditLogSummary(reader);
+                            //count = reader["totalrowcount"].ReturnDefaultOrValue<long>();
+                            count = LongField(reader, "totalrowcount");
                         }
                     }
                     catch (Exception e)
@@ -111,7 +112,7 @@ namespace Instrumentation.DomainDA.DataServices
                 }
             }
 
-            return summary;
+            return count;
         }
 
         public List<SummaryItem> GetSummaryItemsByApplicationName(string summaryType, string applicationName)
@@ -406,7 +407,7 @@ namespace Instrumentation.DomainDA.DataServices
             return categoryCounts;
         }
 
-        public AuditLog GetAuditLogById(string id)
+        public AuditLog GetById(string id)
         {
             IList<AuditLog> auditLogs = GetAuditLogList(GETAUDITLOGBYID, 
                 new Dictionary<string, object>
@@ -416,11 +417,11 @@ namespace Instrumentation.DomainDA.DataServices
 
             if(auditLogs.Count > 0)
                 return auditLogs[0];
-            else
-                return new AuditLog();
+
+            return new AuditLog();
         }
 
-        public IList<AuditLog> GetAuditLogByApplicationName(string applicationName, int maxRowCount = -1)
+        public IList<AuditLog> GetByApplicationName(string applicationName, int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -435,7 +436,7 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByCategory(string category, int maxRowCount = -1)
+        public IList<AuditLog> GetByCategory(string category, int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -450,7 +451,7 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByEventId(string eventId, int maxRowCount = -1)
+        public IList<AuditLog> GetByEventId(string eventId, int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -465,7 +466,7 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByFeatureName(string featureName, int maxRowCount = -1)
+        public IList<AuditLog> GetByFeatureName(string featureName, int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -480,7 +481,7 @@ namespace Instrumentation.DomainDA.DataServices
             return auditLogs;
         }
 
-        public IList<AuditLog> GetAuditLogByTraceLevel(string travelLevel, int maxRowCount = -1)
+        public IList<AuditLog> GetByTraceLevel(string travelLevel, int maxRowCount = -1)
         {
             if (maxRowCount < 0)
                 maxRowCount = Configurations.MaxRowCountDefault;
@@ -493,7 +494,7 @@ namespace Instrumentation.DomainDA.DataServices
                 });
         }
 
-        public IList<AuditLog> GetAuditLogByFilters(
+        public IList<AuditLog> GetByAppNameAndTraceLevel(
             int maxRowCount, 
             string startTime, 
             string endTime, 
@@ -647,24 +648,6 @@ namespace Instrumentation.DomainDA.DataServices
                 AuditedOn = reader["AuditedOn"].ReturnDefaultOrValue<string>(),
                 AdditionalInfo = reader["AdditionalInfo"].ReturnDefaultOrValue<string>(),
             };
-        }
-
-        private AuditLogSummary ToAuditLogSummary(IDataReader reader)
-        {
-            return new AuditLogSummary()
-            {
-                TotalRowCount = reader["totalrowcount"].ReturnDefaultOrValue<long>(),
-            };
-        }
-
-        private string ToStringItem(IDataReader reader)
-        {
-            string item = StringField(reader, "name");
-
-            if (!string.IsNullOrEmpty(item))
-                item = item.Trim();
-
-            return item;
         }
 
         private string ToStringItemByIndex(IDataReader reader)

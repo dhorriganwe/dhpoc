@@ -65,7 +65,6 @@
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="DbFramework\ISqlCommand.cs" />
     <Compile Include="DbFramework\SqlCommand.cs" />
-    <Compile Include="Models\AuditLogSummary.cs" />
     <Compile Include="Models\SummaryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
