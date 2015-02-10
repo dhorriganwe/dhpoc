@@ -12,15 +12,6 @@
     @Html.ActionLink("Home", "Index", "Home", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     <br/>
     <h3>AuditLog Dashboards</h3>
-    @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("Recent", "Recent", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
-    @Html.ActionLink("Search", "Search", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char)160).ToString())
-    @Html.Raw(((char)160).ToString())
 }
 else
 {
@@ -31,18 +22,20 @@ else
     @Html.Raw(((char) 124).ToString())
     @Html.Raw(((char) 124).ToString())
     @Html.Raw(((char) 160).ToString())
+}
+
     @Html.ActionLink("Summary", "Summary", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char) 160).ToString())
-    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
     @Html.ActionLink("Recent", "Recent", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
-    @Html.Raw(((char) 160).ToString())
-    @Html.Raw(((char) 160).ToString())
+    @Html.Raw(((char)160).ToString())
+    @Html.Raw(((char)160).ToString())
     @Html.ActionLink("Search", "Search", "AuditDb", new { id = "", dbkey = Model.DbKey, maxrowcount = Model.MaxRowCount }, null)
     @Html.Raw(((char)160).ToString())
     @Html.Raw(((char)160).ToString())
-}
 
-<hr />
+
+    <hr />
 @if(!string.IsNullOrEmpty(Model.ErrorMessage))
 { 
     <table>
