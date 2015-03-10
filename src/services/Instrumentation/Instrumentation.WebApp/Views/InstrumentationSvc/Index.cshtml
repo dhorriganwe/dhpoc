@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>InstrumentationSvc</h2>
+
+<div>
+    <div>
+        <div id="pageStatus"></div>
+        <div id="instrumentationServiceUrl"></div>
+    </div>
+    <div>
+        <div id="pageStatusDetail"></div>
+    </div>
+    <table>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="Test Instrumentation Service" onclick="TestInstrumentationService();" />
+            </td>
+        </tr>
+        <tr>
+            <td>Host</td>
+            <td>
+                <input id="instrumentationSvcHost" value="localhost" />
+            </td>
+        </tr>
+        <tr>
+            <td>Host2</td>
+            <td>
+                <select id="hostSelect">
+                    <option value="localhost">localhost</option>
+                    <option value="54.191.98.71">54.191.98.71</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Url</td>
+            <td>
+                <input id="instrumentationSvcUrl" size="50" />
+            </td>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td>
+                <input id="messageText" size="50" value="defaultText"/>
+            </td>
+        </tr>
+    </table>
+    
+    <div>
+        <table>
+            <tr>
+                <td>
+                    browser url:
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    http://localhost:9000/api/logs?EventId=ei&ApplicationName=an&FeatureName=fn&Category=cc&Messages%5B%5D=mm&TraceLevel=error&AdditionalInfo=aass                
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+
+</div>
+
+
+@section scripts {
+    <script>
+
+        function TestInstrumentationService() {
+
+            $('#pageStatus').text('TestInstrumentationService.....');
+
+
+
+            var messageText = $("#messageText").val();
+            var host = $("#instrumentationSvcHost").val();
+            var hostSelect = $("#hostSelect option:selected").text();
+
+
+            //$('#instrumentationServiceUrl').text('InstrumentationServiceUrl: ' + 'http://54.191.98.71:9000/api/logs');
+            $('#instrumentationServiceUrl').text('InstrumentationServiceUrl: ' + 'http://localhost:9000/api/logs');
+
+            var newUrl = 'http://' + hostSelect + ':9000/api/logs';
+            $("#instrumentationSvcUrl").val(newUrl);
+
+
+
+            $.ajax(
+                {
+                    //url: 'http://54.191.98.71:9000/api/logs',
+                    //url: 'http://localhost:9000/api/logs',
+                    url: newUrl,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: {
+                        EventId: "Random",
+                        ApplicationName: "RisingTide",
+                        FeatureName: "FieldMapping",
+                        Category: "Audit",
+                        Messages: [messageText],
+                        TraceLevel: "error",
+                        AdditionalInfo: "from healthcheck/index",
+                        MessageCode: hostSelect,
+                        LoginName: "some loginname",
+                        AuditedOn: "1/1/1905"
+                    },
+
+                    crossDomain: true,
+                    dataType: 'jsonp',
+
+                    success: function(data) {
+                        //console.log(data);
+                        $('#pageStatus').text('success.....');
+                        $('#pageStatusDetail').text(data);
+                    },
+                    //error: function(e) {
+                    error: function(jqXHR, textStatus, err) {
+                        //console.log(e.message);
+                        $('#pageStatus').text('error.....');
+                        $('#pageStatusDetail').text(err);
+                    },
+                }
+            );
+        }
+
+    </script>
+    }
+

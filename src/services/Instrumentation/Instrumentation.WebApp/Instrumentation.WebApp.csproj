@@ -140,6 +140,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuditDbController.cs" />
+    <Compile Include="Controllers\InstrumentationSvcController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -251,6 +252,7 @@
     <Content Include="Views\AuditDb\Search.cshtml" />
     <Content Include="Views\Home\Header.cshtml" />
     <Content Include="Views\AuditDb\Browse.cshtml" />
+    <Content Include="Views\InstrumentationSvc\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
