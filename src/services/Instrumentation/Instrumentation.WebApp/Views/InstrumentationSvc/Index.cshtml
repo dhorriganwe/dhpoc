@@ -3,30 +3,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>InstrumentationSvc</h2>
+<h2>InstrumentationSvc Ajax Test Page</h2>
 
 <div>
-    <div>
-        <div id="pageStatus"></div>
-        <div id="instrumentationServiceUrl"></div>
-    </div>
-    <div>
-        <div id="pageStatusDetail"></div>
-    </div>
     <table>
         <tr>
-            <td colspan="2">
-                <input type="button" value="Test Instrumentation Service" onclick="TestInstrumentationService();" />
-            </td>
-        </tr>
-        <tr>
             <td>Host</td>
-            <td>
-                <input id="instrumentationSvcHost" value="localhost" />
-            </td>
-        </tr>
-        <tr>
-            <td>Host2</td>
             <td>
                 <select id="hostSelect">
                     <option value="localhost">localhost</option>
@@ -35,34 +17,81 @@
             </td>
         </tr>
         <tr>
+            <td>Port</td>
+            <td>
+                <input id="instrumentationSvcPort" value="9000" />
+            </td>
+        </tr>
+        <tr>
             <td>Url</td>
             <td>
-                <input id="instrumentationSvcUrl" size="50" />
+                <input id="url" size="50" />
             </td>
         </tr>
         <tr>
             <td>Message</td>
             <td>
-                <input id="messageText" size="50" value="defaultText"/>
+                <input id="messageText" value="someMessage"/>
+            </td>
+        </tr>
+        <tr>
+            <td>AjaxData</td>
+            <td>
+                <div id="ajaxData"></div>
             </td>
         </tr>
     </table>
     
-    <div>
+    <table>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="Test Instrumentation Service" onclick="TestInstrumentationService();" />
+            </td>
+        </tr>
+        <tr>
+            <td>instrumentationServiceUrl</td>
+            <td><div id="instrumentationServiceUrl"></div></td>
+        </tr>
+        <tr>
+            <td>pageStatus</td>
+            <td><div id="pageStatus"></div></td>
+        </tr>
+        <tr>
+            <td>ajaxResponseData</td>
+            <td><div id="ajaxResponseData"></div></td>
+        </tr>
+        <tr>
+            <td>ajaxResponseErr</td>
+            <td><div id="ajaxResponseErr"></div></td>
+        </tr>
+        <tr>
+            <td>ajaxStatus</td>
+            <td><div id="ajaxStatus"></div></td>
+        </tr>
+        <tr>
+            <td>ajaxStatusText</td>
+            <td><div id="ajaxStatusText"></div></td>
+        </tr>
+    </table>
+
         <table>
             <tr>
+                <td>QueryStr</td>
                 <td>
-                    browser url:
+                    <input id="queryString" value="?EventId=ei&ApplicationName=an&FeatureName=fn&Category=cc&Messages=mm&TraceLevel=info&AdditionalInfo=aass&AuditedOn=1/1/2001" />
                 </td>
             </tr>
             <tr>
+                <td>BrowserUrl</td>
                 <td>
-                    http://localhost:9000/api/logs?EventId=ei&ApplicationName=an&FeatureName=fn&Category=cc&Messages%5B%5D=mm&TraceLevel=error&AdditionalInfo=aass                
+                    <input id="browserUrl" value="" class="TextInputWide" />
                 </td>
             </tr>
         </table>
-    </div>
     
+    <div>
+        <div id="debug"></div>
+    </div>
 
 </div>
 
@@ -72,56 +101,64 @@
 
         function TestInstrumentationService() {
 
-            $('#pageStatus').text('TestInstrumentationService.....');
+            $('#pageStatus').text('POST.....');
+
+            $('#ajaxResponseData').text('');
+            $('#ajaxStatus').text('');
+            $('#ajaxStatusText').text('');
+            $('#ajaxResponseErr').text('');
 
 
-
-            var messageText = $("#messageText").val();
-            var host = $("#instrumentationSvcHost").val();
+            // collect request data
             var hostSelect = $("#hostSelect option:selected").text();
+            var port = $("#instrumentationSvcPort").val();
+            var url = 'http://' + hostSelect + ':' + port + '/api/logs';
+            var queryStr = $("#queryString").val();
 
+            // echo to UI
+            $('#instrumentationServiceUrl').text(url);
+            $('#url').val(url);
+            $('#browserUrl').val(url + queryStr);
 
-            //$('#instrumentationServiceUrl').text('InstrumentationServiceUrl: ' + 'http://54.191.98.71:9000/api/logs');
-            $('#instrumentationServiceUrl').text('InstrumentationServiceUrl: ' + 'http://localhost:9000/api/logs');
+            // build Instrumentation Service request
+            var ajaxData = {
+                EventId: "anEventId",
+                ApplicationName: "InstSvcAjaxTestPage",
+                FeatureName: "Ajax POST test",
+                Category: "Audit",
+                Messages: $("#messageText").val(),
+                TraceLevel: "info",
+                AdditionalInfo: url,
+                MessageCode: "from InstrumentationSvcWeb",
+                LoginName: "someLoginName",
+                AuditedOn: "1/1/1905"
+            };
+            $('#ajaxData').text(JSON.stringify(ajaxData));
 
-            var newUrl = 'http://' + hostSelect + ':9000/api/logs';
-            $("#instrumentationSvcUrl").val(newUrl);
-
-
-
+            // call Instrumentation Service
             $.ajax(
                 {
                     //url: 'http://54.191.98.71:9000/api/logs',
                     //url: 'http://localhost:9000/api/logs',
-                    url: newUrl,
+                    url: url,
                     type: 'POST',
                     contentType: 'application/json',
-                    data: {
-                        EventId: "Random",
-                        ApplicationName: "RisingTide",
-                        FeatureName: "FieldMapping",
-                        Category: "Audit",
-                        Messages: [messageText],
-                        TraceLevel: "error",
-                        AdditionalInfo: "from healthcheck/index",
-                        MessageCode: hostSelect,
-                        LoginName: "some loginname",
-                        AuditedOn: "1/1/1905"
-                    },
-
+                    data: ajaxData,
                     crossDomain: true,
                     dataType: 'jsonp',
 
                     success: function(data) {
-                        //console.log(data);
                         $('#pageStatus').text('success.....');
-                        $('#pageStatusDetail').text(data);
+
+                        $('#ajaxResponseData').text(data);
                     },
-                    //error: function(e) {
-                    error: function(jqXHR, textStatus, err) {
-                        //console.log(e.message);
+
+                    error: function (jqXHR, textStatus, err) {
                         $('#pageStatus').text('error.....');
-                        $('#pageStatusDetail').text(err);
+
+                        $('#ajaxResponseErr').text(err);
+                        $('#ajaxStatus').text(jqXHR.status);
+                        $('#ajaxStatusText').text(jqXHR.statusText);
                     },
                 }
             );

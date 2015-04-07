@@ -50,6 +50,12 @@ table th, td.TdSection{
     width: 150px;
 }
 
+.TextInputWide input {
+    text-align:left;
+    float: left;
+    width: 500px;
+}
+
 .TextLabelLeft {
     text-align: left;
 }
